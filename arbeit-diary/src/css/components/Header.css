@@ -1,13 +1,13 @@
-@import url(reset.css);
-@import url(./Main.css);
+@import url(../reset.css);
+@import url(../Main.css);
 
 .Header {
   margin-top: 30px;
-
-  font-family: "Jua", sans-serif;
   display: flex;
   justify-content: space-between;
   background-color: white;
+
+  margin-bottom: 5%;
 }
 
 .Header .left {

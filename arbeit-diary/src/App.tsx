@@ -2,12 +2,11 @@ import React from "react";
 import { Link, Route } from "react-router-dom";
 import Index from "./containers/Index";
 import Login from "./containers/Login";
-
-const key: number = 1;
+import Regist from "./containers/Regist";
 
 function App() {
   return (
-    <>
+    <div className="All">
       <ul>
         <li>
           <Link to="/">홈</Link>
@@ -19,7 +18,8 @@ function App() {
       <hr />
       <Route path="/" exact component={Index} />
       <Route path="/login" component={Login} />
-    </>
+      <Route path="/Regist" component={Regist} />
+    </div>
   );
 }
 

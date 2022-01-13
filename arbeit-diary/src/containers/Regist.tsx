@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/containers/Login.css";
+import "../css/containers/Regist.css";
 
-function Login() {
+function Regist() {
   return (
     <>
       <div className="Login-body">
@@ -13,10 +13,8 @@ function Login() {
           crossOrigin="anonymous"
         />
         <form className="form-signin" id="form-login">
-          <h1 className="h3 mb-3 font-weight-normal">로그인 정보 입력</h1>
-          <label htmlFor="inputEmail" className="sr-only">
-            Email address
-          </label>
+          <h1 className="h3 mb-3 font-weight-normal">회원가입 정보 입력</h1>
+
           <input
             type="email"
             id="email"
@@ -25,25 +23,42 @@ function Login() {
             required
             autoFocus
           />
-          <label htmlFor="inputPassword" className="sr-only">
-            Password
-          </label>
+          <input
+            type="text"
+            id="name"
+            className="form-control"
+            placeholder="이름"
+            required
+            autoFocus
+          />
+          <input
+            type="text"
+            id="phonenumber"
+            className="form-control"
+            placeholder="핸드폰 번호"
+            required
+            autoFocus
+          />
           <input
             type="password"
             id="password"
             className="form-control"
             placeholder="비밀번호"
             required
+            autoFocus
           />
-          <button className="btn-login" type="submit">
-            로그인
-          </button>
+          <input
+            type="password"
+            id="password-check"
+            className="form-control"
+            placeholder="비밀번호 확인"
+            required
+          />
 
-          <div className="find">
-            <Link to="#">아이디 찾기</Link>
-            <Link to="#">비밀번호 찾기</Link>
-            <Link to="/Regist">회원가입</Link>
-          </div>
+          <button className="btn-login" type="submit">
+            회원가입
+          </button>
+          <div className="find"></div>
           <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
         <script
@@ -66,4 +81,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Regist;
