@@ -1,0 +1,56 @@
+@import url(./Main.css);
+.MkProject {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-top: 5%;
+  display: flex;
+  font-family: "Jua", sans-serif;
+  align-items: center;
+  background: #eee linear-gradient(to right, #7fffd4 10%, #fff 65%);
+  margin-bottom: 100rem;
+}
+.MkProject .description {
+  width: 40%;
+  margin-left: 15%;
+  font-size: 3rem;
+  line-height: 5rem;
+  border-radius: 5%;
+}
+
+.MkProject .project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10%;
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+}
+
+.MkProject .project .btn--new {
+  border: 1px solid #7cb464;
+  color: #fff;
+  background: #55a532 linear-gradient(#9ed685, #7cb464);
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 25%;
+  font-size: rem;
+  background-color: rgba(127, 255, 212, 30%);
+}
+
+.MkProject .project .btn--old {
+  border: 1px solid #65b836;
+  color: #55ae2e;
+  background: #55a532 linear-gradient(#fff, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 25%;
+  margin-top: 10%;
+  font-size: rem;
+}
