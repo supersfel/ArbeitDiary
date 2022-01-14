@@ -1,8 +1,22 @@
-import React from "react";
+import React, { CSSProperties, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/containers/Regist.css";
 
 function Regist() {
+  const [password, setPassword] = useState(""); // 비밀번호 일치확인
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const onChangeConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const uncorrectstyle: CSSProperties = {
+    border: password !== confirmPassword ? "2px solid red" : "",
+  };
+
   return (
     <>
       <div className="Login-body">
@@ -46,6 +60,8 @@ function Regist() {
             placeholder="비밀번호"
             required
             autoFocus
+            onChange={onChangePassword}
+            style={uncorrectstyle}
           />
           <input
             type="password"
@@ -53,6 +69,8 @@ function Regist() {
             className="form-control"
             placeholder="비밀번호 확인"
             required
+            onChange={onChangeConfirmPassword}
+            style={uncorrectstyle}
           />
 
           <button className="btn-login" type="submit">

@@ -26,6 +26,7 @@
   padding: 10px;
   font-size: 16px;
   margin: 15px 0;
+  border-radius: 9px;
 }
 .form-signin .form-control:focus {
   z-index: 2;
@@ -62,4 +63,11 @@
 .form-signin .find {
   display: flex;
   justify-content: space-between;
+}
+
+.uncorrectstyle {
+  display: none;
+  border-radius: 20px;
+  background-image: linear-gradient(#444444, #444444),
+    linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
 }

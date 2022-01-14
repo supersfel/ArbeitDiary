@@ -3,6 +3,7 @@ import { Link, Route } from "react-router-dom";
 import Index from "./containers/Index";
 import Login from "./containers/Login";
 import Regist from "./containers/Regist";
+import OldProject from "./containers/OldProject";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/" exact component={Index} />
       <Route path="/login" component={Login} />
       <Route path="/Regist" component={Regist} />
+      <Route path="/oldproject" component={OldProject} />
     </div>
   );
 }

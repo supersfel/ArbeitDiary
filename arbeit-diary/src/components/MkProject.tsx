@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../css/MkProject.css";
 
 function MkProject() {
@@ -10,7 +11,9 @@ function MkProject() {
       </div>
       <div className="project">
         <div className="btn btn--new">새 프로젝트</div>
-        <div className="btn btn--old">기존 프로젝트</div>
+        <Link to="/oldproject" className="btn btn--old">
+          기존 프로젝트
+        </Link>
       </div>
     </div>
   );
