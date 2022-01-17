@@ -4,6 +4,7 @@ import Index from "./containers/Index";
 import Login from "./containers/Login";
 import Regist from "./containers/Regist";
 import OldProject from "./containers/OldProject";
+import Project from "./containers/Project";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/Regist" component={Regist} />
       <Route path="/oldproject" component={OldProject} />
+      <Route path="/project" component={Project} />
     </div>
   );
 }
