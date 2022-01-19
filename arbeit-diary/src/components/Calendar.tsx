@@ -36,7 +36,10 @@ function Calendar() {
                   <div
                     className="calendarDay"
                     key={index}
-                    style={{ backgroundColor: "var(--main-color)" }}
+                    style={{
+                      backgroundColor: "var(--main-color)",
+                      color: "#fff",
+                    }}
                   >
                     {days.format("D")}
                   </div>
@@ -46,7 +49,7 @@ function Calendar() {
                   <div
                     className="calendarDay"
                     key={index}
-                    style={{ backgroundColor: "#d2d2d2" }}
+                    style={{ backgroundColor: "#d2d2d2ee" }}
                   >
                     {days.format("D")}
                   </div>
@@ -89,13 +92,13 @@ function Calendar() {
 
       <div className="calendarBody">
         <div className="calendarDays">
-          <div className="calendarDayofWeek sunday">일</div>
-          <div className="calendarDayofWeek">월</div>
-          <div className="calendarDayofWeek">화</div>
-          <div className="calendarDayofWeek">수</div>
-          <div className="calendarDayofWeek">목</div>
-          <div className="calendarDayofWeek">금</div>
-          <div className="calendarDayofWeek saturday">토</div>
+          <div className="calendarDayofWeek sunday">SUN</div>
+          <div className="calendarDayofWeek">MON</div>
+          <div className="calendarDayofWeek">THU</div>
+          <div className="calendarDayofWeek">WEN</div>
+          <div className="calendarDayofWeek">THU</div>
+          <div className="calendarDayofWeek">FRI</div>
+          <div className="calendarDayofWeek saturday">SAT</div>
         </div>
         {calendarArr()}
       </div>

@@ -51,8 +51,7 @@
   display: flex;
   width: 90%;
   margin: 0 auto;
-  border-top: 1px solid var(--main-color);
-  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
 .calendar .calendarDays .calendarDayofWeek {
@@ -65,8 +64,6 @@
   height: 2rem;
   font-size: 1.3rem;
   font-weight: 700;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
 .calendar .calendarDays .sunday {
@@ -80,18 +77,28 @@
   display: flex;
   width: 90%;
   margin: 0 auto;
-  border-top: 1px solid var(--main-color);
-  border-radius: 5px;
 }
 
 .calendar .calendarDay {
   display: flex;
-  padding-top: 1%;
-  padding-left: 1%;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 6rem;
+  height: 5rem;
   font-size: 1rem;
   font-weight: 700;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 99px;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.calendar .calendarDay:nth-child(7) {
+  margin-right: 0;
+}
+
+.calendar .calendarDay:hover {
+  background: var(--main-color);
+  color: #fff;
+  transition: 0.5s;
+  cursor: pointer;
 }
