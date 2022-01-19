@@ -6,7 +6,9 @@ function Header() {
   return (
     <>
       <header className="Header">
-        <div className="left">로고</div>
+        <Link to="/" className="left">
+          로고
+        </Link>
         <Link to="/login" className="right">
           로그인
         </Link>

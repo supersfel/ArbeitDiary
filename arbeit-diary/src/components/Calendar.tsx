@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useState } from "react";
 import "../css/components/Calendar.css";
+import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 
 function Calendar() {
   const [getMoment, setMoment] = useState(moment());
@@ -15,6 +16,7 @@ function Calendar() {
   const calendarArr = () => {
     let result: any = []; //type 맞춰줘야함
     let week = firstWeek;
+
     for (week; week <= lastWeek; week++) {
       result = result.concat(
         <div className="calendarWeek" key={week}>
@@ -72,7 +74,7 @@ function Calendar() {
             setMoment(getMoment.clone().subtract(1, "month"));
           }}
         >
-          이전달
+          <MdChevronLeft />
         </button>
         <span>{today.format("YYYY 년 MM 월")}</span>
         <button
@@ -81,10 +83,22 @@ function Calendar() {
             setMoment(getMoment.clone().add(1, "month"));
           }}
         >
-          다음달
+          <MdChevronRight />
         </button>
       </div>
-      <div className="calendarBody">{calendarArr()}</div>
+
+      <div className="calendarBody">
+        <div className="calendarDays">
+          <div className="calendarDayofWeek sunday">일</div>
+          <div className="calendarDayofWeek">월</div>
+          <div className="calendarDayofWeek">화</div>
+          <div className="calendarDayofWeek">수</div>
+          <div className="calendarDayofWeek">목</div>
+          <div className="calendarDayofWeek">금</div>
+          <div className="calendarDayofWeek saturday">토</div>
+        </div>
+        {calendarArr()}
+      </div>
     </div>
   );
 }

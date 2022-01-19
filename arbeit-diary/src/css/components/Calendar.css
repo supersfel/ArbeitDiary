@@ -9,19 +9,32 @@
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
 }
 
+.calendar:hover {
+  border: 1px solid var(--main-color);
+}
+
 .calendar .control {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
 .calendar .control .btn-calendar {
   background: var(--main-color);
   color: #fff;
   font-size: 1.2rem;
+  border-radius: 99px;
+}
+
+.calendar .control .btn-calendar:hover {
+  background: #fff;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  transition: 0.5s;
 }
 .calendar .control .btn-beforeMonth {
   margin-right: 0.5rem;
@@ -34,19 +47,51 @@
   margin: 2rem;
 }
 
+.calendar .calendarDays {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  border-top: 1px solid var(--main-color);
+  border-radius: 5px;
+}
+
+.calendar .calendarDays .calendarDayofWeek {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 100%;
+  height: 2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.calendar .calendarDays .sunday {
+  color: #eb0000;
+}
+.calendar .calendarDays .saturday {
+  color: #3232ff;
+}
+
 .calendar .calendarWeek {
   display: flex;
   width: 90%;
   margin: 0 auto;
+  border-top: 1px solid var(--main-color);
+  border-radius: 5px;
 }
 
 .calendar .calendarDay {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-top: 1%;
+  padding-left: 1%;
   width: 100%;
-  height: 4rem;
+  height: 6rem;
   font-size: 1rem;
+  font-weight: 700;
   border: 1px solid #ddd;
   border-radius: 5px;
 }

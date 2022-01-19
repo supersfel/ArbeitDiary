@@ -9,15 +9,6 @@ import Project from "./containers/Project";
 function App() {
   return (
     <div className="All">
-      <ul>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
-        <li>
-          <Link to="/login">로그인</Link>
-        </li>
-      </ul>
-      <hr />
       <Route path="/" exact component={Index} />
       <Route path="/login" component={Login} />
       <Route path="/Regist" component={Regist} />

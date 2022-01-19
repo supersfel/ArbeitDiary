@@ -1,0 +1,9 @@
+.project {
+  display: flex;
+}
+
+.project .userList {
+  width: 30%;
+  background-color: yellowgreen;
+}
+
