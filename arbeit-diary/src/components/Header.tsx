@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/components/Header.css";
-import $ from "jquery";
 
 function Header() {
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장

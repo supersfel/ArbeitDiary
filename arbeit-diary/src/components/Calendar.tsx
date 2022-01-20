@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import "../css/components/Calendar.css";
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 
-function Calendar() {
+type CalendarProps = {
+  onConfirm: () => void;
+  onConfirmDay: (days: moment.Moment) => void;
+};
+
+function Calendar({ onConfirm, onConfirmDay }: CalendarProps) {
   const [getMoment, setMoment] = useState(moment());
   const today = getMoment; // today == moment()   입니다.
 
@@ -29,7 +34,7 @@ function Calendar() {
                 .startOf("year")
                 .week(week)
                 .startOf("week")
-                .add(index, "day"); //d로해도되지만 직관성
+                .add(index, "day");
 
               if (moment().format("YYYYMMDD") === days.format("YYYYMMDD")) {
                 return (
@@ -39,6 +44,10 @@ function Calendar() {
                     style={{
                       backgroundColor: "var(--main-color)",
                       color: "#fff",
+                    }}
+                    onClick={() => {
+                      onConfirm();
+                      onConfirmDay(days);
                     }}
                   >
                     {days.format("D")}
@@ -50,13 +59,24 @@ function Calendar() {
                     className="calendarDay"
                     key={index}
                     style={{ backgroundColor: "#d2d2d2ee" }}
+                    onClick={() => {
+                      onConfirm();
+                      onConfirmDay(days);
+                    }}
                   >
                     {days.format("D")}
                   </div>
                 );
               } else {
                 return (
-                  <div className="calendarDay" key={index}>
+                  <div
+                    className="calendarDay"
+                    key={index}
+                    onClick={() => {
+                      onConfirm();
+                      onConfirmDay(days);
+                    }}
+                  >
                     {days.format("D")}
                   </div>
                 );
