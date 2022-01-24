@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Schedule from "../components/Schedule";
 import "../css/containers/DayDetail.css";
 
 type DaydetailProps = {
@@ -19,8 +20,15 @@ function DayDetail({ visible, onCancel, selectedDay }: DaydetailProps) {
     >
       <div className="dayDetail" onClick={(event) => event.stopPropagation()}>
         {/*이벤트 캡쳐링 방지 */}
-        <button onClick={onCancel}>취소</button>
-        <p>{selectedDay}</p>
+        <Schedule />
+        <div className="dayDetailRight">
+          <div className="selectedDay">{selectedDay}</div>
+          <div className="record"></div>
+
+          <button className="cancel-btn btn" onClick={onCancel}>
+            취소
+          </button>
+        </div>
       </div>
     </div>
   );

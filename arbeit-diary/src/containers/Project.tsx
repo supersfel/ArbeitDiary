@@ -26,7 +26,10 @@ function Project() {
       <Header />
       <div className="project">
         <UserList />
-        <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} />
+        <div className="projectRight">
+          <div className="projectTitle">맘스터치 개봉점</div>
+          <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} />
+        </div>
       </div>
       <DayDetail
         visible={visible}
