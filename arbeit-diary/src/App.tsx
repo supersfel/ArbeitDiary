@@ -5,6 +5,7 @@ import Login from "./containers/Login";
 import Regist from "./containers/Regist";
 import OldProject from "./containers/OldProject";
 import Project from "./containers/Project";
+import IndexDone from "./containers/IndexDone";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/Regist" component={Regist} />
       <Route path="/oldproject" component={OldProject} />
       <Route path="/project" component={Project} />
+      <Route path="/done" component={IndexDone} />
     </div>
   );
 }

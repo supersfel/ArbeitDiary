@@ -3,13 +3,20 @@ import UserApi from "../api/UserApi";
 import { Link } from "react-router-dom";
 import "../css/containers/Regist.css";
 import axios from "axios";
+import CheckEmailModal from "../components/CheckEmailModal";
 
 function Regist() {
   const [password, setPassword] = useState(""); // 비밀번호 일치확인
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [visible, setvisible] = useState(false);
+
+  const onCancel = () => {
+    setvisible(false);
+  };
 
   const onSubmit = (e: any) => {
-    //e.preventDefault();
+    e.preventDefault();
+    setvisible(true);
     UserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,
@@ -92,6 +99,7 @@ function Regist() {
           <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
       </div>
+      <CheckEmailModal visible={visible} onCancel={onCancel} />
     </>
   );
 }
