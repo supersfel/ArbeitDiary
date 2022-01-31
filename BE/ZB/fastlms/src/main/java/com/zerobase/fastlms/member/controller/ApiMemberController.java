@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,8 +39,9 @@ public class ApiMemberController {
 	@GetMapping("/api/users")
 	public ResponseEntity<?>  user (Model model, MemberInput memberInput) {
 		// 요청을 보낸 클라이언트의 IP주소를 반환합니다.
+		System.out.println("로그인 API PAGE");
 		boolean result = memberService.register(memberInput);
-		System.out.println(memberInput);
+		System.out.println("++++++++++++++++++++"+memberInput);
 		return ResponseEntity.ok().body(memberInput);
 	}
 	

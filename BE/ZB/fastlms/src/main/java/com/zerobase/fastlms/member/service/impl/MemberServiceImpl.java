@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public boolean register(MemberInput parameter) {
 		Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
-		System.out.println("회원 정보 찾는 중");
+		System.out.println("회원 정보 찾는 중 log");
 		if(optionalMember.isPresent()) {
 			System.out.println("존재함");
 			return false;
