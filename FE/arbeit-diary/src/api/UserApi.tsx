@@ -17,10 +17,13 @@ function UserApi(params: UserApiprops) {
     },
     params,
   }).then((response) => {
+    const { userId } = response.data;
+    if (userId === null) {
+      return;
+    }
+    localStorage.setItem("userId", userId);
     console.log(response.data);
   });
 }
-
-
 
 export default UserApi;
