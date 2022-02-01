@@ -5,7 +5,7 @@ import "../css/containers/Login.css";
 
 function Login() {
   const onSubmit = (e: any) => {
-    //e.preventDefault();
+    e.preventDefault();
     UserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,

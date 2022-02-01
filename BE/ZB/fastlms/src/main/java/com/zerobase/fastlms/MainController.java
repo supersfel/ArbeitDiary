@@ -1,5 +1,8 @@
 package com.zerobase.fastlms;
 
+import java.security.Principal;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -9,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class MainController {
 	@GetMapping("/")
-	public String index() {
+	public String index(Authentication auth, Principal principal, Authentication authentication) {
 		System.out.println("메인");
+		System.out.println(auth);
 		return "index";
 	}
 	

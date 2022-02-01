@@ -1,5 +1,7 @@
 package com.zerobase.fastlms.member.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zerobase.fastlms.configuration.token.AuthConstants;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import com.zerobase.fastlms.member.service.MemberService;
@@ -22,26 +25,27 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/register")
-	public String register() {
+	public String register(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("회원가입GET");
-		
 		return "member/register";
 	}
 	
 	@PostMapping("/member/register")
-	public String registerSubmit(Model model, MemberInput parameter) {
+	public String registerSubmit(Model model, MemberInput parameter ,Principal principal) {
 		System.out.println("회원가입POST");
 		System.out.println(parameter.toString());
 		
 		boolean result = memberService.register(parameter);
 		model.addAttribute("result", result);
+		System.out.println("pricd :" +principal);
 		return "member/register-complete";
 	}
 	
 	@GetMapping("/member/email-auth")
-	public String emailAuth(Model model, HttpServletRequest request) {
+	public String emailAuth(Model model, HttpServletRequest request, Principal principal) {
 		String uuid = request.getParameter("id");
 		System.out.println(uuid);
+		System.out.println("pricd :" +principal);
 		boolean result = memberService.emailAuth(uuid);
 		
 		model.addAttribute("result", result);
@@ -53,12 +57,13 @@ public class MemberController {
 		System.out.println("정보");
 		return "member/info";
 	}
-	
+	/*
 	@PostMapping("/member/login")
 	public String memberLoginSubmit() {
 		System.out.println("Post로그인");
 		return "member/login";
 	}
+	*/
 	@GetMapping("/member/login")
 	public String memberLogin(HttpServletRequest request) {
 		System.out.println("Get로그인");

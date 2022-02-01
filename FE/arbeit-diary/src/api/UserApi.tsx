@@ -9,19 +9,17 @@ type UserApiprops = {
 
 function UserApi(params: UserApiprops) {
   axios({
-    method: "get",
-    url: "http://localhost:8080/api/users",
+    method: "post",
+    url: "http://localhost:8080/api/login",
     headers: {
       'Accept': "application/json", //prettier-ignore
-      "Content-Type": "application/json",
+      'Content-Type': "application/json", //prettier-ignore
     },
-    params,
+    data: params,
   }).then((response) => {
-    const { userId } = response.data;
-    if (userId === null) {
-      return;
-    }
-    localStorage.setItem("userId", userId);
+    const { memberRefreshToken } = response.data;
+    console.log(memberRefreshToken);
+    localStorage.setItem("token", memberRefreshToken);
     console.log(response.data);
   });
 }

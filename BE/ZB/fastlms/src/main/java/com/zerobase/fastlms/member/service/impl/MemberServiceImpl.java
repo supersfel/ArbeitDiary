@@ -3,28 +3,35 @@ package com.zerobase.fastlms.member.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedCredentialsNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.dto.MemberLoginDto;
 import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.component.MailComponent;
+import com.zerobase.fastlms.configuration.token.TokenUtils;
 import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.exception.MemberNotEmailAllthException;
 import com.zerobase.fastlms.member.exception.MemberStopUserException;
+import com.zerobase.fastlms.member.model.CustomUserDetails;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import com.zerobase.fastlms.member.repository.MemberRepository;
@@ -36,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
 	private final MailComponent mailComponents;
 	private final MemberMapper memberMapper;
 	
+	
 	@Autowired
 	public MemberServiceImpl(MemberRepository memberRepository, MailComponent mailComponents, MemberMapper memberMapper) {
 		this.memberRepository = memberRepository;
@@ -46,14 +54,15 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public boolean register(MemberInput parameter) {
 		Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
-		System.out.println("회원 정보 찾는 중 log");
+		System.out.println("회원 정보 찾는 중");
 		if(optionalMember.isPresent()) {
 			System.out.println("존재함");
 			return false;
 		}
 		
 		System.out.println("존재하지 않음");
-		String encPassword = BCrypt.hashpw(parameter.getUserPassword(), BCrypt.gensalt());
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String encPassword = BCrypt.hashpw(parameter.getUserPassword(), BCrypt.gensalt());//bCryptPasswordEncoder.encode(parameter.getUserPassword());
 		
 		String uuid = UUID.randomUUID().toString();
 		Member member = Member.builder()
@@ -65,14 +74,16 @@ public class MemberServiceImpl implements MemberService{
 				.emailAuthYn(false)
 				.emailAuthKey(uuid)
 				.userState(Member.MEMBER_STATUS_YET)
+				.roles("invalid")
+				.refreshToken("invalid")
 				.build();
 		
 		memberRepository.save(member);
-		
+		System.out.println(member.getRoles());
 		String email = member.getUserId();
 		String subject = "가입에 축하드립니다.";
 		String text = "<h1>가입에 축하드립니다</h1><p>아래 링크를 클릭하여 가입을 완료하세요</p>"
-				+"<div><a href='http://localhost:8080/member/email-auth?id="+uuid+"'>가입 완료</a>하러가기</div>";
+				+"<div><a href='http://localhost:3000/done'>가입 완료</a>하러가기</div>";
 		mailComponents.sendMail(email, subject, text);
 		System.out.println(true);
 		return true;
@@ -100,16 +111,16 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("loadUserByUserName");
-		
+	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("=========== 로그인 시도 ===========");
 		Optional<Member> optionalMember = memberRepository.findById(username);
 		if(!optionalMember.isPresent()) {
 			System.out.println("loadUserByUserName - isNotParent");
 			throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
 		}
-		System.out.println("loadUserByUserName - isParent");
 		Member member = optionalMember.get();
+		
+		System.out.println("로그인 시도_ 전달받은 값 : " + member);
 		
 		if(Member.MEMBER_STATUS_YET.equals(member.getUserState())) {
 			String uuid = member.getEmailAuthKey();
@@ -127,14 +138,34 @@ public class MemberServiceImpl implements MemberService{
 		
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		if(member.isAdminYn()) {
+			System.out.println("=====관리자=====");
+			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
+		member.setRole(grantedAuthorities);
+		memberRepository.save(member);
+		System.out.println(member);
+		return new CustomUserDetails(member, grantedAuthorities);
+	}
+	/*
+	public CustomUserDetails loadUserByUserName(String username) {
+		Optional<Member> optionalMember = memberRepository.findById(username);
+		
+		if(!optionalMember.isPresent()) {
+			throw new UsernameNotFoundException("이메일 존재 하지 않습니다.");
+		}
+		Member member = optionalMember.get();
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		
 		if(member.isAdminYn()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
-		System.out.println("impl끝");
-		return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
+		
+		
+		return new CustomUserDetails(member,grantedAuthorities);
 	}
-
+	*/
 	@Override
 	public boolean sendResetPassword(ResetPasswordInput parameter) {
 		Optional<Member> optionalMember = memberRepository.findByUserIdAndUserName(parameter.getUserId(), parameter.getUserName());
@@ -262,4 +293,33 @@ public class MemberServiceImpl implements MemberService{
 		
 		return sendEmailData(optionalMember);
 	}
+
+	@Override
+	public CustomUserDetails apiUserDetail(String userId) {
+		Optional<Member> optionalMember = memberRepository.findById(userId);
+		
+		if(!optionalMember.isPresent()) {
+			return null;
+		}
+		Member member = optionalMember.get();
+		System.out.println("member :" +member);
+		CustomUserDetails detail = new CustomUserDetails(member,member.getRoleList());
+		System.out.println(detail);
+		return detail;
+	}
+	
+	@Override
+	public MemberLoginDto getloginToken(CustomUserDetails principal) {
+		System.out.println("==============SUCCESS=============");
+		System.out.println("=============JWT토큰 생성=========");
+		System.out.println("success:"+ principal);
+		CustomUserDetails user = principal;
+		String accessToken = TokenUtils.generateAccessToken(user);		
+		user.setMemberRefreshToken(TokenUtils.generateRefreshToken(user));
+		System.out.println("length:"+user.getMemberRefreshToken().length());
+		memberRepository.save(user.getMember());
+		
+		return new MemberLoginDto(principal.getUsername(), accessToken, user.getMemberRefreshToken());
+	}
+	
 }

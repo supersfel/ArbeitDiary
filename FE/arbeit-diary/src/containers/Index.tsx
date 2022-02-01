@@ -15,6 +15,7 @@ function Index() {
     dispatch(addId("3"));
     console.log(user[0].id);
     console.log(localStorage.getItem("userId"));
+    alert(localStorage.getItem("token"));
   };
 
   return (
