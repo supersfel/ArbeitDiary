@@ -1,5 +1,5 @@
 import React, { CSSProperties, FormEvent, useEffect, useState } from "react";
-import UserApi from "../api/UserApi";
+import { RegistUserApi } from "../api/UserApi";
 import { Link } from "react-router-dom";
 import "../css/containers/Regist.css";
 import axios from "axios";
@@ -17,7 +17,7 @@ function Regist() {
   const onSubmit = (e: any) => {
     e.preventDefault();
     setvisible(true);
-    UserApi({
+    RegistUserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,
       userName: e.target.name.value,
@@ -33,7 +33,7 @@ function Regist() {
   };
 
   const uncorrectstyle: CSSProperties = {
-    border: password !== confirmPassword ? "2px solid red" : "",
+    border: password !== confirmPassword ? "4px solid var(--main-color)" : "",
   };
 
   return (
@@ -73,7 +73,7 @@ function Regist() {
             autoFocus
           />
           <input
-            type="password"
+            type="text"
             id="password"
             className="form-control"
             placeholder="비밀번호"

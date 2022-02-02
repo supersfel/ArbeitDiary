@@ -24,14 +24,26 @@ function Header() {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
+  const token = localStorage.getItem("token");
+
+  const onlogout = () => {
+    if (token !== null) {
+      localStorage.clear();
+    }
+  };
+
   return (
     <>
       <header className={"Header" + (ScrollActive ? " onScrolled" : "")}>
         <Link to="/" className="left">
           로고
         </Link>
-        <Link to="/login" className="right">
-          로그인
+        <Link
+          to={token === null ? "/login" : "/"}
+          onClick={onlogout}
+          className="right"
+        >
+          {token === null ? "로그인" : "로그아웃"}
         </Link>
       </header>
     </>

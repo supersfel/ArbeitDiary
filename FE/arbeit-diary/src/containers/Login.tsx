@@ -1,15 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import UserApi from "../api/UserApi";
+import { Link, useHistory } from "react-router-dom";
+import { UserApi } from "../api/UserApi";
+
 import "../css/containers/Login.css";
 
-function Login() {
+function Login(): JSX.Element {
+  const history = useHistory();
   const onSubmit = (e: any) => {
     e.preventDefault();
     UserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,
-    });
+    }).then(() => history.push("/"));
   };
 
   return (
@@ -44,6 +46,7 @@ function Login() {
             placeholder="비밀번호"
             required
           />
+
           <button className="btn-login" type="submit">
             로그인
           </button>
