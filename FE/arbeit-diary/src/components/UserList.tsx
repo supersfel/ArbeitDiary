@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import "../css/components/UserList.css";
 
 import { MdDone, MdAdd } from "react-icons/md";

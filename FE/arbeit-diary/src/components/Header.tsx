@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../css/components/Header.css";
 
 function Header() {
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
+  const history = useHistory();
   function handleScroll() {
     if (ScrollY > 10) {
       setScrollY(window.pageYOffset);
@@ -29,6 +30,7 @@ function Header() {
   const onlogout = () => {
     if (token !== null) {
       localStorage.clear();
+      history.go(0);
     }
   };
 

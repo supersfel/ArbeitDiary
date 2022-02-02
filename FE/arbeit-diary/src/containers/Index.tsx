@@ -20,9 +20,9 @@ function Index() {
 
   return (
     <>
+      <button onClick={onTest}>test</button>
       <Header />
       <MkProject />
-      <button onClick={onTest}>test</button>
     </>
   );
 }

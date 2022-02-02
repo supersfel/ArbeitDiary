@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CheckToken from "../api/CheckToken";
 import Calendar from "../components/Calendar";
 import Header from "../components/Header";
 import UserList from "../components/UserList";
@@ -6,6 +7,7 @@ import "../css/containers/Project.css";
 import DayDetail from "./DayDetail";
 
 function Project() {
+  CheckToken();
   const [visible, setvisible] = useState(false); //토글방식
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
 

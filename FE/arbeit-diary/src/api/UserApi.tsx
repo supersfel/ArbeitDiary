@@ -28,7 +28,9 @@ export async function UserApi(params: UserApiprops) {
       localStorage.setItem("token", memberRefreshToken);
       console.log(response.data);
     });
-  } catch (e) {}
+  } catch (e) {
+    console.log("get logintoken error!!");
+  }
 }
 
 export async function RegistUserApi(params: RegistApiprops) {

@@ -11,7 +11,15 @@ function Login(): JSX.Element {
     UserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,
-    }).then(() => history.push("/"));
+    }).then(() => {
+      const token = localStorage.getItem("token");
+      if (token !== null) {
+        history.push("/");
+      } else {
+        alert("로그인 정보가 없습니다");
+        history.push("/login");
+      }
+    });
   };
 
   return (
@@ -54,7 +62,7 @@ function Login(): JSX.Element {
           <div className="find">
             <Link to="#">아이디 찾기</Link>
             <Link to="#">비밀번호 찾기</Link>
-            <Link to="/Regist">회원가입</Link>
+            <Link to="/regist">회원가입</Link>
           </div>
           <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>

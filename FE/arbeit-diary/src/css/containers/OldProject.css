@@ -21,7 +21,7 @@
 .diary-container .Make-diary-box {
   background-color: var(--main-color);
   color: #eee;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .diary-container .Make-diary-box:hover {
