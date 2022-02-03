@@ -49,12 +49,13 @@ public class ApiMemberController {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
 	@ResponseBody
-	@GetMapping("/api/userRegist")
-	public ResponseEntity<?>  userRegist (Model model, MemberInput memberInput) {
+	@PostMapping("/api/userRegist")
+	public ResponseEntity<?>  userRegist (Model model,@RequestBody MemberInput memberInput) {
 		// 요청을 보낸 클라이언트의 IP주소를 반환합니다.
+		System.out.println(memberInput);
 		boolean result = memberService.register(memberInput);
 		System.out.println("MEMBER:" +memberInput);
-		return ResponseEntity.ok().body(true);
+		return ResponseEntity.ok().body(result);
 	}
 	
 	@PostMapping("/api/login")

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import CheckToken from "../api/CheckToken";
+import CheckToken, { CheckTokenMoveHome } from "../api/CheckToken";
 import Header from "../components/Header";
 import "../css/containers/OldProject.css";
 
 function OldProject() {
-  CheckToken();
+  CheckTokenMoveHome();
   return (
     <>
       <Header />

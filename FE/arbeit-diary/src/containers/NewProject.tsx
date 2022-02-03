@@ -1,10 +1,10 @@
 import React from "react";
-import CheckToken from "../api/CheckToken";
+import CheckToken, { CheckTokenMoveHome } from "../api/CheckToken";
 import Header from "../components/Header";
 import "../css/containers/NewProject.css";
 
 function NewProject() {
-  CheckToken();
+  CheckTokenMoveHome();
 
   return (
     <>

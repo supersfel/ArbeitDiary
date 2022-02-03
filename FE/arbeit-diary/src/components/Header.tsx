@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import CheckToken from "../api/CheckToken";
 import "../css/components/Header.css";
 
 function Header() {
@@ -25,10 +26,8 @@ function Header() {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
-  const token = localStorage.getItem("token");
-
   const onlogout = () => {
-    if (token !== null) {
+    if (CheckToken()) {
       localStorage.clear();
       history.go(0);
     }
@@ -41,11 +40,11 @@ function Header() {
           로고
         </Link>
         <Link
-          to={token === null ? "/login" : "/"}
+          to={CheckToken() ? "/" : "/login"}
           onClick={onlogout}
           className="right"
         >
-          {token === null ? "로그인" : "로그아웃"}
+          {CheckToken() ? "로그아웃" : "로그인"}
         </Link>
       </header>
     </>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import CheckToken from "../api/CheckToken";
 import { UserApi } from "../api/UserApi";
 
 import "../css/containers/Login.css";
@@ -13,7 +14,7 @@ function Login(): JSX.Element {
       userPassword: e.target.password.value,
     }).then(() => {
       const token = localStorage.getItem("token");
-      if (token !== null) {
+      if (CheckToken()) {
         history.push("/");
       } else {
         alert("로그인 정보가 없습니다");

@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6bc0eb6-9571-4764-9d36-6ffbabbe212a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastlms/src/main/java/com/zerobase/fastlms/member/controller/ApiMemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fastlms/src/main/java/com/zerobase/fastlms/member/controller/ApiMemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastlms/src/main/java/com/zerobase/fastlms/member/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fastlms/src/main/java/com/zerobase/fastlms/member/service/impl/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FE/arbeit-diary/src/api/UserApi.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../FE/arbeit-diary/src/api/UserApi.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,6 +14,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="24K0GQUlWWBhXwy2usI231ZZ3Ej" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />

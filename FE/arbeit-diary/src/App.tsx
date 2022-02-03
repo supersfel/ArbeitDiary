@@ -6,6 +6,7 @@ import Regist from "./containers/Regist";
 import OldProject from "./containers/OldProject";
 import Project from "./containers/Project";
 import NewProject from "./containers/NewProject";
+import Emaildone from "./css/containers/Emaildone";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/oldproject" component={OldProject} />
       <Route path="/project/:username" component={Project} />
       <Route path="/newproject" component={NewProject} />
+      <Route path="/done" component={Emaildone} />
     </div>
   );
 }
