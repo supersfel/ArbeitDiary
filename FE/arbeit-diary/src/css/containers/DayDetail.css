@@ -18,17 +18,14 @@
   display: flex;
   width: 80%;
   height: 80%;
-  background: rgb(226, 226, 226);
-
-  border-radius: 20px;
+  background: rgb(243, 243, 243);
+  border-radius: 5px;
 }
 
 .dayDetail .dayDetailRight {
-  width: 45%;
-  height: 90%;
+  width: 50%;
+  height: 100%;
   margin: 0 auto;
-  border: 1px solid #ddd;
-  border-radius: 20px;
 }
 
 .dayDetail .dayDetailRight .selectedDay {
@@ -43,8 +40,8 @@
 .dayDetail .dayDetailRight .record {
   margin-left: 2rem;
   margin-top: 18%;
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 70%;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 15px;
@@ -55,9 +52,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1rem;
   margin-left: 2rem;
   margin-top: 1rem;
   width: 15%;
-  border-radius: 10px;
+  height: 4%;
+
+  border-radius: 30px;
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+  transition: 0.3s;
+  color: #eee;
+  background: var(--main-color);
+}
+
+.dayDetail .dayDetailRight .cancel-btn:hover {
+  background-color: #eee;
+  color: var(--main-color);
 }

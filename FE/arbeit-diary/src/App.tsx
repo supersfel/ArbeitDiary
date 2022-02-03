@@ -6,7 +6,7 @@ import Regist from "./containers/Regist";
 import OldProject from "./containers/OldProject";
 import Project from "./containers/Project";
 import NewProject from "./containers/NewProject";
-import Emaildone from "./css/containers/Emaildone";
+import Emaildone from "./containers/Emaildone";
 
 function App() {
   return (

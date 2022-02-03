@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router";
 
 type UserApiprops = {
   userId: string;
@@ -57,9 +58,11 @@ export async function RegistUserApi(params: RegistApiprops) {
 }
 
 export async function Emailrequestapi(params: EmailRequestApiprops) {
+  const history = useHistory();
+
   try {
     await axios({
-      method: "get",
+      method: "post",
       url: "http://localhost:8080/api/emailAuth",
       headers: {
         'Accept': "application/json", //prettier-ignore
@@ -67,7 +70,14 @@ export async function Emailrequestapi(params: EmailRequestApiprops) {
       },
       data: params,
     }).then((response) => {
-      console.log(response.data);
+      if (response.data === "true") {
+        history.push("/");
+      } else {
+        alert("올바르지 않은 인증입니다.");
+      }
     });
-  } catch (e) {}
+  } catch (e) {
+    alert("올바르지 않은 인증입니다.");
+    history.push("/");
+  }
 }
