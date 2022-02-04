@@ -8,7 +8,7 @@ function Schedule() {
     i < 10 ? hours.push("0" + String(i)) : hours.push(String(i));
   }
   const minutes = ["00", "30"];
-
+  //test
   let times: string[] = [];
   hours.map((hour) => {
     minutes.map((minute) => {
