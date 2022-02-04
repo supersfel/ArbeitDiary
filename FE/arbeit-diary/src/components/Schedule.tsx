@@ -15,7 +15,7 @@ function Schedule() {
       times.push(hour + ":" + minute);
     });
   });
-
+  //test
   return (
     <div className="schedule">
       {times.map((time, index) => {
