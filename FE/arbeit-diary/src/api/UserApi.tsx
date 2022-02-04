@@ -70,7 +70,7 @@ export async function Emailrequestapi(params: EmailRequestApiprops) {
       },
       data: params,
     }).then((response) => {
-      if (response.data === "true") {
+      if (response.data) {
         history.push("/");
       } else {
         alert("올바르지 않은 인증입니다.");
