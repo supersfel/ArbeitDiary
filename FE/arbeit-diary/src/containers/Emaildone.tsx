@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { useLocation } from "react-router";
 import { Emailrequestapi } from "../api/UserApi";
 import "../css/containers/Emaildone.css";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Index from "./containers/Index";
 import Login from "./containers/Login";
 import Regist from "./containers/Regist";
@@ -15,7 +15,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/regist" component={Regist} />
       <Route path="/oldproject" component={OldProject} />
-      <Route path="/project/:username" component={Project} />
+      <Route path="/project" component={Project} />
       <Route path="/newproject" component={NewProject} />
       <Route path="/done" component={Emaildone} />
     </div>

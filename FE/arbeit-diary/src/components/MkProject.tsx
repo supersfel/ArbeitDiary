@@ -4,8 +4,6 @@ import CheckToken from "../api/CheckToken";
 import "../css/MkProject.css";
 
 function MkProject() {
-  const token = localStorage.getItem("token");
-
   return (
     <div className="MkProject">
       <div className="description">

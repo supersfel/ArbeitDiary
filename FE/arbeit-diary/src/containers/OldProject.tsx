@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import CheckToken, { CheckTokenMoveHome } from "../api/CheckToken";
+import { CheckTokenMoveHome } from "../api/CheckToken";
 import Header from "../components/Header";
 import "../css/containers/OldProject.css";
 import { RootState } from "../module";
@@ -14,7 +14,7 @@ type ProjecttitleProps = {
 function Projecttitle({ projectId, projectName }: ProjecttitleProps) {
   return (
     <Link
-      to={`project/${projectId}`}
+      to={`project/?projectId=${projectId}`}
       className="diary-inner-box Select-diary-box"
     >
       {projectName}

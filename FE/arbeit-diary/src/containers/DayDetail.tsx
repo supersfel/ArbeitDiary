@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Schedule from "../components/Schedule";
 import "../css/containers/DayDetail.css";
 

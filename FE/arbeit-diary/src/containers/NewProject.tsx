@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import CheckToken, { CheckTokenMoveHome } from "../api/CheckToken";
+import { CheckTokenMoveHome } from "../api/CheckToken";
 import Header from "../components/Header";
 import "../css/containers/NewProject.css";
 import { addProject } from "../module/User";

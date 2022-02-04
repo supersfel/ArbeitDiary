@@ -1,8 +1,6 @@
-import React, { CSSProperties, FormEvent, useEffect, useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { RegistUserApi } from "../api/UserApi";
-import { Link } from "react-router-dom";
 import "../css/containers/Regist.css";
-import axios from "axios";
 import CheckEmailModal from "../components/CheckEmailModal";
 
 function Regist() {

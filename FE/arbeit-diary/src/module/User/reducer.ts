@@ -1,20 +1,22 @@
 import { createReducer } from "typesafe-actions";
-import { GET_USER, ADD_ID, ADD_PROJECT } from "./actions";
+import { ADD_PROJECT, TOGGLE_NAME } from "./actions";
 import { UserAction, User } from "./types";
 
 const initialState: User = [
   {
     id: "1",
+    userName: "정민규",
     projects: [
       {
         projectId: "1",
         projectName: "서브웨이 연수점",
         calendarId: "firstcalendar",
         userList: [
-          { userName: "정민규", userId: "supersfel@naver.com" },
+          { userName: "정민규", userId: "supersfel@naver.com", done: false },
           {
             userName: "박세연",
             userId: "parkseyeon99@naver.com",
+            done: true,
           },
         ],
       },
@@ -23,10 +25,11 @@ const initialState: User = [
         projectName: "맘스터치 개봉점",
         calendarId: "secondecalendar",
         userList: [
-          { userName: "정민규", userId: "supersfel@naver.com" },
+          { userName: "짭민규", userId: "supersfel@naver.com", done: true },
           {
-            userName: "박세연",
+            userName: "짭세연",
             userId: "parkseyeon99@naver.com",
+            done: false,
           },
         ],
       },
@@ -35,9 +38,6 @@ const initialState: User = [
 ];
 
 const Userinfo = createReducer<User, UserAction>(initialState, {
-  [GET_USER]: (state, action) => state,
-  [ADD_ID]: (state, action) =>
-    state.map((user) => ({ ...user, project: [], id: action.payload })),
   [ADD_PROJECT]: (state, action) =>
     state.map((user) => ({
       ...user,
@@ -45,8 +45,35 @@ const Userinfo = createReducer<User, UserAction>(initialState, {
         projectId: "3",
         projectName: action.payload,
         calendarId: "3",
-        userList: [{ userName: "정민규", userId: "supersfel@naver.com" }],
+        userList: [
+          {
+            userName: user.userName,
+            userId: "supersfel@naver.com",
+            done: true,
+          },
+        ],
       }),
+    })),
+  [TOGGLE_NAME]: (state, action) =>
+    state.map((user) => ({
+      ...user,
+      projects: user.projects.map((project) =>
+        project.projectId === action.projectId
+          ? {
+              ...project,
+              userList: project.userList.map((user) =>
+                user.userName === action.name
+                  ? {
+                      ...user,
+                      done: !user.done,
+                    }
+                  : {
+                      ...user,
+                    }
+              ),
+            }
+          : { ...project }
+      ),
     })),
 });
 

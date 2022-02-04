@@ -13,7 +13,6 @@ function Login(): JSX.Element {
       userId: e.target.email.value,
       userPassword: e.target.password.value,
     }).then(() => {
-      const token = localStorage.getItem("token");
       if (CheckToken()) {
         history.push("/");
       } else {

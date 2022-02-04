@@ -4,7 +4,7 @@ import * as actions from "./actions";
 export type UserAction = ActionType<typeof actions>;
 
 export type UserListType = {
-  done?: boolean;
+  done: boolean;
   userName: string;
   userId: string;
 };
@@ -18,6 +18,7 @@ export type projectType = {
 
 export type Usertype = {
   id: string;
+  userName: string;
   projects: projectType[];
 };
 
