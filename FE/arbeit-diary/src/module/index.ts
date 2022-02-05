@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import Userinfo from "./User";
-import ScheduleInfo from "./Shedule/reducer";
+import CalenderInfo from "./Calendar/reducer";
 
 const rootReducer = combineReducers({
   Userinfo,
-  ScheduleInfo,
+  CalenderInfo,
 });
 
 export default rootReducer;

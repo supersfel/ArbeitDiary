@@ -1,10 +1,38 @@
 .schedule {
   display: flex;
-  margin: 2rem 0% 0% 2rem;
+  overflow: auto;
+  margin: 2rem 0% 2% 2rem;
+  padding: 2rem;
   width: 70%;
-  height: 90%;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 15px;
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+.schedule::-webkit-scrollbar {
+  width: 10px;
+}
+.schedule::-webkit-scrollbar-thumb {
+  background-color: var(--main-black);
+  border-radius: 10px;
+}
+.schedule::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.schedule .column-line {
+  margin-right: 1rem;
+}
+
+.schedule .time {
+  margin-top: 1rem;
+}
+
+.schedule .first-row-line {
+  width: 100px;
+  text-align: center;
+  position: fixed;
 }

@@ -38,8 +38,7 @@ function Project() {
         </div>
       </div>
       <DayDetail
-        // visible={visible}
-        visible={true}
+        visible={visible}
         onCancel={onCancel}
         selectedDay={selectedDay}
       />

@@ -20,7 +20,7 @@ function DayDetail({ visible, onCancel, selectedDay }: DaydetailProps) {
     >
       <div className="dayDetail" onClick={(event) => event.stopPropagation()}>
         {/*이벤트 캡쳐링 방지 */}
-        <Schedule />
+        <Schedule selectedDay={selectedDay} />
         <div className="dayDetailRight">
           <div className="selectedDay">{selectedDay}</div>
           <div className="record"></div>
