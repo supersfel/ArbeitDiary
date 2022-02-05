@@ -18,13 +18,17 @@ function Schedule() {
   //test
   return (
     <div className="schedule">
-      {times.map((time, index) => {
-        return (
-          <div className="time" key={index}>
-            {time}
-          </div>
-        );
-      })}
+      <div className="times">
+        <div>시간</div>
+        {times.map((time, index) => {
+          return (
+            <div className="time" key={index}>
+              {time}
+            </div>
+          );
+        })}
+      </div>
+      <div className="usershedule">hi</div>
     </div>
   );
 }

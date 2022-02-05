@@ -1,4 +1,5 @@
 .schedule {
+  display: flex;
   margin: 2rem 0% 0% 2rem;
   width: 70%;
   height: 90%;

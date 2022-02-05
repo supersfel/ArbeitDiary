@@ -3,21 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import MkProject from "../components/MkProject";
 import { RootState } from "../module";
-import { addProject } from "../module/User";
+import { onTest } from "../module/Shedule";
 
 function Index() {
   const user = useSelector((state: RootState) => state.Userinfo);
+  const schedule = useSelector((state: RootState) => state.ScheduleInfo);
   const dispatch = useDispatch();
 
-  const onTest = () => {
-    dispatch(addProject("3"));
-
-    console.log(user[0]);
+  const Test = () => {
+    dispatch(onTest("3"));
+    console.log(schedule);
   };
 
   return (
     <>
-      <button onClick={onTest}>test</button>
+      <button onClick={Test}>test</button>
       <Header />
       <MkProject />
     </>
