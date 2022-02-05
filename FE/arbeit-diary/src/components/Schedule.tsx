@@ -11,6 +11,7 @@ type ScheduleProps = {
 
 type UserScheduleProps = {
   worktimes: string;
+  username: string;
 };
 
 function Schedule({ selectedDay }: ScheduleProps) {
@@ -39,7 +40,6 @@ function Schedule({ selectedDay }: ScheduleProps) {
       (state: RootState) => state.CalenderInfo
     )[0].dates.filter((date) => date.date === currentdate)[0].users;
   } catch (error) {
-    alert("해당날의 정보가 없습니다");
     dispatch(addDate(currentdate));
   }
 
@@ -48,22 +48,21 @@ function Schedule({ selectedDay }: ScheduleProps) {
     (state: RootState) => state.CalenderInfo
   )[0].dates.filter((date) => date.date === currentdate)[0].users;
 
-  const UserShedule = ({ worktimes }: UserScheduleProps) => {
+  const UserShedule = ({ worktimes, username }: UserScheduleProps) => {
     const worktimelst = worktimes.split("");
+
     return (
-      <>
+      <div className="worktimes">
         {worktimelst.map((worktime, index) => {
           return worktime === "1" ? (
-            <div className="time" key={index}>
-              O
+            <div className="time work" key={index}>
+              {username}
             </div>
           ) : (
-            <div className="time" key={index}>
-              X
-            </div>
+            <div className="time " key={index}></div>
           );
         })}
-      </>
+      </div>
     );
   };
 
@@ -71,19 +70,22 @@ function Schedule({ selectedDay }: ScheduleProps) {
     <div className="schedule">
       <div className="times column-line">
         <div className="first-row-line">시간</div>
-        {times.map((time, index) => {
-          return (
-            <div className="time" key={index}>
-              {time}
-            </div>
-          );
-        })}
+        <div className="worktimes">
+          {times.map((time, index) => {
+            return (
+              <div className="time" key={index}>
+                {time}
+              </div>
+            );
+          })}
+        </div>
       </div>
+
       {users.map((user, index) => {
         return (
           <div className="column-line" key={index}>
             <div className="first-row-line">{user.name}</div>
-            <UserShedule worktimes={user.worktime} />
+            <UserShedule worktimes={user.worktime} username={user.name} />
           </div>
         );
       })}
