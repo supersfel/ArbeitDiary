@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import CheckToken from "../api/CheckToken";
+import { CheckTokenMoveHome } from "../api/CheckToken";
 import Calendar from "../components/Calendar";
 import Header from "../components/Header";
 import UserList from "../components/UserList";
 import "../css/containers/Project.css";
+import { RootState } from "../module";
 import DayDetail from "./DayDetail";
 
 function Project() {
-  CheckToken();
+  CheckTokenMoveHome();
   const location = useLocation();
   const projectId = location.search.slice(11);
 
   const [visible, setvisible] = useState(false); //토글방식
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
+
+  const { projects } = useSelector((state: RootState) => state.Userinfo)[0];
+
+  const constproject = projects.filter(
+    (project) => project.projectId === projectId
+  )[0]; //해당 id의 userList 추출
 
   const onConfirmDay = (days: moment.Moment) => {
     setselectedDay(days.format("YYYY년 MM월 DD일"));
@@ -33,7 +41,7 @@ function Project() {
       <div className="project">
         <UserList projectId={projectId} />
         <div className="projectRight">
-          <div className="projectTitle">맘스터치 개봉점</div>
+          <div className="projectTitle">{constproject.projectName}</div>
           <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} />
         </div>
       </div>

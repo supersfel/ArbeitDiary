@@ -10,7 +10,7 @@ const initialState: User = [
       {
         projectId: "1",
         projectName: "서브웨이 연수점",
-        calendarId: "firstcalendar",
+        calendarId: "1",
         userList: [
           { userName: "정민규", userId: "supersfel@naver.com", done: false },
           {
@@ -23,7 +23,7 @@ const initialState: User = [
       {
         projectId: "2",
         projectName: "맘스터치 개봉점",
-        calendarId: "secondecalendar",
+        calendarId: "2",
         userList: [
           { userName: "짭민규", userId: "supersfel@naver.com", done: true },
           {

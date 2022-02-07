@@ -17,35 +17,14 @@
 .background .dayDetail {
   display: flex;
   width: 80%;
-  height: 80%;
-  background: rgb(243, 243, 243);
+  height: 95%;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
 }
 
 .dayDetail .dayDetailRight {
   width: 50%;
-  height: 100%;
   margin: 0 auto;
-}
-
-.dayDetail .dayDetailRight .selectedDay {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-top: 5%;
-  margin-bottom: 2rem;
-  margin-right: 5%;
-  float: right;
-}
-
-.dayDetail .dayDetailRight .record {
-  margin-left: 2rem;
-  margin-top: 18%;
-  width: 90%;
-  height: 70%;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
 }
 
 .dayDetail .dayDetailRight .cancel-btn {
@@ -53,10 +32,10 @@
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  margin-left: 2rem;
-  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-top: 5%;
   width: 15%;
-  height: 4%;
+  height: 5%;
 
   border-radius: 30px;
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;

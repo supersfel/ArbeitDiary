@@ -15,7 +15,6 @@ type UserScheduleProps = {
 };
 
 function Schedule({ selectedDay }: ScheduleProps) {
-  const history = useHistory();
   const dispatch = useDispatch();
   let hours = []; //00:00 ~ 23:30까지 생성
   for (let i = 0; i < 24; i++) {

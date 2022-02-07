@@ -22,6 +22,23 @@ const initialState: CalendersType = [
             worktime: "000000000000000000000000000000000000000000000000",
           },
         ],
+        dayIssues: [
+          {
+            name: "정민규",
+            time: "08:50",
+            text: "빵이 상해떠요",
+          },
+          {
+            name: "박세연",
+            time: "15:30",
+            text: "확인",
+          },
+          {
+            name: "박세연",
+            time: "22:30",
+            text: "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사",
+          },
+        ],
       },
       {
         date: "20220206",
@@ -75,6 +92,7 @@ const initialState: CalendersType = [
             worktime: "000000000000000000000000000000001111111100000000",
           },
         ],
+        dayIssues: [],
       },
     ],
   },
@@ -100,6 +118,7 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
               worktime: "000000000000000000000000000000000000000000000000",
             },
           ],
+          dayIssues: [],
         }),
       })),
   }

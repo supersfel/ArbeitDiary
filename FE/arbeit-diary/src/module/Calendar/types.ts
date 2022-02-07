@@ -8,9 +8,16 @@ type userType = {
   worktime: string;
 };
 
+export type dayIssueType = {
+  name: string;
+  time: string;
+  text: string;
+};
+
 type dateType = {
   date: string;
   users: userType[];
+  dayIssues: dayIssueType[];
 };
 
 export type CalenderType = {

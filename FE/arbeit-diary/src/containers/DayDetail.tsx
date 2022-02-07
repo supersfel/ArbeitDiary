@@ -1,4 +1,5 @@
 import React from "react";
+import Record from "../components/Record";
 import Schedule from "../components/Schedule";
 import "../css/containers/DayDetail.css";
 
@@ -22,8 +23,8 @@ function DayDetail({ visible, onCancel, selectedDay }: DaydetailProps) {
         {/*이벤트 캡쳐링 방지 */}
         <Schedule selectedDay={selectedDay} />
         <div className="dayDetailRight">
-          <div className="selectedDay">{selectedDay}</div>
-          <div className="record"></div>
+
+          <Record selectedDay={selectedDay}/>
 
           <button className="cancel-btn btn" onClick={onCancel}>
             취소
