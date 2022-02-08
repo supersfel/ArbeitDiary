@@ -19,7 +19,7 @@ type EmailRequestApiprops = {
 
 type PostApiprops = {};
 
-export async function PostApi(url: string) {
+export async function PostApi(url: string, token: string) {
   try {
     await axios({
       method: "post",
@@ -27,6 +27,7 @@ export async function PostApi(url: string) {
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
+        Authorization: token,
       },
     }).then((response) => {
       console.log(response.data);
@@ -47,9 +48,9 @@ export async function UserApi(params: UserApiprops) {
       },
       data: params,
     }).then((response) => {
-      const { memberRefreshToken } = response.data;
-      console.log(memberRefreshToken);
-      localStorage.setItem("token", memberRefreshToken);
+      const { authorization } = response.headers;
+      console.log(authorization);
+      localStorage.setItem("token", authorization);
       console.log(response.data);
     });
   } catch (e) {

@@ -12,7 +12,12 @@ function Index() {
   const dispatch = useDispatch();
 
   const Test = () => {
-    PostApi("http://localhost:8080/api/oldproject");
+    let token = localStorage.getItem("token");
+
+    PostApi(
+      "http://localhost:8080/api/oldproject",
+      token !== null ? token : ""
+    );
   };
 
   return (
