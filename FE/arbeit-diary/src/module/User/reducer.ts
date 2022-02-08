@@ -1,14 +1,16 @@
 import { createReducer } from "typesafe-actions";
-import { ADD_PROJECT, TOGGLE_NAME } from "./actions";
+import { ADD_PROJECT, TOGGLE_NAME, GET_USERINFO } from "./actions";
 import { UserAction, User } from "./types";
 
 const initialState: User = [
   {
-    id: "1",
+    userId: "1",
     userName: "정민규",
+    phone: "01022348115",
     projects: [
       {
         projectId: "1",
+        joinId: "",
         projectName: "서브웨이 연수점",
         calendarId: "1",
         userList: [
@@ -75,6 +77,7 @@ const Userinfo = createReducer<User, UserAction>(initialState, {
           : { ...project }
       ),
     })),
+  [GET_USERINFO]: (state, action) => state.map((user) => action.payload),
 });
 
 export default Userinfo;

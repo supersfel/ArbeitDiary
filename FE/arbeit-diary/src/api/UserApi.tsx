@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { get_userinfo } from "../module/User";
 
 type UserApiprops = {
   userId: string;
@@ -17,9 +19,8 @@ type EmailRequestApiprops = {
   id: string;
 };
 
-type PostApiprops = {};
-
-export async function PostApi(url: string, token: string) {
+export async function getUserinfoApi(url: string, token: string) {
+  const dispatch = useDispatch();
   try {
     await axios({
       method: "post",
@@ -30,7 +31,7 @@ export async function PostApi(url: string, token: string) {
         Authorization: token,
       },
     }).then((response) => {
-      console.log(response.data);
+      dispatch(get_userinfo(response.data));
     });
   } catch (e) {
     console.log("get logintoken error!!");

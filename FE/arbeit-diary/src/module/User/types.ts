@@ -7,18 +7,24 @@ export type UserListType = {
   done: boolean;
   userName: string;
   userId: string;
+  phone?: string;
 };
 
 export type projectType = {
   projectId: string;
+  joinId?: string;
+  projectRole?: string;
+  projectRegDt?: string;
+
   projectName: string;
   calendarId: string;
   userList: UserListType[];
 };
 
 export type Usertype = {
-  id: string;
+  userId: string;
   userName: string;
+  phone: string;
   projects: projectType[];
 };
 

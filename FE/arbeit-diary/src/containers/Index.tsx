@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PostApi } from "../api/UserApi";
+import { getUserinfoApi } from "../api/UserApi";
 import Header from "../components/Header";
 import MkProject from "../components/MkProject";
 import { RootState } from "../module";
@@ -14,7 +14,7 @@ function Index() {
   const Test = () => {
     let token = localStorage.getItem("token");
 
-    PostApi(
+    getUserinfoApi(
       "http://localhost:8080/api/oldproject",
       token !== null ? token : ""
     );
