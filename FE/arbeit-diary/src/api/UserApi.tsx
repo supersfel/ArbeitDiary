@@ -17,6 +17,25 @@ type EmailRequestApiprops = {
   id: string;
 };
 
+type PostApiprops = {};
+
+export async function PostApi(url: string) {
+  try {
+    await axios({
+      method: "post",
+      url,
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+      },
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("get logintoken error!!");
+  }
+}
+
 export async function UserApi(params: UserApiprops) {
   try {
     await axios({

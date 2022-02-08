@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { PostApi } from "../api/UserApi";
 import Header from "../components/Header";
 import MkProject from "../components/MkProject";
 import { RootState } from "../module";
@@ -11,8 +12,7 @@ function Index() {
   const dispatch = useDispatch();
 
   const Test = () => {
-    dispatch(onTest("3"));
-    console.log(calendar);
+    PostApi("http://localhost:8080/api/oldproject");
   };
 
   return (
