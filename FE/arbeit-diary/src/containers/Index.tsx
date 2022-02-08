@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import MkProject from "../components/MkProject";
 import { RootState } from "../module";
 import { onTest } from "../module/Calendar";
+import { get_userinfo } from "../module/User";
 
 function Index() {
   const user = useSelector((state: RootState) => state.Userinfo);
@@ -14,10 +15,12 @@ function Index() {
   const Test = () => {
     let token = localStorage.getItem("token");
 
-    getUserinfoApi(
+    const userinfo = getUserinfoApi(
       "http://localhost:8080/api/oldproject",
       token !== null ? token : ""
     );
+
+    dispatch(get_userinfo(userinfo));
   };
 
   return (

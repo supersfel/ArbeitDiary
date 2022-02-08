@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { get_userinfo } from "../module/User";
+import { get_userinfo, Usertype } from "../module/User";
 
 type UserApiprops = {
   userId: string;
@@ -30,8 +30,7 @@ export async function getUserinfoApi(url: string, token: string) {
         Authorization: token,
       },
     }).then((response) => {
-      const dispatch = useDispatch();
-      dispatch(get_userinfo(response.data));
+      return response.data;
     });
   } catch (e) {
     console.log("get logintoken error!!");
