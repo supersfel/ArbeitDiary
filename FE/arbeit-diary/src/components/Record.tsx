@@ -72,8 +72,6 @@ function Record({ selectedDay }: RecordProps) {
     e.target.addDetail.value = "";
   };
 
-  const onChangetext = (e: React.ChangeEvent<HTMLTextAreaElement>) => {};
-
   return (
     <div className="record">
       <div className="record-header">
@@ -86,7 +84,7 @@ function Record({ selectedDay }: RecordProps) {
         })}
       </div>
       <form className="recordform" onSubmit={onsubmitdetail}>
-        <input
+        <textarea
           id="addDetail"
           className="inputBox"
           placeholder="특이사항을 입력하세요"

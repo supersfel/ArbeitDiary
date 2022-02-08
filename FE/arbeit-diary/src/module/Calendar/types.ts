@@ -20,6 +20,12 @@ export type removeDetailPropsType = {
   text: string;
 };
 
+export type toggleDetailPropsType = {
+  date: string;
+  index: number;
+  name: string;
+};
+
 export type dayIssueType = {
   name: string;
   time: string;

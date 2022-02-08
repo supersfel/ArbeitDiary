@@ -1,9 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import "../css/components/Schedule.css";
 import { RootState } from "../module";
-import { addDate } from "../module/Calendar";
+import { addDate, toggleDetail } from "../module/Calendar";
 
 type ScheduleProps = {
   selectedDay: string;
@@ -50,15 +49,37 @@ function Schedule({ selectedDay }: ScheduleProps) {
   const UserShedule = ({ worktimes, username }: UserScheduleProps) => {
     const worktimelst = worktimes.split("");
 
+    const onclicktime = (index: number) => {
+      dispatch(
+        toggleDetail({
+          date: currentdate,
+          name: username,
+          index,
+        })
+      );
+    };
+
     return (
       <div className="worktimes">
         {worktimelst.map((worktime, index) => {
           return worktime === "1" ? (
-            <div className="time work" key={index}>
+            <div
+              className="time work touch"
+              key={index}
+              onClick={() => {
+                onclicktime(index);
+              }}
+            >
               {username}
             </div>
           ) : (
-            <div className="time " key={index}></div>
+            <div
+              className="time touch"
+              key={index}
+              onClick={() => {
+                onclicktime(index);
+              }}
+            ></div>
           );
         })}
       </div>

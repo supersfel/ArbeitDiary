@@ -1,6 +1,12 @@
 import { createReducer } from "typesafe-actions";
 import { CalenderAction, CalendersType } from "./types";
-import { REMOVE_DETAIL, TEST, ADD_DATE, ADD_DETAIL } from "./actions";
+import {
+  TOGGLE_DETAIL,
+  REMOVE_DETAIL,
+  TEST,
+  ADD_DATE,
+  ADD_DETAIL,
+} from "./actions";
 
 const initialState: CalendersType = [
   {
@@ -147,6 +153,35 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
               dayissue.name !== action.payload.name ||
               dayissue.text !== action.payload.text
           ),
+        })),
+      })),
+    [TOGGLE_DETAIL]: (state, action) =>
+      state.map((calendar) => ({
+        ...calendar,
+        dates: calendar.dates.map((date) => ({
+          ...date,
+          users:
+            date.date === action.payload.date
+              ? date.users.map((user) =>
+                  user.name === action.payload.name
+                    ? user.worktime[action.payload.index] === "1"
+                      ? {
+                          ...user,
+                          worktime:
+                            user.worktime.slice(0, action.payload.index) +
+                            "0" +
+                            user.worktime.slice(action.payload.index + 1),
+                        }
+                      : {
+                          ...user,
+                          worktime:
+                            user.worktime.slice(0, action.payload.index) +
+                            "1" +
+                            user.worktime.slice(action.payload.index + 1),
+                        }
+                    : { ...user }
+                )
+              : date.users,
         })),
       })),
   }
