@@ -1,6 +1,6 @@
 import { createReducer } from "typesafe-actions";
 import { CalenderAction, CalendersType } from "./types";
-import { TEST, ADD_DATE } from "./actions";
+import { REMOVE_DETAIL, TEST, ADD_DATE, ADD_DETAIL } from "./actions";
 
 const initialState: CalendersType = [
   {
@@ -102,7 +102,8 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
   initialState,
   {
     [TEST]: (state, action) =>
-      state.map((calendar) => ({ ...calendar, id: action.payload })),
+      state.map((calendar) => ({ calendarId: "", dates: [], dayIssues: "" })),
+
     [ADD_DATE]: (state, action) =>
       state.map((calendar) => ({
         ...calendar,
@@ -120,6 +121,33 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
           ],
           dayIssues: [],
         }),
+      })),
+    [ADD_DETAIL]: (state, action) =>
+      state.map((calendar) => ({
+        ...calendar,
+        dates: calendar.dates.map((date) => ({
+          ...date,
+          dayIssues:
+            date.date === action.payload.date
+              ? date.dayIssues.concat({
+                  name: action.payload.name,
+                  time: action.payload.time,
+                  text: action.payload.text,
+                })
+              : date.dayIssues,
+        })),
+      })),
+    [REMOVE_DETAIL]: (state, action) =>
+      state.map((calendar) => ({
+        ...calendar,
+        dates: calendar.dates.map((date) => ({
+          ...date,
+          dayIssues: date.dayIssues.filter(
+            (dayissue) =>
+              dayissue.name !== action.payload.name ||
+              dayissue.text !== action.payload.text
+          ),
+        })),
       })),
   }
 );

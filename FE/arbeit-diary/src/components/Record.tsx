@@ -1,15 +1,18 @@
-import React from "react";
+import React, { createRef, useState } from "react";
 import "../css/components/Record.css";
-import { MdAdd } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { MdAdd, MdRestoreFromTrash } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../module";
-import { dayIssueType } from "../module/Calendar";
+import { addDetail, dayIssueType, removeDetail } from "../module/Calendar";
 
 type RecordProps = {
   selectedDay: string;
 };
 
 function Record({ selectedDay }: RecordProps) {
+  const dispatch = useDispatch();
+  const [detailText, setDetailText] = useState("");
+
   const day =
     selectedDay.slice(0, 4) +
     "-" +
@@ -31,20 +34,45 @@ function Record({ selectedDay }: RecordProps) {
     //users목록 추출
     (state: RootState) => state.CalenderInfo
   )[0].dates.filter((date) => date.date === currentdate)[0].dayIssues;
+  const userName = useSelector((state: RootState) => state.Userinfo)[0]
+    .userName;
 
-  console.log(issues);
-
-  const DayIssue = ({ name, time, text }: dayIssueType) => {
+  const DayIssue = ({ name, time, text }: dayIssueType, userName: string) => {
     return (
       <div className="issuebox">
         <div>{text}</div>
         <div className="issuedetail">
           <div>{name}&nbsp;</div>
           <div>{time}</div>
+          <MdRestoreFromTrash
+            className="trash"
+            onClick={() => {
+              dispatch(removeDetail({ name: userName, text }));
+            }}
+          />
         </div>
       </div>
     );
   };
+
+  const date = new Date();
+  let currenttime = String(date.getHours()) + ":" + String(date.getMinutes());
+
+  const onsubmitdetail = (e: any) => {
+    e.preventDefault();
+    setDetailText(e.target.addDetail.value);
+    dispatch(
+      addDetail({
+        date: currentdate,
+        text: e.target.addDetail.value,
+        name: userName,
+        time: currenttime,
+      })
+    );
+    e.target.addDetail.value = "";
+  };
+
+  const onChangetext = (e: React.ChangeEvent<HTMLTextAreaElement>) => {};
 
   return (
     <div className="record">
@@ -53,13 +81,20 @@ function Record({ selectedDay }: RecordProps) {
         <div className="day-of-week">{week[today]}</div>
       </div>
       <div className="record-body">
-        {issues.map((issue) => {
-          return DayIssue(issue);
+        {issues.map((issue, index) => {
+          return <div key={index}>{DayIssue(issue, userName)}</div>;
         })}
       </div>
-      <div className="plusBox">
-        <MdAdd />
-      </div>
+      <form className="recordform" onSubmit={onsubmitdetail}>
+        <input
+          id="addDetail"
+          className="inputBox"
+          placeholder="특이사항을 입력하세요"
+        />
+        <button className="plusBox">
+          <MdAdd type="submit" />
+        </button>
+      </form>
     </div>
   );
 }
