@@ -20,7 +20,6 @@ type EmailRequestApiprops = {
 };
 
 export async function getUserinfoApi(url: string, token: string) {
-  const dispatch = useDispatch();
   try {
     await axios({
       method: "post",
@@ -31,6 +30,7 @@ export async function getUserinfoApi(url: string, token: string) {
         Authorization: token,
       },
     }).then((response) => {
+      const dispatch = useDispatch();
       dispatch(get_userinfo(response.data));
     });
   } catch (e) {
