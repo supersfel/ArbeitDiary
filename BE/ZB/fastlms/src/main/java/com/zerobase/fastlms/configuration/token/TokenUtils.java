@@ -54,6 +54,7 @@ public class TokenUtils {
 				.setClaims(createClaims(member))
 				.setExpiration(createExpireDateForOneYear(expireTime))
 				.signWith(SignatureAlgorithm.HS256, createSigningKey(key));
+		System.out.println("[트큰 완료]");
 		return builder.compact();
 	}
 	

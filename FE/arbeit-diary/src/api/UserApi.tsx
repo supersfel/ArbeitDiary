@@ -19,7 +19,11 @@ type EmailRequestApiprops = {
   id: string;
 };
 
-export async function getUserinfoApi(url: string, token: string) {
+export async function getUserinfoApi(
+  url: string,
+  token: string,
+  dispatch: any
+) {
   try {
     await axios({
       method: "post",
@@ -30,7 +34,7 @@ export async function getUserinfoApi(url: string, token: string) {
         Authorization: token,
       },
     }).then((response) => {
-      return response.data;
+      dispatch(get_userinfo(response.data));
     });
   } catch (e) {
     console.log("get logintoken error!!");

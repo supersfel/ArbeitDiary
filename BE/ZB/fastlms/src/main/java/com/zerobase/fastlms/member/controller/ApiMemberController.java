@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,26 +51,40 @@ public class ApiMemberController {
 	private final UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
 	@ResponseBody
 	@PostMapping("/api/userRegist")
-	public ResponseEntity<?>  userRegist (Model model,@RequestBody MemberInput memberInput) {
+	public ResponseEntity<?>  userRegist (@RequestBody MemberInput memberInput) {
 		// 요청을 보낸 클라이언트의 IP주소를 반환합니다.
 		System.out.println(memberInput);
 		boolean result = memberService.register(memberInput);
 		System.out.println("MEMBER:" +memberInput);
-		return ResponseEntity.ok().body(result);
+		return ResponseEntity.ok().body(true);
 	}
 	
 	@PostMapping("/api/login")
 	public ResponseEntity<?> login (HttpServletRequest request, HttpServletResponse response, LoginInput loginInput) throws ServletException, IOException {
 		System.out.println("==========================================================");
 		System.out.println("유저 인증");
+		System.out.println(request.getParameterNames());
 		Authentication auth = jwtAuthenticationFilter.attemptAuthentication(request, response);
 		System.out.println("엑세스 토큰 생성");
 		MemberLoginDto token = memberService.getloginToken((CustomUserDetails)auth.getPrincipal());
-		System.out.println(token);
+		boolean result = true;
+		if(token == null) {
+			result = false;
+		}
+		
+		System.out.println("[toekn] :" +token);
+		System.out.println("[result] :" + true);
 		response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + token.getAccessToken());
 		response.addHeader(AuthConstants.RERESH_HEADER, AuthConstants.TOKEN_TYPE + " " + token.getRefreshToken());
-		return ResponseEntity.ok().body(auth.getPrincipal());
+		return ResponseEntity.ok().body(result);
 	}
 	
+	@PostMapping("/api/emailAuth") // get은 requestbody 불가
+	public ResponseEntity<?> emailAuth(@RequestBody LoginInput loginInput){
+		System.out.println("[이메일 인증]");
+		System.out.println(loginInput);
+		boolean result = memberService.emailAuth(loginInput.getId());
+		return ResponseEntity.ok().body(result);
+	}
 
 }

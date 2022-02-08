@@ -2,26 +2,40 @@ package com.zerobase.fastlms.member.controller;
 
 import java.security.Principal;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.dto.MemberLoginDto;
+import com.zerobase.fastlms.configuration.login.JwtAuthenticationFilter;
 import com.zerobase.fastlms.configuration.token.AuthConstants;
+import com.zerobase.fastlms.course.model.ServiceResult;
+import com.zerobase.fastlms.member.model.CustomUserDetails;
+import com.zerobase.fastlms.member.model.LoginInput;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
+import com.zerobase.fastlms.member.repository.MemberRepository;
 import com.zerobase.fastlms.member.service.MemberService;
 
 @Controller
 public class MemberController {
 	private final MemberService memberService;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, JwtAuthenticationFilter jwtAuthenticationFilter) {
 		this.memberService = memberService;
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 	}
 	
 	@GetMapping("/member/register")
@@ -53,17 +67,28 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/info")
-	public String memberInfo() {
+	public String memberInfo(Model model, Principal principal) {
 		System.out.println("정보");
+		Principal prin = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("[AUTH] : "+prin);
+		System.out.println("[AUTH] : "+principal);
+		MemberDto detail = memberService.detail(principal.getName());
+		
+		model.addAttribute("detail", detail);
 		return "member/info";
 	}
-	/*
+	
+	
 	@PostMapping("/member/login")
-	public String memberLoginSubmit() {
+	public String memberLoginSubmit(HttpServletRequest request, HttpServletResponse response, LoginInput loginInput) {
 		System.out.println("Post로그인");
+		System.out.println("==========================================================");
+		System.out.println("유저 인증");
+		System.out.println(loginInput);
+
 		return "member/login";
 	}
-	*/
+	
 	@GetMapping("/member/login")
 	public String memberLogin(HttpServletRequest request) {
 		System.out.println("Get로그인");
@@ -120,6 +145,33 @@ public class MemberController {
 	public String findEmail() {
 		System.out.println("아이디 찾기");
 		return "member/find-email";
+	}
+	
+	@GetMapping("/member/password")
+	public String memberPassword() {
+		System.out.println("비밀번호 변경");
+		return "member/password";
+	}
+	
+	@PostMapping("/member/password")
+	public String submitMemberPassword(Model model, MemberInput memberInput, Principal principal) {
+		System.out.println("비밀번호 변경");
+		String userId = principal.getName();
+		System.out.println(memberInput);
+		memberInput.setUserId(userId);
+		ServiceResult result = memberService.updateMemberPassword(memberInput);
+		if(!result.isResult()) {
+			model.addAttribute("message", result.getMessage());
+			return "member/password";
+		}
+	
+		return "redirect:/member/info";
+	}
+	
+	@GetMapping("/member/takecourse")
+	public String memberTakeCourse() {
+		System.out.println("수강 정보");
+		return "member/takecourse";
 	}
 
 	@GetMapping("/projects/newProject")

@@ -40,13 +40,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		System.out.println("internal : " +request.getRequestURI());
 		System.out.println("들어왔나?");
-		//System.out.println(SecurityContextHolder.getContext().get);
-		Authentication auth = (Authentication) request.getSession().getAttribute(AuthConstants.AUTH_HEADER);
-		System.out.println(auth);
-		System.out.println(SecurityContextHolder.getContextHolderStrategy().getContext());
-		System.out.println(response.getHeader(AuthConstants.AUTH_HEADER));
+		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+		Authentication auth = (Authentication) request.getSession().getAttribute("Principal");
 		String jwtToken = request.getHeader(AuthConstants.AUTH_HEADER);
+		System.out.println(request.getHeader(AuthConstants.AUTH_HEADER));
 		System.out.println("header_token : "+ jwtToken);
 
 		
@@ -68,8 +67,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 			System.out.println(userDetails);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			chain.doFilter(request, response);
 		}
-		
+		chain.doFilter(request, response);
 	}
 }

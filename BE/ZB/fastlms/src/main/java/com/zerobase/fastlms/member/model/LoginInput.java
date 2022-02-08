@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class LoginInput {
 	private String userId;
 	private String userPassword;
+	private String id;
 }

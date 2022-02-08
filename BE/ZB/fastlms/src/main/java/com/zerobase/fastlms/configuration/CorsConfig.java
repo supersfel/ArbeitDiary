@@ -23,20 +23,5 @@ public class CorsConfig {
 		source.registerCorsConfiguration("/api/**", config);
 		System.out.println("------------- 적용 완료  ----------");
 		return new CorsFilter(source);
-
-	}
-
-	@Bean
-	public CorsConfigurationSource configurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedMethod("*");
-		config.addAllowedOrigin("*");
-		config.addExposedHeader("Authorization");
-
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/api/**", config);
-
-		return source;
-	}
+	}	
 }

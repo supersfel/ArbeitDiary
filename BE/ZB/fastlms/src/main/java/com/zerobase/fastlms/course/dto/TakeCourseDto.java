@@ -2,6 +2,7 @@ package com.zerobase.fastlms.course.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
@@ -30,4 +31,10 @@ public class TakeCourseDto {
 	
 	long totalCount;
 	long courseNum;
+	
+	String regDtText;
+	public String getRegDtText() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy.MM.dd HH:mm");
+		return regDt != null ? regDt.format(formatter) : "";
+	}
 }

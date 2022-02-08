@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,6 +30,7 @@ import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.component.MailComponent;
 import com.zerobase.fastlms.configuration.token.TokenUtils;
+import com.zerobase.fastlms.course.model.ServiceResult;
 import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.exception.MemberNotEmailAllthException;
 import com.zerobase.fastlms.member.exception.MemberStopUserException;
@@ -61,7 +64,6 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		System.out.println("존재하지 않음");
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String encPassword = BCrypt.hashpw(parameter.getUserPassword(), BCrypt.gensalt());//bCryptPasswordEncoder.encode(parameter.getUserPassword());
 		
 		String uuid = UUID.randomUUID().toString();
@@ -83,7 +85,7 @@ public class MemberServiceImpl implements MemberService{
 		String email = member.getUserId();
 		String subject = "가입에 축하드립니다.";
 		String text = "<h1>가입에 축하드립니다</h1><p>아래 링크를 클릭하여 가입을 완료하세요</p>"
-				+"<div><a href='http://localhost:3000/done'>가입 완료</a>하러가기</div>";
+				+"<div><a href='http://localhost:3000/done?id="+uuid+"'>가입 완료</a>하러가기</div>";
 		mailComponents.sendMail(email, subject, text);
 		System.out.println(true);
 		return true;
@@ -110,6 +112,7 @@ public class MemberServiceImpl implements MemberService{
 		return true;
 	}
 
+	@Transactional
 	@Override
 	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("=========== 로그인 시도 ===========");
@@ -147,25 +150,7 @@ public class MemberServiceImpl implements MemberService{
 		System.out.println(member);
 		return new CustomUserDetails(member, grantedAuthorities);
 	}
-	/*
-	public CustomUserDetails loadUserByUserName(String username) {
-		Optional<Member> optionalMember = memberRepository.findById(username);
-		
-		if(!optionalMember.isPresent()) {
-			throw new UsernameNotFoundException("이메일 존재 하지 않습니다.");
-		}
-		Member member = optionalMember.get();
-		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		
-		if(member.isAdminYn()) {
-			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		}
-		
-		
-		return new CustomUserDetails(member,grantedAuthorities);
-	}
-	*/
+
 	@Override
 	public boolean sendResetPassword(ResetPasswordInput parameter) {
 		Optional<Member> optionalMember = memberRepository.findByUserIdAndUserName(parameter.getUserId(), parameter.getUserName());
@@ -320,6 +305,28 @@ public class MemberServiceImpl implements MemberService{
 		memberRepository.save(user.getMember());
 		
 		return new MemberLoginDto(principal.getUsername(), accessToken, user.getMemberRefreshToken());
+	}
+
+	@Override
+	public ServiceResult updateMemberPassword(MemberInput memberInput) {
+		// TODO Auto-generated method stub
+		Optional<Member> optionalMember = memberRepository.findById(memberInput.getUserId());
+		
+		if(!optionalMember.isPresent()) {
+			return new ServiceResult(false, "존재 X, 잘못된 접근");
+		}
+		
+		Member member = optionalMember.get();
+		
+		if(!BCrypt.checkpw(memberInput.getUserPassword(), member.getPassword())) {
+			return new ServiceResult(false, "현재 비밀번호 일치하지 않습니다.");
+		}
+		
+		String encPassword = BCrypt.hashpw(memberInput.getNewPassword(), BCrypt.gensalt());
+		member.setPassword(encPassword);
+		memberRepository.save(member);
+		
+		return new ServiceResult(true);
 	}
 	
 }

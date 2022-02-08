@@ -16,6 +16,7 @@ import com.zerobase.fastlms.course.dto.CourseDto;
 import com.zerobase.fastlms.course.dto.TakeCourseDto;
 import com.zerobase.fastlms.course.model.CourseInput;
 import com.zerobase.fastlms.course.model.CourseParam;
+import com.zerobase.fastlms.course.model.ServiceResult;
 import com.zerobase.fastlms.course.model.TakeCourseParam;
 import com.zerobase.fastlms.course.service.TakeCourseService;
 import com.zerobase.fastlms.course.service.impl.TakeCourseServiceImpl;
@@ -45,8 +46,19 @@ public class AdminTakeCourseController extends BaseController{
 		model.addAttribute("lists", courses);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pager", pagerHtml);
+		System.out.println("list.do");
 		return "admin/takecourse/list";
 	}
 	
-	
+	@PostMapping("/admin/takecourse/status.do")
+	public String status(Model model,TakeCourseParam takeCourseParam) {
+		System.out.println("status.do");
+		ServiceResult result = takeCourseService.updateStatus(takeCourseParam.getId(), takeCourseParam.getStatus());
+		
+		if (!result.isResult()) {
+			model.addAttribute("message", result.getMessage());
+			return "common/error";
+		}
+		return "redirect:/admin/takecourse/list.do";
+	}
 }

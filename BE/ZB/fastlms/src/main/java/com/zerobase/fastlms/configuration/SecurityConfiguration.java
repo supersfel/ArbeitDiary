@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -20,9 +22,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.zerobase.fastlms.configuration.filter.Myfilter1;
-import com.zerobase.fastlms.configuration.filter.Myfilter2;
-import com.zerobase.fastlms.configuration.filter.Myfilter3;
 import com.zerobase.fastlms.configuration.login.JwtAuthenticationFilter;
 import com.zerobase.fastlms.configuration.login.JwtAuthorizationFilter;
 import com.zerobase.fastlms.configuration.login.UserAuthenticationProvider;
@@ -32,7 +31,7 @@ import com.zerobase.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@EnableWebSecurity
+@EnableWebSecurity//(debug = true)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	private final MemberService memberService;
@@ -60,9 +59,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
 		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
 		//jwtAuthenticationFilter.setFilterProcessesUrl("/member/login"); 
-		jwtAuthenticationFilter.setUsernameParameter("userId");
+		jwtAuthenticationFilter.setUsernameParameter("userId"); 
 		jwtAuthenticationFilter.setPasswordParameter("userPassword");
-		jwtAuthenticationFilter.setAuthenticationSuccessHandler(getSuccessHandler());
+		//jwtAuthenticationFilter.setAuthenticationSuccessHandler(getSuccessHandler());
 		//jwtAuthenticationFilter.setAuthenticationFailureHandler(getFailureHandler());
 		//jwtAuthenticationFilter.afterPropertiesSet();
 		return jwtAuthenticationFilter;
@@ -91,14 +90,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		System.out.println("configure");
-		http.cors();//추가
 		http.csrf().disable();
+		//http.cors();
 		// 세션 사용 X
 		// http 로그인 사용 X
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-//			.addFilter(corsFilter)
-			.formLogin().disable()
+			.addFilter(corsFilter)
+			.formLogin()//.disable()
+				.loginPage("/member/login")
+				.usernameParameter("userId")
+				.passwordParameter("userPassword")
+				.successHandler(getSuccessHandler())
+				.permitAll()
+			.and()
 			.httpBasic().disable()
 			.addFilter(jwtAuthenticationFilter())
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberService));
@@ -107,6 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		// 주소 URL 권한 설정
 		http.authorizeRequests()
 			.antMatchers("/"
+				,"/member/login"
 				,"/member/register"
 				,"/member/email-auth"
 				,"/member/find/password"
@@ -153,6 +159,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.userDetailsService(memberService)
 			.passwordEncoder(getPasswodEncoder());
 		*/
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception{
+		web.ignoring()
+			.antMatchers("/"
+					,"/member/regist"
+					,"/api/login");
 	}
 
 	

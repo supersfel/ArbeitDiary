@@ -8,6 +8,7 @@ import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.dto.MemberLoginDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.admin.model.MemberStatusInput;
+import com.zerobase.fastlms.course.model.ServiceResult;
 import com.zerobase.fastlms.member.model.CustomUserDetails;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
@@ -34,4 +35,6 @@ public interface MemberService extends UserDetailsService{
 	CustomUserDetails apiUserDetail(String userId);
 	
 	MemberLoginDto getloginToken(CustomUserDetails principal);
+	
+	ServiceResult updateMemberPassword(MemberInput memberInput);
 }

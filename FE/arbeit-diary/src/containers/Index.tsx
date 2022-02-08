@@ -15,12 +15,11 @@ function Index() {
   const Test = () => {
     let token = localStorage.getItem("token");
 
-    const userinfo = getUserinfoApi(
+    getUserinfoApi(
       "http://localhost:8080/api/oldproject",
-      token !== null ? token : ""
+      token !== null ? token : "",
+      dispatch
     );
-
-    dispatch(get_userinfo(userinfo));
   };
 
   return (

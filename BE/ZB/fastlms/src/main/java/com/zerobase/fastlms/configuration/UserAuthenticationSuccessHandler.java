@@ -5,12 +5,15 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -24,7 +27,7 @@ import com.zerobase.fastlms.member.model.MemberInput;
 
 import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
-public class UserAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
+public class UserAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
  	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 		System.out.println("==============SUCCESS=============");
@@ -38,8 +41,16 @@ public class UserAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
 		System.out.println(AuthConstants.AUTH_HEADER+" : "+AuthConstants.TOKEN_TYPE + " " + accessToken);
 		System.out.println("TOKEN 완료 : "+ authentication);
-		System.out.println(request.getSession().getAttribute(AuthConstants.AUTH_HEADER));
+		
+		SecurityContext context = SecurityContextHolder.createEmptyContext();
+		context.setAuthentication(authentication);
+		SecurityContextHolder.setContext(context);
+		System.out.println(AuthConstants.AUTH_HEADER+" : "+AuthConstants.TOKEN_TYPE + " " + accessToken);
+		System.out.println(context);
+		System.out.println("==전==");
 
-		//super.onAuthenticationSuccess(request, response, authentication);				
+		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+		clearAuthenticationAttributes(request);
+        getRedirectStrategy().sendRedirect(request, response, "/");		
 	}
  }

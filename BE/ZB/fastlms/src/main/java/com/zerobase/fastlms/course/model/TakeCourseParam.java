@@ -2,6 +2,10 @@ package com.zerobase.fastlms.course.model;
 
 import com.zerobase.fastlms.admin.model.CommonParam;
 
-public class TakeCourseParam extends CommonParam {
+import lombok.Data;
 
+@Data
+public class TakeCourseParam extends CommonParam {
+	long id;
+	String status;
 }
