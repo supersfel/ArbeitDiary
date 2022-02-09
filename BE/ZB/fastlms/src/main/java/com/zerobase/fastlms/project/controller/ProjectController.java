@@ -73,7 +73,7 @@ public class ProjectController {
 	@PostMapping("/outProject")
 	public String submitOutProject(ProjectInput projectInput, Principal principal) {
 		System.out.println(projectInput);
-		boolean result = projectService.out(principal.getName(), projectInput.getMemberProjectId());
+		boolean result = projectService.out(principal.getName(), projectInput.getJoinId());
 		return "projects/out";
 	}
 }

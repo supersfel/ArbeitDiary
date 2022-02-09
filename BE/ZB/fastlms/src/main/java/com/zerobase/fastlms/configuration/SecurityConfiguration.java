@@ -94,8 +94,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		//http.cors();
 		// 세션 사용 X
 		// http 로그인 사용 X
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
+		http//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			//.and()
 			.addFilter(corsFilter)
 			.formLogin()//.disable()
 				.loginPage("/member/login")

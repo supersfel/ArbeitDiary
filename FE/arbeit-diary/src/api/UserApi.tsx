@@ -105,3 +105,29 @@ export async function Emailrequestapi(params: EmailRequestApiprops) {
     history.push("/");
   }
 }
+
+type PostApiProps = {
+  projectName: string;
+};
+export async function PostApi(
+  url: string,
+  token: string,
+  params: PostApiProps
+) {
+  try {
+    await axios({
+      method: "post",
+      url,
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+        Authorization: token,
+      },
+      data: params,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("error in make NewProjectApi");
+  }
+}

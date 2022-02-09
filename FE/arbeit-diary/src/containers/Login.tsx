@@ -1,18 +1,27 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CheckToken from "../api/CheckToken";
-import { UserApi } from "../api/UserApi";
+import { getUserinfoApi, UserApi } from "../api/UserApi";
 
 import "../css/containers/Login.css";
 
 function Login(): JSX.Element {
   const history = useHistory();
+  const dispatch = useDispatch();
   const onSubmit = (e: any) => {
     e.preventDefault();
     UserApi({
       userId: e.target.email.value,
       userPassword: e.target.password.value,
     }).then(() => {
+      let token = localStorage.getItem("token");
+
+      getUserinfoApi(
+        "http://localhost:8080/api/oldproject",
+        token !== null ? token : "",
+        dispatch
+      );
       if (CheckToken()) {
         history.push("/");
       } else {

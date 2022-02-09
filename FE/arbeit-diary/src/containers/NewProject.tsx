@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { CheckTokenMoveHome } from "../api/CheckToken";
+import { PostApi } from "../api/UserApi";
 import Header from "../components/Header";
 import "../css/containers/NewProject.css";
 import { addProject } from "../module/User";
@@ -13,8 +14,15 @@ function NewProject() {
   const history = useHistory();
 
   const makeNewProject = (e: any) => {
+    const token = localStorage.getItem("token");
+
     e.preventDefault();
     dispatch(addProject(e.target.Name.value));
+    PostApi(
+      "http://localhost:8080/api/newproject",
+      token !== null ? token : "",
+      { projectName: e.target.Name.value }
+    );
     history.push("/oldproject");
   };
 

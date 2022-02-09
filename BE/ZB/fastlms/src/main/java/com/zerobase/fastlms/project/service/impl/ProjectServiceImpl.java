@@ -49,6 +49,8 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public boolean add(String userId, ProjectInput projectInput) {
 		// TODO Auto-generated method stub
+		System.out.println("===============================================================================");
+		System.out.println(projectInput);
 		Project project = Project.builder()
 				.projectName(projectInput.getProjectName())
 				.regDt(LocalDateTime.now())

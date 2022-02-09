@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { CheckTokenMoveHome } from "../api/CheckToken";
+import { getUserinfoApi } from "../api/UserApi";
 import Calendar from "../components/Calendar";
 import Header from "../components/Header";
 import UserList from "../components/UserList";
@@ -11,6 +12,15 @@ import DayDetail from "./DayDetail";
 
 function Project() {
   CheckTokenMoveHome();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    getUserinfoApi(
+      "http://localhost:8080/api/oldproject",
+      token !== null ? token : "",
+      dispatch
+    );
+  }, []);
   const location = useLocation();
   const projectId = location.search.slice(11);
 

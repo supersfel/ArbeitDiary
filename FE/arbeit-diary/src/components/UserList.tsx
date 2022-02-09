@@ -32,6 +32,7 @@ function User({ done, text, projectId }: UserProps) {
       <div className={classNames("userText", { userTextDone: done })}>
         {text}
       </div>
+      <MdAdd />
     </div>
   );
 }

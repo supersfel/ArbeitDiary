@@ -13,5 +13,5 @@ public class ProjectInput {
 	/*
 	 * 참여 번호
 	 */
-	private Long memberProjectId;
+	private Long joinId;
 }
