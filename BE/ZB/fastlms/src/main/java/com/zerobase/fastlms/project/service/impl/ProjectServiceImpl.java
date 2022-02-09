@@ -179,9 +179,9 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public boolean out(String userId, Long memberProjectId) {
+	public boolean out(String userId, ProjectInput projectInput) {
 		// TODO Auto-generated method stub
-		Optional<MemberProject> optionalMemberProject = memberProjectRepository.findById(memberProjectId);
+		Optional<MemberProject> optionalMemberProject = memberProjectRepository.findById(projectInput.getJoinId());
 		
 		if(!optionalMemberProject.isPresent()) {
 			System.out.println("[OUT] : 참여하시지 않았습니다.");
@@ -192,10 +192,27 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		System.out.println(memberProject.getProject().getId());
 		if(memberProject.getProjectRole().equals(ProjectRoleType.MASTER) ) {
+			System.out.println("IM A MASTER");
 			Long count = memberProjectRepository.countByProjectId(memberProject.getProject().getId());
-			if(count == 1) {
+			if(!projectInput.getTargetId().equals(userId)){
+				System.out.println("MASTER-DELETE-TARGET");
+				Optional<MemberProject> optionalTargetProject = memberProjectRepository.findByProjectIdAndMemberId(memberProject.getProject().getId(),projectInput.getTargetId());
+				System.out.println(memberProject.getProject().getId()+":"+ projectInput.getTargetId());
+				if(!optionalTargetProject.isPresent()){
+					System.out.println("타깃 회원 정보 존재 X");
+					return false;
+				}
+				memberProjectRepository.delete(optionalTargetProject.get());
+				return true;
+			}
+			if(count > 1) {
 				System.out.println("[아직 회원이 남아있습니다.]");
 				return false;
+			}
+			else if(count == 1){
+				Project project = memberProject.getProject();
+				memberProjectRepository.delete(memberProject);
+				projectRepository.delete(project);
 			}
 		}
 		

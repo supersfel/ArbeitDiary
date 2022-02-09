@@ -6,42 +6,92 @@ import { MdDone, MdAdd } from "react-icons/md";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../module";
-import { toggleName } from "../module/User";
+import { projectType, toggleName } from "../module/User";
+import { api, PostApi } from "../api/UserApi";
+import { useHistory } from "react-router";
 
 type UserProps = {
   done: boolean;
   text: string;
   projectId: string;
+  projectRole: string;
+  userId: string;
+  currentUserId: string;
+  joinId: string;
 };
 
 type UserListProps = {
   projectId: string;
+  projects: projectType[];
+  projectRole: string;
+  currentUserId: string;
 };
 
-function User({ done, text, projectId }: UserProps) {
+function User({
+  done,
+  text,
+  projectId,
+  projectRole,
+  userId,
+  currentUserId,
+  joinId,
+}: UserProps) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const onclickUser = () => {
     dispatch(toggleName(text, projectId));
   };
+  const checkMaster = (projectRole: string) => {
+    return projectRole === "MASTER" ? true : false;
+  };
 
+  const token = localStorage.getItem("token");
+
+  const onRemoveUser = () => {
+    PostApi(`${api}/api/deleteproject`, token === null ? "" : token, {
+      joinId,
+      targetId: userId,
+    });
+    history.push("/");
+  };
   return (
-    <div className="User" onClick={onclickUser}>
-      <div className={classNames("checkBox", { checkBoxDone: done })}>
-        {done && <MdDone />}
+    <div className="User">
+      <div className="User-left">
+        <div
+          className={classNames("checkBox", { checkBoxDone: done })}
+          onClick={onclickUser}
+        >
+          {done && <MdDone />}
+        </div>
+        <div
+          className={classNames("userText", { userTextDone: done })}
+          onClick={onclickUser}
+        >
+          {text}
+        </div>
       </div>
-      <div className={classNames("userText", { userTextDone: done })}>
-        {text}
+      <div className="userdelete">
+        {checkMaster(projectRole) === true || userId === currentUserId ? (
+          <MdAdd onClick={onRemoveUser} />
+        ) : (
+          ""
+        )}
       </div>
-      <MdAdd />
     </div>
   );
 }
 
-function UserList({ projectId }: UserListProps) {
-  const { projects } = useSelector((state: RootState) => state.Userinfo)[0];
+function UserList({
+  projectId,
+  projects,
+  projectRole,
+  currentUserId,
+}: UserListProps) {
+  const project = projects.filter(
+    (project) => project.projectId === projectId
+  )[0];
 
-  const users = projects.filter((project) => project.projectId === projectId)[0]
-    .userList; //해당 id의 userList 추출
+  const users = project.userList;
 
   return (
     <div className="UserList">
@@ -54,6 +104,10 @@ function UserList({ projectId }: UserListProps) {
             done={user.done}
             text={user.userName}
             projectId={projectId}
+            projectRole={projectRole}
+            userId={user.userId}
+            currentUserId={currentUserId}
+            joinId={project.joinId === undefined ? "" : project.joinId}
           />
         );
       })}

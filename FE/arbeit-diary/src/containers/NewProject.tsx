@@ -13,17 +13,18 @@ function NewProject() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const makeNewProject = (e: any) => {
+  const makeNewProject = async (e: any) => {
     const token = localStorage.getItem("token");
 
     e.preventDefault();
     dispatch(addProject(e.target.Name.value));
-    PostApi(
+    const api = await PostApi(
       "http://localhost:8080/api/newproject",
       token !== null ? token : "",
       { projectName: e.target.Name.value }
-    );
-    history.push("/oldproject");
+    ).then(() => {
+      history.push("/oldproject");
+    });
   };
 
   return (

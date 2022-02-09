@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { get_userinfo, Usertype } from "../module/User";
 
+export const api = "http://localhost:8080";
+
 type UserApiprops = {
   userId: string;
   userPassword: string;
@@ -106,14 +108,7 @@ export async function Emailrequestapi(params: EmailRequestApiprops) {
   }
 }
 
-type PostApiProps = {
-  projectName: string;
-};
-export async function PostApi(
-  url: string,
-  token: string,
-  params: PostApiProps
-) {
+export async function PostApi(url: string, token: string, params: any) {
   try {
     await axios({
       method: "post",
@@ -126,6 +121,7 @@ export async function PostApi(
       data: params,
     }).then((response) => {
       console.log(response.data);
+      return response.data;
     });
   } catch (e) {
     console.log("error in make NewProjectApi");

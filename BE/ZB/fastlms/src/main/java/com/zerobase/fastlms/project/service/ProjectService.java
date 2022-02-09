@@ -20,6 +20,6 @@ public interface ProjectService {
 	
 	List<sampleDto> showOldProject(String userId);
 	boolean join(String userId, Long projectId);
-	boolean out(String userId, Long projectId);
+	boolean out(String userId, ProjectInput projectInput);
 	String responseOldProject(String userId);
 }

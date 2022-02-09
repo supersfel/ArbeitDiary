@@ -35,6 +35,11 @@
   color: var(--main-color);
   margin: 30px 30px;
   cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+}
+.UserList .User .User-left {
+  display: flex;
 }
 
 .UserList .User .checkBox {
@@ -57,6 +62,15 @@
   color: #343a40;
 }
 
+.UserList .User .userdelete {
+  transform: rotate(45deg);
+  color: #d2d2d2;
+  font-size: 1.6rem;
+  visibility: visible;
+}
+.UserList .User .userdelete:hover {
+  color: #ff3d3d;
+}
 .UserList .plusBox {
   color: var(--main-color);
   width: 40px;

@@ -48,7 +48,7 @@ public class ApiMemberProjectController {
 		System.out.println("==========================================================");
 		System.out.println("[post : deleteProejct]");
 		System.out.println(projectInput+ principal.getName());
-		boolean result = projectService.out(principal.getName(), projectInput.getJoinId());
+		boolean result = projectService.out(principal.getName(), projectInput);
 		return ResponseEntity.ok().body(result);
 	}
 }

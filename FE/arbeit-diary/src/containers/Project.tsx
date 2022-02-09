@@ -27,7 +27,8 @@ function Project() {
   const [visible, setvisible] = useState(false); //토글방식
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
 
-  const { projects } = useSelector((state: RootState) => state.Userinfo)[0];
+  const user = useSelector((state: RootState) => state.Userinfo)[0];
+  const projects = user.projects;
 
   const constproject = projects.filter(
     (project) => project.projectId === projectId
@@ -49,7 +50,16 @@ function Project() {
     <>
       <Header />
       <div className="project">
-        <UserList projectId={projectId} />
+        <UserList
+          projectId={projectId}
+          projects={projects}
+          projectRole={
+            constproject.projectRole === undefined
+              ? ""
+              : constproject.projectRole
+          }
+          currentUserId={user.userId}
+        />
         <div className="projectRight">
           <div className="projectTitle">{constproject.projectName}</div>
           <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} />
