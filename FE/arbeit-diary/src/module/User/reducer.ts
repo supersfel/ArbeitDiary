@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { createReducer } from "typesafe-actions";
+import { getUserinfoApi } from "../../api/UserApi";
 import { ADD_PROJECT, TOGGLE_NAME, GET_USERINFO } from "./actions";
 import { UserAction, User } from "./types";
 
@@ -13,6 +15,7 @@ const initialState: User = [
         joinId: "",
         projectName: "서브웨이 연수점",
         calendarId: "1",
+
         userList: [
           { userName: "정민규", userId: "supersfel@naver.com", done: false },
           {

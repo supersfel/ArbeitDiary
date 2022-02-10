@@ -117,8 +117,8 @@
   color: #fff0f0;
   border-radius: 99px;
   position: absolute;
-  bottom: -20px;
-  left: 50%;
+  bottom: 15px;
+  left: 94%;
   transform: translate(-50%, 0);
   cursor: pointer;
   border: none;

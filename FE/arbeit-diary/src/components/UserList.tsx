@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/components/UserList.css";
 
-import { MdDone, MdAdd } from "react-icons/md";
+import { MdDone, MdAdd, MdSettings } from "react-icons/md";
 
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
@@ -48,11 +48,13 @@ function User({
   const token = localStorage.getItem("token");
 
   const onRemoveUser = () => {
-    PostApi(`${api}/api/deleteproject`, token === null ? "" : token, {
-      joinId,
-      targetId: userId,
-    });
-    history.push("/");
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      PostApi(`${api}/api/deleteproject`, token === null ? "" : token, {
+        joinId,
+        targetId: userId,
+      });
+      history.push("/");
+    }
   };
   return (
     <div className="User">
@@ -70,12 +72,17 @@ function User({
           {text}
         </div>
       </div>
-      <div className="userdelete">
-        {checkMaster(projectRole) === true || userId === currentUserId ? (
-          <MdAdd onClick={onRemoveUser} />
-        ) : (
-          ""
-        )}
+      <div className="User-right">
+        <div className="usersetting">
+          {checkMaster(projectRole) === true ? <MdSettings /> : ""}
+        </div>
+        <div className="userdelete">
+          {checkMaster(projectRole) === true || userId === currentUserId ? (
+            <MdAdd onClick={onRemoveUser} />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

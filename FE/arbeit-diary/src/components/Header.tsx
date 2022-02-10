@@ -37,7 +37,8 @@ function Header() {
     <>
       <header className={"Header" + (ScrollActive ? " onScrolled" : "")}>
         <Link to="/" className="left">
-          로고
+          <div className="logo-icon"></div>
+          <div className="logo"></div>
         </Link>
         <Link
           to={CheckToken() ? "/" : "/login"}

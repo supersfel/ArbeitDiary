@@ -13,6 +13,7 @@ import DayDetail from "./DayDetail";
 
 function Project() {
   CheckTokenMoveHome();
+  const user = useSelector((state: RootState) => state.Userinfo)[0];
 
   const dispatch = useDispatch();
 
@@ -24,6 +25,7 @@ function Project() {
       dispatch
     );
   }, []);
+
   const location = useLocation();
   const projectId = location.search.slice(11);
 
@@ -31,12 +33,15 @@ function Project() {
   const [JoinModalvisible, setJoinModalvisible] = useState(false);
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
 
-  const user = useSelector((state: RootState) => state.Userinfo)[0];
   const projects = user.projects;
-
   const constproject = projects.filter(
     (project) => project.projectId === projectId
   )[0]; //해당 id의 userList 추출
+
+  /*새로고침 오류 방지 */
+  if (constproject === undefined) {
+    return <></>;
+  }
 
   const onConfirmDay = (days: moment.Moment) => {
     setselectedDay(days.format("YYYY년 MM월 DD일"));
@@ -73,7 +78,11 @@ function Project() {
         onCancel={onCancel}
         selectedDay={selectedDay}
       />
-      <ModalJoinProject visible={JoinModalvisible} projectId={projectId} onCancelJoinModal={onCancelJoinModal} />
+      <ModalJoinProject
+        visible={JoinModalvisible}
+        projectId={projectId}
+        onCancelJoinModal={onCancelJoinModal}
+      />
     </>
   );
 }

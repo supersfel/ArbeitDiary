@@ -25,6 +25,14 @@
   color: #eee;
 }
 
+.logo-title {
+  width: 370px;
+  height: 88px;
+  background-image: url("./components/logo2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .MkProject .description .highlite {
   color: var(--main-color);
   font-size: 5rem;

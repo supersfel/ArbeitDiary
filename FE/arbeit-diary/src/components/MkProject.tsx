@@ -7,7 +7,10 @@ function MkProject() {
   return (
     <div className="MkProject">
       <div className="description">
-        <span className="highlite">알바일기</span> <br />
+        <span className="highlite">
+          <div className="logo-title"></div>
+        </span>{" "}
+        <br />
         클릭으로 완성되는 스마트한 스케쥴러
       </div>
       <div className="project">

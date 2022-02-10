@@ -62,13 +62,26 @@
   color: #343a40;
 }
 
-.UserList .User .userdelete {
+.UserList .User-right {
+  display: flex;
+  align-items: center;
+}
+
+.UserList .User-right .usersetting {
+  font-size: 1.3rem;
+  color: #d2d2d2;
+}
+
+.UserList .User-right .usersetting:hover {
+  color: var(--main-color);
+}
+
+.UserList .User-right .userdelete {
   transform: rotate(45deg);
   color: #d2d2d2;
   font-size: 1.6rem;
-  visibility: visible;
 }
-.UserList .User .userdelete:hover {
+.UserList .User-right .userdelete:hover {
   color: #ff3d3d;
 }
 .UserList .plusBox {
