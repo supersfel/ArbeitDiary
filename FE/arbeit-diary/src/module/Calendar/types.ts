@@ -38,8 +38,19 @@ type dateType = {
   dayIssues: dayIssueType[];
 };
 
+type fixedtime = {
+  dayId : string,
+  worktime : string
+}
+
+type userListType = {
+  name : string,
+  fixedtimes : fixedtime[]
+}
+
 export type CalenderType = {
   calendarId: string;
+  userList : userListType[];
   dates: dateType[];
 };
 

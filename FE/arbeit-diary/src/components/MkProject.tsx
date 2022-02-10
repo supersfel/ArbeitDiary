@@ -21,7 +21,13 @@ function MkProject() {
           to={CheckToken() ? "/oldproject" : "/login"}
           className="btn btn--old"
         >
-          기존 프로젝트
+          내 프로젝트
+        </Link>
+        <Link
+          to={CheckToken() ? "/joinproject" : "/login"}
+          className="btn btn--join"
+        >
+          프로젝트 참여
         </Link>
       </div>
     </div>

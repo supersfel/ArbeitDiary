@@ -4,8 +4,7 @@ import "../css/components/UserList.css";
 import { MdDone, MdAdd } from "react-icons/md";
 
 import classNames from "classnames";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../module";
+import { useDispatch } from "react-redux";
 import { projectType, toggleName } from "../module/User";
 import { api, PostApi } from "../api/UserApi";
 import { useHistory } from "react-router";
@@ -25,6 +24,7 @@ type UserListProps = {
   projects: projectType[];
   projectRole: string;
   currentUserId: string;
+  onActiveJoinModal: () => void;
 };
 
 function User({
@@ -86,6 +86,7 @@ function UserList({
   projects,
   projectRole,
   currentUserId,
+  onActiveJoinModal,
 }: UserListProps) {
   const project = projects.filter(
     (project) => project.projectId === projectId
@@ -112,7 +113,7 @@ function UserList({
         );
       })}
       <div className="plusBox">
-        <MdAdd />
+        <MdAdd onClick={onActiveJoinModal} />
       </div>
     </div>
   );

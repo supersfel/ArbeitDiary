@@ -121,9 +121,10 @@ export async function PostApi(url: string, token: string, params: any) {
       data: params,
     }).then((response) => {
       console.log(response.data);
+      localStorage.setItem("response", response.data);
       return response.data;
     });
   } catch (e) {
-    console.log("error in make NewProjectApi");
+    console.log("error in PostApi");
   }
 }

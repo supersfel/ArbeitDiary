@@ -7,6 +7,7 @@ import OldProject from "./containers/OldProject";
 import Project from "./containers/Project";
 import NewProject from "./containers/NewProject";
 import Emaildone from "./containers/Emaildone";
+import JoinProject from "./containers/JoinProject";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/project" component={Project} />
       <Route path="/newproject" component={NewProject} />
       <Route path="/done" component={Emaildone} />
+      <Route path="/joinproject" component={JoinProject} />
     </div>
   );
 }

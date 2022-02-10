@@ -51,4 +51,11 @@ public class ApiMemberProjectController {
 		boolean result = projectService.out(principal.getName(), projectInput);
 		return ResponseEntity.ok().body(result);
 	}
+	@PostMapping("/api/joinproject")
+	public ResponseEntity<?> submitJoinproject(Model model, Principal principal,@RequestBody ProjectInput projectInput){
+		System.out.println("[post : newproejct]");
+		System.out.println(projectInput+ principal.getName());
+		boolean result = projectService.join(principal.getName(), projectInput.getProjectId());
+		return ResponseEntity.ok().body(result);
+	}
 }

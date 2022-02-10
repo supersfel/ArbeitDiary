@@ -12,7 +12,6 @@ export function CheckTokenMoveHome() {
   const history = useHistory();
   const token = localStorage.getItem("token");
   if (!token || token === "undefined") {
-    alert("로그인 토큰이 만료되었습니다");
     history.push("/");
   }
 }

@@ -71,3 +71,18 @@
   font-size: 1.2rem;
   font-weight: 700;
 }
+
+.MkProject .project .btn--join {
+  border: 1px solid var(--main-color);
+  color: #fff;
+  background: var(--main-color);
+  border-radius: 99px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 25%;
+  margin-top: 10%;
+  font-size: 1.2rem;
+  font-weight: 700;
+}

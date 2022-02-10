@@ -11,6 +11,21 @@ import {
 const initialState: CalendersType = [
   {
     calendarId: "1",
+    userList: [
+      {
+        name: "정민규",
+        fixedtimes: [
+          {
+            dayId: "Monday",
+            worktime: "000000000000000000000000000000001111111100000000",
+          },
+          {
+            dayId: "Tuesday",
+            worktime: "000000000000000000000000000000001111111100000000",
+          },
+        ],
+      },
+    ],
     dates: [
       {
         date: "20220205",
@@ -107,9 +122,6 @@ const initialState: CalendersType = [
 const CalenderInfo = createReducer<CalendersType, CalenderAction>(
   initialState,
   {
-    [TEST]: (state, action) =>
-      state.map((calendar) => ({ calendarId: "", dates: [], dayIssues: "" })),
-
     [ADD_DATE]: (state, action) =>
       state.map((calendar) => ({
         ...calendar,

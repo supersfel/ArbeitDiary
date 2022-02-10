@@ -22,9 +22,13 @@ function NewProject() {
       "http://localhost:8080/api/newproject",
       token !== null ? token : "",
       { projectName: e.target.Name.value }
-    ).then(() => {
-      history.push("/oldproject");
-    });
+    )
+      .then(() => {
+        history.push("/oldproject");
+      })
+      .catch((e) => {
+        console.log("makeNewProject Error!!!");
+      });
   };
 
   return (
