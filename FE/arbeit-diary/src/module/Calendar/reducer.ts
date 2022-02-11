@@ -3,7 +3,6 @@ import { CalenderAction, CalendersType } from "./types";
 import {
   TOGGLE_DETAIL,
   REMOVE_DETAIL,
-  TEST,
   ADD_DATE,
   ADD_DETAIL,
 } from "./actions";

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { CheckTokenMoveHome } from "../api/CheckToken";
-import { getUserinfoApi } from "../api/UserApi";
+import { useHistory, useLocation } from "react-router";
+import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
+
 import Calendar from "../components/Calendar";
 import Header from "../components/Header";
 import ModalJoinProject from "../components/ModalJoinProject";
@@ -16,14 +16,9 @@ function Project() {
   const user = useSelector((state: RootState) => state.Userinfo)[0];
 
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    getUserinfoApi(
-      "http://localhost:8080/api/oldproject",
-      token !== null ? token : "",
-      dispatch
-    );
+    checkEffectiveToken(dispatch, history);
   }, []);
 
   const location = useLocation();

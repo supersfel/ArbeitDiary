@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CheckTokenMoveHome } from "../api/CheckToken";
-import { getUserinfoApi } from "../api/UserApi";
+import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
+import { useHistory } from "react-router";
 import Header from "../components/Header";
 import "../css/containers/OldProject.css";
 import { RootState } from "../module";
@@ -28,13 +28,9 @@ function OldProject() {
   const { projects } = useSelector((state: RootState) => state.Userinfo)[0];
 
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    getUserinfoApi(
-      "http://localhost:8080/api/oldproject",
-      token !== null ? token : "",
-      dispatch
-    );
+    checkEffectiveToken(dispatch, history);
   }, []);
 
   return (

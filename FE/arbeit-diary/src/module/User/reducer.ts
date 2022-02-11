@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux";
 import { createReducer } from "typesafe-actions";
-import { getUserinfoApi } from "../../api/UserApi";
 import { ADD_PROJECT, TOGGLE_NAME, GET_USERINFO } from "./actions";
 import { UserAction, User } from "./types";
 

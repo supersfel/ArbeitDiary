@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { CheckTokenMoveHome } from "../api/CheckToken";
+import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
 import { PostApi } from "../api/UserApi";
 import Header from "../components/Header";
 import "../css/containers/NewProject.css";
@@ -9,9 +9,11 @@ import { addProject } from "../module/User";
 
 function NewProject() {
   CheckTokenMoveHome();
-
   const dispatch = useDispatch();
   const history = useHistory();
+  useEffect(() => {
+    checkEffectiveToken(dispatch, history);
+  }, []);
 
   const makeNewProject = async (e: any) => {
     const token = localStorage.getItem("token");

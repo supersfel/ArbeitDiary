@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { get_userinfo, Usertype } from "../module/User";
 
@@ -40,6 +39,7 @@ export async function getUserinfoApi(
     });
   } catch (e) {
     console.log("get logintoken error!!");
+    return false;
   }
 }
 
