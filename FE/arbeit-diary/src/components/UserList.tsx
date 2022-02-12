@@ -27,7 +27,7 @@ type UserListProps = {
   currentUserId: string;
   onActiveJoinModal: () => void;
   setFixedSchedulevisible: (value: boolean) => void;
-  setuserfixedInfo: any;
+  setuserId: (value: string) => void;
 };
 
 function UserList({
@@ -37,7 +37,7 @@ function UserList({
   currentUserId,
   onActiveJoinModal,
   setFixedSchedulevisible,
-  setuserfixedInfo,
+  setuserId,
 }: UserListProps) {
   const project = projects.filter(
     (project) => project.projectId === projectId
@@ -75,11 +75,6 @@ function UserList({
       }
     };
 
-    const selectedFixedUserinfo = useSelector(
-      //유저의 고정값 가져오기
-      (state: RootState) => state.CalenderInfo
-    )[0].userList.filter((user) => user.userId === userId)[0];
-
     return (
       <div className="User">
         <div className="User-left">
@@ -101,8 +96,8 @@ function UserList({
             {checkMaster(projectRole) === true ? (
               <MdSettings
                 onClick={() => {
-                  setuserfixedInfo(selectedFixedUserinfo);
                   setFixedSchedulevisible(true);
+                  setuserId(userId);
                 }}
               />
             ) : (

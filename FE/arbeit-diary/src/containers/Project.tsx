@@ -29,11 +29,7 @@ function Project() {
   const [JoinModalvisible, setJoinModalvisible] = useState(false);
   const [FixedSchedulevisible, setFixedSchedulevisible] = useState(false);
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
-  const [userfixedInfo, setuserfixedInfo] = useState({
-    userId: "",
-    name: "",
-    fixedtimes: [],
-  });
+  const [userId, setuserId] = useState("");
 
   const projects = user.projects;
   const constproject = projects.filter(
@@ -70,7 +66,7 @@ function Project() {
           currentUserId={user.userId}
           onActiveJoinModal={onActiveJoinModal}
           setFixedSchedulevisible={setFixedSchedulevisible}
-          setuserfixedInfo={setuserfixedInfo}
+          setuserId={setuserId}
         />
         <div className="projectRight">
           <div className="projectTitle">{constproject.projectName}</div>
@@ -92,7 +88,7 @@ function Project() {
       />
 
       <FixedSchedule
-        userfixedInfo={userfixedInfo}
+        userId={userId}
         FixedSchedulevisible={FixedSchedulevisible}
         setFixedSchedulevisible={setFixedSchedulevisible}
       />

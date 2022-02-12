@@ -35,6 +35,12 @@ export type removeScheduleUserPropsType = {
   userId: string;
 };
 
+export type toggleFixedSchedulePropsType = {
+  userId: string;
+  dayId: string;
+  index: number;
+};
+
 /* Object Type */
 type userType = {
   name: string;

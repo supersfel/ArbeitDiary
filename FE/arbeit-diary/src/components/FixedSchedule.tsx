@@ -1,24 +1,32 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../css/components/FixedSchedule.css";
 import { RootState } from "../module";
-import { userListType } from "../module/Calendar/types";
+import { toggleFixedSchedule } from "../module/Calendar";
 
 type fixedScheduleProps = {
-  userfixedInfo: userListType;
+  userId: string;
   FixedSchedulevisible: boolean;
   setFixedSchedulevisible: (value: boolean) => void;
 };
 
 type FixedscheduletimeProps = {
   worktimes: string;
+  dayId: string;
 };
 
 function FixedSchedule({
-  userfixedInfo,
+  userId,
   FixedSchedulevisible,
   setFixedSchedulevisible,
 }: fixedScheduleProps) {
+  const dispatch = useDispatch();
+
+  const userList = useSelector((state: RootState) => state.CalenderInfo)[0]
+    .userList;
+
+  const user = userList.filter((user) => user.userId === userId)[0];
+
   if (!FixedSchedulevisible) return <></>;
 
   let hours = []; //00:00 ~ 23:30까지 생성
@@ -33,9 +41,7 @@ function FixedSchedule({
     });
   });
 
-  const { userId, name, fixedtimes } = userfixedInfo;
-
-  const FixedScheduletime = ({ worktimes }: FixedscheduletimeProps) => {
+  const FixedScheduletime = ({ worktimes, dayId }: FixedscheduletimeProps) => {
     const worktimelst = worktimes.split("");
 
     return (
@@ -46,9 +52,30 @@ function FixedSchedule({
               className="time work touch"
               key={index}
               style={{ background: "var(--main-color)" }}
+              onClick={() =>
+                dispatch(
+                  toggleFixedSchedule({
+                    userId,
+                    dayId,
+                    index,
+                  })
+                )
+              }
             ></div>
           ) : (
-            <div className="time touch" key={index}></div>
+            <div
+              className="time touch"
+              key={index}
+              onClick={() =>
+                dispatch(
+                  toggleFixedSchedule({
+                    userId,
+                    dayId,
+                    index,
+                  })
+                )
+              }
+            ></div>
           );
         })}
       </div>
@@ -65,7 +92,7 @@ function FixedSchedule({
           className="settingBox shadowBox "
           onClick={(event) => event.stopPropagation()}
         >
-          {name} 님의 고정근무 설정
+          {user.name} 님의 고정근무 설정
           <div className="settingBoxUp schedule shadowBox">
             <div className="times column-line fixedtimeline">
               <div className="first-row-line">시간</div>
@@ -79,13 +106,16 @@ function FixedSchedule({
                 })}
               </div>
             </div>
-            {fixedtimes.map((day, index) => {
+            {user.fixedtimes.map((day, index) => {
               return (
                 <div className="times columnline fixedtimeline" key={index}>
                   <div className="first-row-line">
                     {day.dayId.slice(0, 3).toUpperCase()}
                   </div>
-                  <FixedScheduletime worktimes={day.worktime} />
+                  <FixedScheduletime
+                    worktimes={day.worktime}
+                    dayId={day.dayId}
+                  />
                 </div>
               );
             })}
