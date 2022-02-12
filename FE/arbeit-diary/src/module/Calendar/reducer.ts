@@ -122,7 +122,7 @@ const initialState: CalendersType = [
       {
         date: "20220205",
         dateId: "155",
-
+        dayId: "SATURDAY",
         users: [
           {
             name: "정민규",
@@ -163,6 +163,8 @@ const initialState: CalendersType = [
       },
       {
         date: "20220206",
+        dayId: "SATURDAY",
+        dateId: "133",
         users: [
           {
             name: "정민규",
@@ -229,6 +231,8 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
         ...calendar,
         dates: calendar.dates.concat({
           date: action.payload,
+          dateId: "3",
+          dayId: "SATURDAY",
           users: [],
           dayIssues: [],
         }),
@@ -305,17 +309,19 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
               : date.users,
         })),
       })),
-    // [REMOVE_SCHEDULE_USER] : (state,action) =>
-    // state.map((calendar) => ({
-    //   ...calendar,
-    //   dates : calendar.dates.map((date) => ({
-    //     ...date,
-    //     users:
-    //       date.date === action.payload.date ? date.users.filter((user) => ({
-    //         user.name === action.payload.userId
-    //       })): date.users
-    //   }))
-    // }))
+    [REMOVE_SCHEDULE_USER]: (state, action) =>
+      state.map((calendar) => ({
+        ...calendar,
+        dates: calendar.dates.map((date) => ({
+          ...date,
+          users:
+            date.date === action.payload.date
+              ? date.users.filter(
+                  (user) => user.userId !== action.payload.userId
+                )
+              : date.users,
+        })),
+      })),
   }
 );
 

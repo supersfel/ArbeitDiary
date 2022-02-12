@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdAdd } from "react-icons/md";
 import "../css/components/Schedule.css";
 import { RootState } from "../module";
-import { addDate, addScheduleUser, toggleDetail } from "../module/Calendar";
+import {
+  addDate,
+  addScheduleUser,
+  removeScheduleUser,
+  toggleDetail,
+} from "../module/Calendar";
 
 type ScheduleProps = {
   selectedDay: string;
@@ -78,6 +83,16 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
     console.log(Calendar);
   };
 
+  const onremoveScheduleUser = (name: string) => {
+    dispatch(
+      removeScheduleUser({
+        date: currentdate,
+        name,
+        userId: finduserId(name),
+      })
+    );
+  };
+
   const UserShedule = ({ worktimes, username }: UserScheduleProps) => {
     const worktimelst = worktimes.split("");
 
@@ -140,7 +155,12 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
             <div className="first-row-line">
               {user.name}
               {projectRole === "MASTER" ? (
-                <MdAdd className="removeScheduleuserbtn" />
+                <MdAdd
+                  className="removeScheduleuserbtn"
+                  onClick={() => {
+                    onremoveScheduleUser(user.name);
+                  }}
+                />
               ) : (
                 ""
               )}

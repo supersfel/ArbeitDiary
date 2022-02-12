@@ -50,8 +50,8 @@ export type dayIssueType = {
 
 type dateType = {
   date: string;
-  dateId?: string;
-  dayId?: string;
+  dateId: string;
+  dayId: string;
   users: userType[];
   dayIssues: dayIssueType[];
 };
@@ -69,8 +69,8 @@ type userListType = {
 
 export type CalenderType = {
   calendarId: string;
-  projectId?: string;
-  projectName?: string;
+  projectId: string;
+  projectName: string;
 
   userList: userListType[];
   dates: dateType[];
