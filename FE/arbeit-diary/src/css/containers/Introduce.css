@@ -1,0 +1,13 @@
+.Introduce .comment {
+  margin-top: 10rem;
+  text-align: center;
+  color: var(--main-color);
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.Introduce .intro {
+  width: 80%;
+  height: 30rem;
+  margin: 5rem auto;
+}

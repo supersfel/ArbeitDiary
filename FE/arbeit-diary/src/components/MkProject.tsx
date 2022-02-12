@@ -7,32 +7,36 @@ function MkProject() {
   return (
     <div className="MkProject">
       <div className="description">
-        <span className="highlite">
-          <div className="logo-title"></div>
-        </span>{" "}
+        <div className="logo-title"></div>
+        <p>그날의 알바 스케줄과 ,</p>
         <br />
-        클릭으로 완성되는 스마트한 스케쥴러
+        <p>그날의 기록을 써내려가는</p>
+        <br />
+        <br />
+        <p>매장전용 스케쥴러</p>
+
+        <div className="project">
+          <Link
+            to={CheckToken() ? "/newproject" : "/login"}
+            className="indexbtn"
+          >
+            일기 만들기
+          </Link>
+          <Link
+            to={CheckToken() ? "/oldproject" : "/login"}
+            className="indexbtn"
+          >
+            내 알바일기
+          </Link>
+          <Link
+            to={CheckToken() ? "/joinproject" : "/login"}
+            className="indexbtn"
+          >
+            일기 참여
+          </Link>
+        </div>
       </div>
-      <div className="project">
-        <Link
-          to={CheckToken() ? "/newproject" : "/login"}
-          className="btn btn--new"
-        >
-          새 프로젝트
-        </Link>
-        <Link
-          to={CheckToken() ? "/oldproject" : "/login"}
-          className="btn btn--old"
-        >
-          내 프로젝트
-        </Link>
-        <Link
-          to={CheckToken() ? "/joinproject" : "/login"}
-          className="btn btn--join"
-        >
-          프로젝트 참여
-        </Link>
-      </div>
+      <div className="icon"></div>
     </div>
   );
 }

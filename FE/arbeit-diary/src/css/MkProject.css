@@ -1,96 +1,69 @@
 @import url(./Main.css);
 .MkProject {
-  padding-top: 5%;
   padding-bottom: 5%;
-  margin-top: 5%;
+  height: 50rem;
   display: flex;
-  align-items: center;
-  background: #eee linear-gradient(to right, #82f9b7 10%, #fff 70%);
-  margin-bottom: 100rem;
-
-  background-image: linear-gradient(
+  justify-content: space-between;
+  /* background-image: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.4),
-      rgba(200, 200, 200, 0.3)
+      rgba(0, 0, 0, 0.6),
+      rgba(200, 200, 200, 0.1)
     ),
     url("../img/background-img.jpg");
-  background-size: cover;
+  background-size: cover; */
 }
 .MkProject .description {
   width: 40%;
-  margin-left: 15%;
+  margin-left: 10%;
+  color: var(--main-black);
   font-size: 2rem;
-  line-height: 5rem;
-  border-radius: 5%;
-  color: #eee;
+  font-weight: 700;
+}
+
+.MkProject .description p:last-of-type {
+  font-weight: 900;
 }
 
 .logo-title {
-  width: 370px;
-  height: 88px;
+  width: 498px;
+  height: 119px;
   background-image: url("./components/logo2.png");
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-.MkProject .description .highlite {
-  color: var(--main-color);
-  font-size: 5rem;
-  font-weight: 500;
+  margin-bottom: 5rem;
 }
 
 .MkProject .project {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-left: 10%;
-  width: 300px;
-  height: 300px;
-  padding: 10px;
+  margin-top: 13rem;
 }
 
-.MkProject .project .btn--new {
-  border: 1px solid var(--main-color);
-  color: #fff;
-  background: var(--main-color)
-    linear-gradient(var(--main-color), var(--main-color));
-  border-radius: 99px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 25%;
-  font-size: 1.2rem;
+.MkProject .description .project .indexbtn {
+  width: 10rem;
+  height: 5rem;
+  margin-right: 2rem;
   font-weight: 700;
-}
-
-.MkProject .project .btn--old {
-  border: 1px solid var(--main-color);
+  font-size: 1.5rem;
+  border-radius: 15px;
+  border: 2px solid var(--main-color);
   color: var(--main-color);
-  background: var(--main-color) linear-gradient(#fff, #fff);
-  border-radius: 99px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 25%;
-  margin-top: 10%;
-  font-size: 1.2rem;
-  font-weight: 700;
+  transition: 0.3s;
 }
 
-.MkProject .project .btn--join {
-  border: 1px solid var(--main-color);
-  color: #fff;
+.MkProject .description .project .indexbtn:hover {
   background: var(--main-color);
-  border-radius: 99px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 25%;
-  margin-top: 10%;
-  font-size: 1.2rem;
-  font-weight: 700;
+  color: #fff;
+}
+
+.MkProject .icon {
+  width: 46rem;
+  height: 44rem;
+  background-image: url("../css/components/iconlogo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0 auto;
 }
