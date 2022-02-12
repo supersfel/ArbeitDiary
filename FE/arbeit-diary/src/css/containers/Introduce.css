@@ -7,7 +7,36 @@
 }
 
 .Introduce .intro {
-  width: 80%;
-  height: 30rem;
+  width: 60%;
   margin: 5rem auto;
+  margin-bottom: 30rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5rem;
+}
+
+.Introduce .intro .Box {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.Introduce .intro .first .staff {
+  display: flex;
+}
+
+.Introduce .intro .img {
+  margin-top: 5rem;
+  display: flex;
+  width: 150px;
+}
+
+.Introduce .intro .makeprojectimg {
+  width: 50rem;
+  height: 28rem;
+  background-image: url("../components/makeproject-img.PNG");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
