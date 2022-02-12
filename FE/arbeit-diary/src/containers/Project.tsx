@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router";
 import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
 
 import Calendar from "../components/Calendar";
+import FixedSchedule from "../components/FixedSchedule";
 import Header from "../components/Header";
 import ModalJoinProject from "../components/ModalJoinProject";
 import UserList from "../components/UserList";
@@ -26,7 +27,13 @@ function Project() {
 
   const [visible, setvisible] = useState(false); //토글방식
   const [JoinModalvisible, setJoinModalvisible] = useState(false);
+  const [FixedSchedulevisible, setFixedSchedulevisible] = useState(false);
   const [selectedDay, setselectedDay] = useState(""); //날짜전달
+  const [userfixedInfo, setuserfixedInfo] = useState({
+    userId: "",
+    name: "",
+    fixedtimes: [],
+  });
 
   const projects = user.projects;
   const constproject = projects.filter(
@@ -62,6 +69,8 @@ function Project() {
           }
           currentUserId={user.userId}
           onActiveJoinModal={onActiveJoinModal}
+          setFixedSchedulevisible={setFixedSchedulevisible}
+          setuserfixedInfo={setuserfixedInfo}
         />
         <div className="projectRight">
           <div className="projectTitle">{constproject.projectName}</div>
@@ -80,6 +89,12 @@ function Project() {
         visible={JoinModalvisible}
         projectId={projectId}
         onCancelJoinModal={onCancelJoinModal}
+      />
+
+      <FixedSchedule
+        userfixedInfo={userfixedInfo}
+        FixedSchedulevisible={FixedSchedulevisible}
+        setFixedSchedulevisible={setFixedSchedulevisible}
       />
     </>
   );

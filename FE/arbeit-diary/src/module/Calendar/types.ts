@@ -61,7 +61,7 @@ type fixedtime = {
   worktime: string;
 };
 
-type userListType = {
+export type userListType = {
   name: string;
   userId: string;
   fixedtimes: fixedtime[];

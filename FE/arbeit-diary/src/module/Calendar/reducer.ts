@@ -25,11 +25,11 @@ const initialState: CalendersType = [
           },
           {
             dayId: "Tuesday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000011111111000000000000000000000000000000000",
           },
           {
             dayId: "Wednesday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000000000000011111111000000000000000000000000",
           },
           {
             dayId: "Thursday",
@@ -37,7 +37,7 @@ const initialState: CalendersType = [
           },
           {
             dayId: "Friday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000000000000011111111000000000000000000000000",
           },
           {
             dayId: "Saturday",
@@ -45,7 +45,7 @@ const initialState: CalendersType = [
           },
           {
             dayId: "Sunday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000000000000011111111000000000000000000000000",
           },
         ],
       },
@@ -55,11 +55,11 @@ const initialState: CalendersType = [
         fixedtimes: [
           {
             dayId: "Monday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000111110000000000000000000000001111111100000000",
           },
           {
             dayId: "Tuesday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "111110000000000000000111111110000000000000000000",
           },
           {
             dayId: "Wednesday",
@@ -67,7 +67,7 @@ const initialState: CalendersType = [
           },
           {
             dayId: "Thursday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000000000111111110000000000000000000000000000",
           },
           {
             dayId: "Friday",
@@ -75,7 +75,7 @@ const initialState: CalendersType = [
           },
           {
             dayId: "Saturday",
-            worktime: "000000000000000000000000000000001111111100000000",
+            worktime: "000000000011111111000000000000000000000000000000",
           },
           {
             dayId: "Sunday",

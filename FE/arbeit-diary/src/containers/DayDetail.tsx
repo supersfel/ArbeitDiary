@@ -25,7 +25,10 @@ function DayDetail({
         onCancel();
       }}
     >
-      <div className="dayDetail" onClick={(event) => event.stopPropagation()}>
+      <div
+        className="dayDetail shadowBox"
+        onClick={(event) => event.stopPropagation()}
+      >
         {/*이벤트 캡쳐링 방지 */}
         <Schedule selectedDay={selectedDay} projectRole={projectRole} />
         <div className="dayDetailRight">

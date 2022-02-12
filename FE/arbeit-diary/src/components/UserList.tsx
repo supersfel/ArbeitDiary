@@ -4,10 +4,11 @@ import "../css/components/UserList.css";
 import { MdDone, MdAdd, MdSettings } from "react-icons/md";
 
 import classNames from "classnames";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { projectType, toggleName } from "../module/User";
 import { api, PostApi } from "../api/UserApi";
 import { useHistory } from "react-router";
+import { RootState } from "../module";
 
 type UserProps = {
   done: boolean;
@@ -25,68 +26,9 @@ type UserListProps = {
   projectRole: string;
   currentUserId: string;
   onActiveJoinModal: () => void;
+  setFixedSchedulevisible: (value: boolean) => void;
+  setuserfixedInfo: any;
 };
-
-function User({
-  done,
-  text,
-  projectId,
-  projectRole,
-  userId,
-  currentUserId,
-  joinId,
-}: UserProps) {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const onclickUser = () => {
-    dispatch(toggleName(text, projectId));
-  };
-  const checkMaster = (projectRole: string) => {
-    return projectRole === "MASTER" ? true : false;
-  };
-
-  const token = localStorage.getItem("token");
-
-  const onRemoveUser = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      PostApi(`${api}/api/deleteproject`, token === null ? "" : token, {
-        joinId,
-        targetId: userId,
-      });
-      history.push("/");
-    }
-  };
-  return (
-    <div className="User">
-      <div className="User-left">
-        <div
-          className={classNames("checkBox", { checkBoxDone: done })}
-          onClick={onclickUser}
-        >
-          {done && <MdDone />}
-        </div>
-        <div
-          className={classNames("userText", { userTextDone: done })}
-          onClick={onclickUser}
-        >
-          {text}
-        </div>
-      </div>
-      <div className="User-right">
-        <div className="usersetting">
-          {checkMaster(projectRole) === true ? <MdSettings /> : ""}
-        </div>
-        <div className="userdelete">
-          {checkMaster(projectRole) === true || userId === currentUserId ? (
-            <MdAdd onClick={onRemoveUser} />
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function UserList({
   projectId,
@@ -94,12 +36,90 @@ function UserList({
   projectRole,
   currentUserId,
   onActiveJoinModal,
+  setFixedSchedulevisible,
+  setuserfixedInfo,
 }: UserListProps) {
   const project = projects.filter(
     (project) => project.projectId === projectId
   )[0];
 
   const users = project.userList;
+
+  function User({
+    done,
+    text,
+    projectId,
+    projectRole,
+    userId,
+    currentUserId,
+    joinId,
+  }: UserProps) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const onclickUser = () => {
+      dispatch(toggleName(text, projectId));
+    };
+    const checkMaster = (projectRole: string) => {
+      return projectRole === "MASTER" ? true : false;
+    };
+
+    const token = localStorage.getItem("token");
+
+    const onRemoveUser = () => {
+      if (window.confirm("정말로 삭제하시겠습니까?")) {
+        PostApi(`${api}/api/deleteproject`, token === null ? "" : token, {
+          joinId,
+          targetId: userId,
+        });
+        history.push("/");
+      }
+    };
+
+    const selectedFixedUserinfo = useSelector(
+      //유저의 고정값 가져오기
+      (state: RootState) => state.CalenderInfo
+    )[0].userList.filter((user) => user.userId === userId)[0];
+
+    return (
+      <div className="User">
+        <div className="User-left">
+          <div
+            className={classNames("checkBox", { checkBoxDone: done })}
+            onClick={onclickUser}
+          >
+            {done && <MdDone />}
+          </div>
+          <div
+            className={classNames("userText", { userTextDone: done })}
+            onClick={onclickUser}
+          >
+            {text}
+          </div>
+        </div>
+        <div className="User-right">
+          <div className="usersetting">
+            {checkMaster(projectRole) === true ? (
+              <MdSettings
+                onClick={() => {
+                  setuserfixedInfo(selectedFixedUserinfo);
+                  setFixedSchedulevisible(true);
+                }}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="userdelete">
+            {checkMaster(projectRole) === true || userId === currentUserId ? (
+              <MdAdd onClick={onRemoveUser} />
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="UserList">

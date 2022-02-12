@@ -38,9 +38,6 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
   });
 
   const currentdate = selectedDay.replace(/[^0-9]/g, ""); //현재날짜출력
-  // dispatch(addDate(currentdate));
-  // const testtt = useSelector((state: RootState) => state.CalenderInfo);
-  // console.log(testtt);
 
   try {
     //user목록 없을때 임시로 추출
@@ -97,14 +94,16 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
     const worktimelst = worktimes.split("");
 
     const onclicktime = (index: number) => {
-      dispatch(
-        toggleDetail({
-          date: currentdate,
-          name: username,
-          index,
-          userId: finduserId(username),
-        })
-      );
+      if (projectRole === "MASTER") {
+        dispatch(
+          toggleDetail({
+            date: currentdate,
+            name: username,
+            index,
+            userId: finduserId(username),
+          })
+        );
+      }
     };
 
     return (

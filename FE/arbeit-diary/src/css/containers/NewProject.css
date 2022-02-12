@@ -6,7 +6,7 @@
   width: 50%;
   margin: 10% auto 5% auto;
   padding: 3rem;
-  font-size: 1.8rem;
+  font-size: 3rem;
   font-weight: 700;
   color: var(--main-color);
   border-radius: 30px;
@@ -14,6 +14,8 @@
 }
 .Stepbox .question {
   display: flex;
+  font-size: 5rem;
+  font-weight: 700;
   border: 0px;
   margin: 5rem;
   font-size: 4rem;
@@ -22,6 +24,7 @@
 }
 .Stepbox .question::placeholder {
   color: var(--main-color);
+  font-size: 4.5rem;
   opacity: 30%;
 }
 
