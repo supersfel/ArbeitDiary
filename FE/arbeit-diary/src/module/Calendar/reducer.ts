@@ -6,8 +6,8 @@ import {
   ADD_DATE,
   ADD_DETAIL,
   ADD_SCHEDULE_USER,
+  REMOVE_SCHEDULE_USER,
 } from "./actions";
-import { userInfo } from "os";
 
 const initialState: CalendersType = [
   {
@@ -126,14 +126,17 @@ const initialState: CalendersType = [
         users: [
           {
             name: "정민규",
+            userId: "supersfel@naver.com",
             worktime: "000000000000000000000000000000001111111100000000",
           },
           {
             name: "박세연",
+            userId: "parkseyeon99@naver.com",
             worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "농땡이놈",
+            userId: "어쩔티비@naver.com",
             worktime: "000000000000000000000000000000000000000000000000",
           },
         ],
@@ -163,51 +166,53 @@ const initialState: CalendersType = [
         users: [
           {
             name: "정민규",
+            userId: "supersfel@naver.com",
             worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkseyeon99@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkseyeo9@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkseye9@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkseyeo@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkse99@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "paron99@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "park99@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parksey@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
           {
             name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
-          },
-          {
-            name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
-          },
-          {
-            name: "박세연",
-            worktime: "000000000000000000000000000000001111111100000000",
+            userId: "parkseyeo@naver.com",
+            worktime: "000000000000000000000000000111111111000000000000",
           },
         ],
         dayIssues: [],
@@ -264,7 +269,7 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
           users:
             date.date === action.payload.date
               ? date.users.map((user) =>
-                  user.name === action.payload.name
+                  user.userId === action.payload.userId
                     ? user.worktime[action.payload.index] === "1"
                       ? {
                           ...user,
@@ -294,11 +299,23 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
             date.date === action.payload.date
               ? date.users.concat({
                   name: action.payload.name,
+                  userId: action.payload.userId,
                   worktime: "000000000000000000000000000000000000000000000000",
                 })
               : date.users,
         })),
       })),
+    // [REMOVE_SCHEDULE_USER] : (state,action) =>
+    // state.map((calendar) => ({
+    //   ...calendar,
+    //   dates : calendar.dates.map((date) => ({
+    //     ...date,
+    //     users:
+    //       date.date === action.payload.date ? date.users.filter((user) => ({
+    //         user.name === action.payload.userId
+    //       })): date.users
+    //   }))
+    // }))
   }
 );
 

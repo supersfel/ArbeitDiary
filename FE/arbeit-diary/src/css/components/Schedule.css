@@ -72,6 +72,15 @@
   justify-content: center;
   align-items: center;
 }
+.schedule .first-row-line .removeScheduleuserbtn {
+  margin-left: 0.3rem;
+  transform: rotate(45deg);
+  color: #d2d2d2;
+}
+.schedule .first-row-line .removeScheduleuserbtn:hover {
+  color: #ff3d3d;
+  cursor: pointer;
+}
 
 .schedule .user-plus-btn {
   position: sticky;
@@ -82,7 +91,7 @@
 }
 
 .schedule .user-plus-btn .scheduleAdd {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .schedule .ScheduleUserAddForm {

@@ -72,6 +72,9 @@ function Project() {
         visible={visible}
         onCancel={onCancel}
         selectedDay={selectedDay}
+        projectRole={
+          constproject.projectRole === undefined ? "" : constproject.projectRole
+        }
       />
       <ModalJoinProject
         visible={JoinModalvisible}

@@ -7,6 +7,7 @@ import { addDate, addScheduleUser, toggleDetail } from "../module/Calendar";
 
 type ScheduleProps = {
   selectedDay: string;
+  projectRole: string;
 };
 
 type UserScheduleProps = {
@@ -14,7 +15,7 @@ type UserScheduleProps = {
   username: string;
 };
 
-function Schedule({ selectedDay }: ScheduleProps) {
+function Schedule({ selectedDay, projectRole }: ScheduleProps) {
   const dispatch = useDispatch();
 
   const [visible, setvisible] = useState(false); //modal 변수
@@ -53,19 +54,28 @@ function Schedule({ selectedDay }: ScheduleProps) {
 
   const users = Calendar.dates.filter((date) => date.date === currentdate)[0]
     .users;
-
   const currentuserList = users.map((user) => user.name); //현재 스케쥴이 없는 유저의 리스트를 만드는 부분
   const everyuserList = Calendar.userList.map((user) => user.name);
   const exceptuserList = everyuserList.filter(
     (user) => !currentuserList.includes(user)
   );
+
+  const finduserId = (name: string) => {
+    return Calendar.userList.filter((user) => user.name === name)[0].userId;
+  };
+
   const onsubmitScheduleUser = (e: any) => {
     e.preventDefault();
     dispatch(
-      addScheduleUser({ date: currentdate, name: e.target.adduser.value })
+      addScheduleUser({
+        date: currentdate,
+        name: e.target.adduser.value,
+        userId: finduserId(e.target.adduser.value),
+      })
     );
     e.target.adduser.value = "";
     setvisible(false);
+    console.log(Calendar);
   };
 
   const UserShedule = ({ worktimes, username }: UserScheduleProps) => {
@@ -77,6 +87,7 @@ function Schedule({ selectedDay }: ScheduleProps) {
           date: currentdate,
           name: username,
           index,
+          userId: finduserId(username),
         })
       );
     };
@@ -126,21 +137,33 @@ function Schedule({ selectedDay }: ScheduleProps) {
       {users.map((user, index) => {
         return (
           <div className="column-line" key={index}>
-            <div className="first-row-line">{user.name}</div>
+            <div className="first-row-line">
+              {user.name}
+              {projectRole === "MASTER" ? (
+                <MdAdd className="removeScheduleuserbtn" />
+              ) : (
+                ""
+              )}
+            </div>
             <UserShedule worktimes={user.worktime} username={user.name} />
           </div>
         );
       })}
-      <div className="column-line user-plus-btn">
-        <MdAdd
-          className="addbtn scheduleAdd"
-          onClick={() => {
-            exceptuserList.length === 0
-              ? alert("추가할 사용자가 없습니다!")
-              : setvisible(true);
-          }}
-        />
-      </div>
+
+      {projectRole === "MASTER" ? (
+        <div className="column-line user-plus-btn">
+          <MdAdd
+            className="addbtn scheduleAdd"
+            onClick={() => {
+              exceptuserList.length === 0
+                ? alert("추가할 사용자가 없습니다!")
+                : setvisible(true);
+            }}
+          />
+        </div>
+      ) : (
+        ""
+      )}
 
       <form
         className={

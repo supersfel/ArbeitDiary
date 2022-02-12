@@ -3,6 +3,7 @@ import {
   removeDetailPropsType,
   toggleDetailPropsType,
   addScheduleUserPropsType,
+  removeScheduleUserPropsType,
 } from "./types";
 
 export const TEST = "Calender/TEST" as const;
@@ -11,6 +12,7 @@ export const ADD_DETAIL = "Calendar/ADD_DETAIL" as const;
 export const REMOVE_DETAIL = "Calendar/REMOVE_DETAIL" as const;
 export const TOGGLE_DETAIL = "Calendar/TOGGLE_DETAIL" as const;
 export const ADD_SCHEDULE_USER = "Calendar/ADD_SCHEDULE_USER" as const;
+export const REMOVE_SCHEDULE_USER = "Calendar/REMOVE_SCHEDULE_USER" as const;
 //export const getUser = deprecated.createStandardAction(GET_USER)();
 
 export const onTest = (id: string) => ({
@@ -48,19 +50,43 @@ export const removeDetail = ({ name, text }: removeDetailPropsType) => ({
   },
 });
 
-export const toggleDetail = ({ date, index, name }: toggleDetailPropsType) => ({
+export const toggleDetail = ({
+  date,
+  index,
+  name,
+  userId,
+}: toggleDetailPropsType) => ({
   type: TOGGLE_DETAIL,
   payload: {
     date,
     index,
     name,
+    userId,
   },
 });
 
-export const addScheduleUser = ({ date, name }: addScheduleUserPropsType) => ({
+export const addScheduleUser = ({
+  date,
+  name,
+  userId,
+}: addScheduleUserPropsType) => ({
   type: ADD_SCHEDULE_USER,
   payload: {
     date,
     name,
+    userId,
+  },
+});
+
+export const removeScheduleUser = ({
+  date,
+  name,
+  userId,
+}: removeScheduleUserPropsType) => ({
+  type: REMOVE_SCHEDULE_USER,
+  payload: {
+    date,
+    name,
+    userId,
   },
 });

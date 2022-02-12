@@ -7,9 +7,15 @@ type DaydetailProps = {
   visible: boolean;
   onCancel: () => void;
   selectedDay: string;
+  projectRole: string;
 };
 
-function DayDetail({ visible, onCancel, selectedDay }: DaydetailProps) {
+function DayDetail({
+  visible,
+  onCancel,
+  selectedDay,
+  projectRole,
+}: DaydetailProps) {
   if (!visible) return null;
 
   return (
@@ -21,10 +27,9 @@ function DayDetail({ visible, onCancel, selectedDay }: DaydetailProps) {
     >
       <div className="dayDetail" onClick={(event) => event.stopPropagation()}>
         {/*이벤트 캡쳐링 방지 */}
-        <Schedule selectedDay={selectedDay} />
+        <Schedule selectedDay={selectedDay} projectRole={projectRole} />
         <div className="dayDetailRight">
-
-          <Record selectedDay={selectedDay}/>
+          <Record selectedDay={selectedDay} />
 
           <button className="cancel-btn btn" onClick={onCancel}>
             취소

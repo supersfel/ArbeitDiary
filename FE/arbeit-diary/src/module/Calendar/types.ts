@@ -3,11 +3,6 @@ import * as actions from "./actions";
 
 export type CalenderAction = ActionType<typeof actions>;
 
-type userType = {
-  name: string;
-  worktime: string;
-};
-
 export type addDetailPropsType = {
   date: string;
   text: string;
@@ -25,15 +20,27 @@ export type toggleDetailPropsType = {
   date: string;
   index: number;
   name: string;
+  userId: string;
 };
 
 export type addScheduleUserPropsType = {
   date: string;
   name: string;
+  userId: string;
+};
+
+export type removeScheduleUserPropsType = {
+  date: string;
+  name: string;
+  userId: string;
 };
 
 /* Object Type */
-
+type userType = {
+  name: string;
+  userId: string;
+  worktime: string;
+};
 export type dayIssueType = {
   name: string;
   time: string;
