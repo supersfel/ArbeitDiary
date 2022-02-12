@@ -34,8 +34,7 @@ function Record({ selectedDay }: RecordProps) {
     //users목록 추출
     (state: RootState) => state.CalenderInfo
   )[0].dates.filter((date) => date.date === currentdate)[0].dayIssues;
-  const userName = useSelector((state: RootState) => state.Userinfo)[0]
-    .userName;
+  const user = useSelector((state: RootState) => state.Userinfo)[0];
 
   const DayIssue = ({ name, time, text }: dayIssueType, userName: string) => {
     return (
@@ -65,8 +64,9 @@ function Record({ selectedDay }: RecordProps) {
       addDetail({
         date: currentdate,
         text: e.target.addDetail.value,
-        name: userName,
+        name: user.userName,
         time: currenttime,
+        userId: user.userId,
       })
     );
     e.target.addDetail.value = "";
@@ -80,7 +80,7 @@ function Record({ selectedDay }: RecordProps) {
       </div>
       <div className="record-body">
         {issues.map((issue, index) => {
-          return <div key={index}>{DayIssue(issue, userName)}</div>;
+          return <div key={index}>{DayIssue(issue, user.userName)}</div>;
         })}
       </div>
       <form className="recordform" onSubmit={onsubmitdetail}>

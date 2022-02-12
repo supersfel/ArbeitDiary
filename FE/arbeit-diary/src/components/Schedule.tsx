@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MdAdd } from "react-icons/md";
 import "../css/components/Schedule.css";
 import { RootState } from "../module";
-import { addDate, toggleDetail } from "../module/Calendar";
+import { addDate, addScheduleUser, toggleDetail } from "../module/Calendar";
 
 type ScheduleProps = {
   selectedDay: string;
@@ -15,6 +16,9 @@ type UserScheduleProps = {
 
 function Schedule({ selectedDay }: ScheduleProps) {
   const dispatch = useDispatch();
+
+  const [visible, setvisible] = useState(false); //modal 변수
+
   let hours = []; //00:00 ~ 23:30까지 생성
   for (let i = 0; i < 24; i++) {
     i < 10 ? hours.push("0" + String(i)) : hours.push(String(i));
@@ -33,6 +37,7 @@ function Schedule({ selectedDay }: ScheduleProps) {
   // console.log(testtt);
 
   try {
+    //user목록 없을때 임시로 추출
     const test = useSelector(
       //users목록 추출
       (state: RootState) => state.CalenderInfo
@@ -41,10 +46,27 @@ function Schedule({ selectedDay }: ScheduleProps) {
     dispatch(addDate(currentdate));
   }
 
-  const users = useSelector(
+  const Calendar = useSelector(
     //users목록 추출
     (state: RootState) => state.CalenderInfo
-  )[0].dates.filter((date) => date.date === currentdate)[0].users;
+  )[0];
+
+  const users = Calendar.dates.filter((date) => date.date === currentdate)[0]
+    .users;
+
+  const currentuserList = users.map((user) => user.name); //현재 스케쥴이 없는 유저의 리스트를 만드는 부분
+  const everyuserList = Calendar.userList.map((user) => user.name);
+  const exceptuserList = everyuserList.filter(
+    (user) => !currentuserList.includes(user)
+  );
+  const onsubmitScheduleUser = (e: any) => {
+    e.preventDefault();
+    dispatch(
+      addScheduleUser({ date: currentdate, name: e.target.adduser.value })
+    );
+    e.target.adduser.value = "";
+    setvisible(false);
+  };
 
   const UserShedule = ({ worktimes, username }: UserScheduleProps) => {
     const worktimelst = worktimes.split("");
@@ -87,7 +109,7 @@ function Schedule({ selectedDay }: ScheduleProps) {
   };
 
   return (
-    <div className="schedule">
+    <div className="schedule shadowBox">
       <div className="times column-line">
         <div className="first-row-line">시간</div>
         <div className="worktimes">
@@ -109,6 +131,48 @@ function Schedule({ selectedDay }: ScheduleProps) {
           </div>
         );
       })}
+      <div className="column-line user-plus-btn">
+        <MdAdd
+          className="addbtn scheduleAdd"
+          onClick={() => {
+            exceptuserList.length === 0
+              ? alert("추가할 사용자가 없습니다!")
+              : setvisible(true);
+          }}
+        />
+      </div>
+
+      <form
+        className={
+          "ScheduleUserAddForm shadowBox" + (visible ? " visible" : "")
+        }
+        onSubmit={onsubmitScheduleUser}
+      >
+        <input
+          type="text"
+          list="exceptUserList"
+          className="inputScheduleUser"
+          placeholder="추가할 사용자 이름을 선택해주세요!"
+          id="adduser"
+          autoComplete="off"
+        ></input>
+        <datalist id="exceptUserList">
+          {exceptuserList.map((name, index) => {
+            return <option key={index}>{name}</option>;
+          })}
+        </datalist>
+        <div className="ScheduleFormRight">
+          <button className="adduserbtn btn">추가</button>
+          <div
+            className="adduserbtn btn"
+            onClick={() => {
+              setvisible(false);
+            }}
+          >
+            취소
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

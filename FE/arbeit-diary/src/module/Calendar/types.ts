@@ -13,6 +13,7 @@ export type addDetailPropsType = {
   text: string;
   name: string;
   time: string;
+  userId: string;
 };
 
 export type removeDetailPropsType = {
@@ -26,31 +27,45 @@ export type toggleDetailPropsType = {
   name: string;
 };
 
+export type addScheduleUserPropsType = {
+  date: string;
+  name: string;
+};
+
+/* Object Type */
+
 export type dayIssueType = {
   name: string;
   time: string;
   text: string;
+  userId: string;
 };
 
 type dateType = {
   date: string;
+  dateId?: string;
+  dayId?: string;
   users: userType[];
   dayIssues: dayIssueType[];
 };
 
 type fixedtime = {
-  dayId : string,
-  worktime : string
-}
+  dayId: string;
+  worktime: string;
+};
 
 type userListType = {
-  name : string,
-  fixedtimes : fixedtime[]
-}
+  name: string;
+  userId: string;
+  fixedtimes: fixedtime[];
+};
 
 export type CalenderType = {
   calendarId: string;
-  userList : userListType[];
+  projectId?: string;
+  projectName?: string;
+
+  userList: userListType[];
   dates: dateType[];
 };
 

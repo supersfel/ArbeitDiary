@@ -2,6 +2,7 @@ import {
   addDetailPropsType,
   removeDetailPropsType,
   toggleDetailPropsType,
+  addScheduleUserPropsType,
 } from "./types";
 
 export const TEST = "Calender/TEST" as const;
@@ -9,6 +10,7 @@ export const ADD_DATE = "Calendar/ADD_DATE" as const;
 export const ADD_DETAIL = "Calendar/ADD_DETAIL" as const;
 export const REMOVE_DETAIL = "Calendar/REMOVE_DETAIL" as const;
 export const TOGGLE_DETAIL = "Calendar/TOGGLE_DETAIL" as const;
+export const ADD_SCHEDULE_USER = "Calendar/ADD_SCHEDULE_USER" as const;
 //export const getUser = deprecated.createStandardAction(GET_USER)();
 
 export const onTest = (id: string) => ({
@@ -21,13 +23,20 @@ export const addDate = (date: string) => ({
   payload: date,
 });
 
-export const addDetail = ({ date, text, name, time }: addDetailPropsType) => ({
+export const addDetail = ({
+  date,
+  text,
+  name,
+  time,
+  userId,
+}: addDetailPropsType) => ({
   type: ADD_DETAIL,
   payload: {
     date,
     text,
     name,
     time,
+    userId,
   },
 });
 
@@ -44,6 +53,14 @@ export const toggleDetail = ({ date, index, name }: toggleDetailPropsType) => ({
   payload: {
     date,
     index,
+    name,
+  },
+});
+
+export const addScheduleUser = ({ date, name }: addScheduleUserPropsType) => ({
+  type: ADD_SCHEDULE_USER,
+  payload: {
+    date,
     name,
   },
 });
