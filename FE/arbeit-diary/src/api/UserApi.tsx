@@ -150,6 +150,25 @@ export async function getCalendarApi(
       dispatch(getCalendarinfo(response.data));
     });
   } catch (e) {
-    console.log("error in PostApi");
+    console.log("error in getCalendarApi");
+  }
+}
+
+export async function sendfixedscheduleapi(token: string, params: any) {
+  try {
+    await axios({
+      method: "post",
+      url: "http://localhost:8080/api/auto",
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+        Authorization: token,
+      },
+      data: params,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("error in sendfixedscheduleapi");
   }
 }

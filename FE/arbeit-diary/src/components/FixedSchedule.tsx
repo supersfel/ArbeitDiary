@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getCalendarApi, sendfixedscheduleapi } from "../api/UserApi";
 import "../css/components/FixedSchedule.css";
 import { RootState } from "../module";
 import { toggleFixedSchedule } from "../module/Calendar";
@@ -22,8 +23,8 @@ function FixedSchedule({
 }: fixedScheduleProps) {
   const dispatch = useDispatch();
 
-  const userList = useSelector((state: RootState) => state.CalenderInfo)[0]
-    .userList;
+  const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
+  const userList = calendar.userList;
 
   const user = userList.filter((user) => user.userId === userId)[0];
 
@@ -40,6 +41,19 @@ function FixedSchedule({
       times.push(hour + ":" + minute);
     });
   });
+
+  const onSendfixedschedule = async () => {
+    const token = localStorage.getItem("token");
+    await sendfixedscheduleapi(token === null ? "" : token, calendar).then(
+      async () => {
+        await getCalendarApi(
+          token === null ? "" : token,
+          calendar.projectId,
+          dispatch
+        );
+      }
+    );
+  };
 
   const FixedScheduletime = ({ worktimes, dayId }: FixedscheduletimeProps) => {
     const worktimelst = worktimes.split("");
@@ -121,7 +135,9 @@ function FixedSchedule({
             })}
           </div>
           <div className="settingBoxDown">
-            <div className="settingBoxbtn btn">저장</div>
+            <div className="settingBoxbtn btn" onClick={onSendfixedschedule}>
+              저장
+            </div>
             <div
               className="settingBoxbtn btn"
               onClick={() => setFixedSchedulevisible(false)}
