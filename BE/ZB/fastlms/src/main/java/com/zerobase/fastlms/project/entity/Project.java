@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.zerobase.fastlms.calendar.entity.Calendar;
 import com.zerobase.fastlms.memberProject.entity.MemberProject;
 
 import lombok.AllArgsConstructor;
@@ -47,7 +49,7 @@ public class Project {
 	
 	
 	LocalDateTime regDt;
-	//@JsonIgnore
+
 //	@JsonManagedReference
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 	        property = "id") 
@@ -59,7 +61,10 @@ public class Project {
 			orphanRemoval = true)
 	List<MemberProject> members = new ArrayList<>();
 	
-	
+	@OneToOne(mappedBy = "project")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "calendarId") 
+	@JsonIdentityReference(alwaysAsId = true)
+	Calendar calendar;
 	
 }
 

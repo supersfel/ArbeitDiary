@@ -16,4 +16,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 //			+ "WHERE p.id = :projectId")
 //	ProjectListInterface getById(Long id); 
 	<T> T findById(Long id, Class<T> type);
+	
+	
 }

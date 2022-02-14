@@ -9,4 +9,5 @@ public class MemberInput {
 	private String userPassword;
 	private String userPhone;
 	private String newPassword;
+	private String day;
 }

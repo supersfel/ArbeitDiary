@@ -1,17 +1,12 @@
 package com.zerobase.fastlms.project.service;
 
-import java.security.Principal;
 import java.util.List;
 
-import com.zerobase.fastlms.member.model.MemberResponseDto;
-import com.zerobase.fastlms.memberProject.dto.UserResponseDto;
+import com.zerobase.fastlms.calendar.model.CalendarInput;
+import com.zerobase.fastlms.calendar.model.CalendarUserList;
 import com.zerobase.fastlms.memberProject.dto.sampleDto;
-import com.zerobase.fastlms.memberProject.entity.MemberProject;
-import com.zerobase.fastlms.memberProject.model.UserListDto;
-import com.zerobase.fastlms.memberProject.model.UserListInterface;
 import com.zerobase.fastlms.project.dto.ProjectDto;
 import com.zerobase.fastlms.project.model.ProjectInput;
-import com.zerobase.fastlms.project.model.ProjectListInterface;
 import com.zerobase.fastlms.project.model.ProjectParam;
 
 public interface ProjectService {
@@ -22,4 +17,6 @@ public interface ProjectService {
 	boolean join(String userId, Long projectId);
 	boolean out(String userId, ProjectInput projectInput);
 	String responseOldProject(String userId);
+	
+	CalendarUserList getUserList(Long projectId);
 }

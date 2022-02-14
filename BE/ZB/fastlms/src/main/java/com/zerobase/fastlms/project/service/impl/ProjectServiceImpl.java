@@ -14,16 +14,17 @@ import org.springframework.util.CollectionUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
-import com.zerobase.fastlms.course.dto.CourseDto;
+import com.zerobase.fastlms.calendar.model.CalendarInput;
+import com.zerobase.fastlms.calendar.model.CalendarUserList;
+import com.zerobase.fastlms.calendar.service.CalendarService;
 import com.zerobase.fastlms.member.entity.Member;
-import com.zerobase.fastlms.member.model.MemberResponseDto;
 import com.zerobase.fastlms.member.repository.MemberRepository;
+import com.zerobase.fastlms.member.repository.WorkRepository;
+import com.zerobase.fastlms.member.service.WorkService;
 import com.zerobase.fastlms.memberProject.dto.UserResponseDto;
 import com.zerobase.fastlms.memberProject.dto.sampleDto;
 import com.zerobase.fastlms.memberProject.entity.MemberProject;
 import com.zerobase.fastlms.memberProject.model.ProjectRoleType;
-import com.zerobase.fastlms.memberProject.model.UserListDto;
 import com.zerobase.fastlms.memberProject.model.UserListInterface;
 import com.zerobase.fastlms.memberProject.repository.MemberProjectRepository;
 import com.zerobase.fastlms.project.dto.ProjectDto;
@@ -40,39 +41,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class ProjectServiceImpl implements ProjectService{
+	private final MemberRepository memberRepository;
 	private final ProjectRepository projectRepository;
 	private final MemberProjectRepository memberProjectRepository;
+	private final WorkRepository workRepository;
+	
+	private final CalendarService calendarService;
 	private final ProjeactMapper projectMapper;
-	private final MemberRepository memberRepository;
+	private final WorkService workService;
+	
+	@Override
+	public CalendarUserList getUserList (Long projectId) {
+		return projectRepository.findById(projectId,CalendarUserList.class);
+	}
 	
 	//@Transactional
 	@Override
 	public boolean add(String userId, ProjectInput projectInput) {
 		// TODO Auto-generated method stub
-		System.out.println("===============================================================================");
-		System.out.println(projectInput);
+		Optional<Member> optionalMember = memberRepository.findById(userId);
+		if(!optionalMember.isPresent()) {
+			System.out.println("[회원 정보 오류]");
+			return false;
+		}
+		
 		Project project = Project.builder()
 				.projectName(projectInput.getProjectName())
 				.regDt(LocalDateTime.now())
 				.build();
 		System.out.println("[Entity Build] : "+ project);
 		
-		Optional<Member> optionalMember = memberRepository.findById(userId);
-		if(!optionalMember.isPresent()) {
-			System.out.println("[회원 정보 오류]");
-			return false;
-		}
+	
 		Member member = optionalMember.get();
-		System.out.println(member);
+		System.out.println(project.getProjectName());
 		MemberProject memberProject = MemberProject.builder()
 				.member(member)
 				.project(project)
 				.projectRole(ProjectRoleType.MASTER)
 				.regDt(LocalDateTime.now())
 				.build();
+		System.out.println("[workd]");
+		System.out.println(project.getId());
+			
 		projectRepository.save(project);
+		workService.initWorkdays(member, project.getId());
 		memberProjectRepository.save(memberProject);
 		
+		calendarService.makeCalendar(memberProject.getId(),project);
 		return true;
 	}
 
@@ -106,9 +121,9 @@ public class ProjectServiceImpl implements ProjectService{
 	 */
 	@Override
 	public String responseOldProject(String userId){
-		//Optional<MemberProject> mp = memberProjectRepository.findById(7L);
-		//System.out.println("Proejct : "+mp.get().getProject());
-		//Project project = mp.get().getProject();
+//		Optional<MemberProject> mp = memberProjectRepository.findById(7L);
+//		System.out.println("Proejct : "+mp.get().getProject());
+//		Project project = mp.get().getProject();
 		UserListInterface ui = memberRepository.findByUserId(userId);
 		//List<MemberProject> ul = memberProjectRepository.findByProject(project);
 		System.out.println("???");
@@ -167,12 +182,15 @@ public class ProjectServiceImpl implements ProjectService{
 			return false;
 		}
 		Member member = optionalMember.get();
+		Project project = optionalProject.get();
 		MemberProject memberProject = MemberProject.builder()
 				.member(member)
-				.project(optionalProject.get())
+				.project(project)
 				.projectRole(ProjectRoleType.USER)
 				.regDt(LocalDateTime.now())
 				.build();
+		
+		workService.initWorkdays(member, project.getId());
 		memberProjectRepository.save(memberProject);
 		
 		return true;
@@ -192,14 +210,12 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		System.out.println(memberProject.getProject().getId());
 		if(memberProject.getProjectRole().equals(ProjectRoleType.MASTER) ) {
-			System.out.println("IM A MASTER");
 			Long count = memberProjectRepository.countByProjectId(memberProject.getProject().getId());
-			if(!projectInput.getTargetId().equals(userId)){
-				System.out.println("MASTER-DELETE-TARGET");
-				Optional<MemberProject> optionalTargetProject = memberProjectRepository.findByProjectIdAndMemberId(memberProject.getProject().getId(),projectInput.getTargetId());
-				System.out.println(memberProject.getProject().getId()+":"+ projectInput.getTargetId());
-				if(!optionalTargetProject.isPresent()){
-					System.out.println("타깃 회원 정보 존재 X");
+			System.out.println("MASTER & COUNT : " + count);
+			if(!projectInput.getTargetId().equals(userId)) {
+				Optional<MemberProject> optionalTargetProject = memberProjectRepository.findByProjectIdAndMemberId(memberProject.getProject().getId(), projectInput.getTargetId());
+				if(!optionalTargetProject.isPresent()) {
+					System.out.println("Target Member is not exist");
 					return false;
 				}
 				memberProjectRepository.delete(optionalTargetProject.get());
@@ -209,7 +225,7 @@ public class ProjectServiceImpl implements ProjectService{
 				System.out.println("[아직 회원이 남아있습니다.]");
 				return false;
 			}
-			else if(count == 1){
+			else if(count == 1) {
 				Project project = memberProject.getProject();
 				memberProjectRepository.delete(memberProject);
 				projectRepository.delete(project);

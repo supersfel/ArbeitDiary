@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,17 +26,21 @@ import com.zerobase.fastlms.member.model.CustomUserDetails;
 import com.zerobase.fastlms.member.model.LoginInput;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
+import com.zerobase.fastlms.member.model.SelectAutoSelf;
 import com.zerobase.fastlms.member.repository.MemberRepository;
 import com.zerobase.fastlms.member.service.MemberService;
+import com.zerobase.fastlms.member.service.WorkService;
 
 @Controller
 public class MemberController {
 	private final MemberService memberService;
+	private final WorkService workService;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	
-	public MemberController(MemberService memberService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+	public MemberController(MemberService memberService, JwtAuthenticationFilter jwtAuthenticationFilter, WorkService workService) {
 		this.memberService = memberService;
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.workService = workService;
 	}
 	
 	@GetMapping("/member/register")
@@ -174,18 +179,16 @@ public class MemberController {
 		return "member/takecourse";
 	}
 
-	@GetMapping("/projects/newProject")
-	public String makeProject() {
-		return "/projects/makeProject";
+	@GetMapping("/setwork")
+	public String work() {
+		return "member/work";
 	}
 	
-	@PostMapping("/projects/newProject")
-	public String newProject() {
-		return "/projects/project";
+	@PostMapping("/setwork")
+	public String submitWork(MemberInput memberInput, Principal principal, Long projectId) {
+		projectId = 4L;
+		boolean result = workService.testAdd(memberInput.getDay(), principal.getName(), projectId, SelectAutoSelf.SELF.toString());
+		
+		return "member/work";
 	}
-	
-	@GetMapping("/projects/project")
-	public String exsistProject() {
-		return "/projects/project";
-	}	
 }

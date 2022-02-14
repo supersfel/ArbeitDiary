@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
+import { getCalendarApi } from "../api/UserApi";
 
 import Calendar from "../components/Calendar";
 import FixedSchedule from "../components/FixedSchedule";
@@ -18,12 +19,13 @@ function Project() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  useEffect(() => {
-    checkEffectiveToken(dispatch, history);
-  }, []);
-
   const location = useLocation();
   const projectId = location.search.slice(11);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    checkEffectiveToken(dispatch, history);
+    getCalendarApi(token === null ? "" : token, { projectId }, dispatch);
+  }, []);
 
   const [visible, setvisible] = useState(false); //토글방식
   const [JoinModalvisible, setJoinModalvisible] = useState(false);

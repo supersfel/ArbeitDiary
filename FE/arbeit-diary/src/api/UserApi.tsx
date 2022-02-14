@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useHistory } from "react-router";
+import { getCalendarinfo } from "../module/Calendar";
 import { get_userinfo, Usertype } from "../module/User";
 
 export const api = "http://localhost:8080";
@@ -123,6 +124,30 @@ export async function PostApi(url: string, token: string, params: any) {
       console.log(response.data);
       localStorage.setItem("response", response.data);
       return response.data;
+    });
+  } catch (e) {
+    console.log("error in PostApi");
+  }
+}
+
+export async function getCalendarApi(
+  token: string,
+  params: any,
+  dispatch: any
+) {
+  try {
+    await axios({
+      method: "post",
+      url: "http://localhost:8080/api/load",
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+        Authorization: token,
+      },
+      data: params,
+    }).then((response) => {
+      console.log(response.data);
+      dispatch(getCalendarinfo(response.data));
     });
   } catch (e) {
     console.log("error in PostApi");

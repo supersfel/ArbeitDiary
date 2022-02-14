@@ -79,13 +79,16 @@ public class Member implements MemberCode{
     //@JsonManagedReference
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 	        property = "id") 
-	@JsonIdentityReference(alwaysAsId = true) 
+	//@JsonIdentityReference(alwaysAsId = true) 
 	@OneToMany(mappedBy = "member",
 			fetch = FetchType.LAZY,
-			//cascade = CascadeType.ALL,
 			orphanRemoval =  true)
 	@Builder.Default
 	private List<MemberProject> projects = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "member")
+	List<Work> works = new ArrayList<Work>();
 	
 	public List<String> getRoleList(){
 		if(this.roles.length() > 0) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdAdd } from "react-icons/md";
 import "../css/components/Schedule.css";
@@ -9,6 +9,7 @@ import {
   removeScheduleUser,
   toggleDetail,
 } from "../module/Calendar";
+import { getCalendarApi } from "../api/UserApi";
 
 type ScheduleProps = {
   selectedDay: string;
@@ -22,9 +23,10 @@ type UserScheduleProps = {
 
 function Schedule({ selectedDay, projectRole }: ScheduleProps) {
   const dispatch = useDispatch();
-
   const [visible, setvisible] = useState(false); //modal 변수
 
+
+  
   let hours = []; //00:00 ~ 23:30까지 생성
   for (let i = 0; i < 24; i++) {
     i < 10 ? hours.push("0" + String(i)) : hours.push(String(i));
@@ -105,7 +107,6 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
         );
       }
     };
-
     return (
       <div className="worktimes">
         {worktimelst.map((worktime, index) => {

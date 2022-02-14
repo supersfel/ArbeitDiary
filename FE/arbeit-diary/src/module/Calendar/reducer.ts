@@ -8,6 +8,7 @@ import {
   ADD_SCHEDULE_USER,
   REMOVE_SCHEDULE_USER,
   TOGGLE_FIXED_SCHEDULE,
+  GET_CALENDARINFO,
 } from "./actions";
 
 const initialState: CalendersType = [
@@ -482,6 +483,7 @@ const CalenderInfo = createReducer<CalendersType, CalenderAction>(
             : { ...user }
         ),
       })),
+    [GET_CALENDARINFO]: (state, action) => state.map(() => action.payload),
   }
 );
 

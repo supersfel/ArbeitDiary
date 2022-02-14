@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CheckToken from "../api/CheckToken";
 import "../css/components/Header.css";
+import { RootState } from "../module";
 
 function Header() {
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
   const history = useHistory();
+  const calendar = useSelector((state: RootState) => state.CalenderInfo);
   function handleScroll() {
     if (ScrollY > 10) {
       setScrollY(window.pageYOffset);
@@ -33,8 +36,13 @@ function Header() {
     }
   };
 
+  const onTest = () => {
+    console.log(calendar[0]);
+  };
+
   return (
     <>
+      <button onClick={onTest}></button>
       <header className={"Header" + (ScrollActive ? " onScrolled" : "")}>
         <Link to="/" className="left">
           <div className="logo-icon"></div>

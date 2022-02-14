@@ -28,10 +28,12 @@ import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.dto.MemberLoginDto;
 import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
+import com.zerobase.fastlms.calendar.model.enuum.DayEnum;
 import com.zerobase.fastlms.component.MailComponent;
 import com.zerobase.fastlms.configuration.token.TokenUtils;
 import com.zerobase.fastlms.course.model.ServiceResult;
 import com.zerobase.fastlms.member.entity.Member;
+import com.zerobase.fastlms.member.entity.Work;
 import com.zerobase.fastlms.member.exception.MemberNotEmailAllthException;
 import com.zerobase.fastlms.member.exception.MemberStopUserException;
 import com.zerobase.fastlms.member.model.CustomUserDetails;
@@ -53,6 +55,7 @@ public class MemberServiceImpl implements MemberService{
 		this.mailComponents = mailComponents;
 		this.memberMapper = memberMapper;
 	}
+
 	
 	@Override
 	public boolean register(MemberInput parameter) {
@@ -78,7 +81,7 @@ public class MemberServiceImpl implements MemberService{
 				.userState(Member.MEMBER_STATUS_YET)
 				.roles("invalid")
 				.refreshToken("invalid")
-				.build();
+				.build();		
 		
 		memberRepository.save(member);
 		System.out.println(member.getRoles());

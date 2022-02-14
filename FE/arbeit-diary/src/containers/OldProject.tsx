@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import Header from "../components/Header";
 import "../css/containers/OldProject.css";
 import { RootState } from "../module";
+import { getCalendarApi } from "../api/UserApi";
 
 type ProjecttitleProps = {
   projectId: string;
@@ -13,10 +14,16 @@ type ProjecttitleProps = {
 };
 
 function Projecttitle({ projectId, projectName }: ProjecttitleProps) {
+  const dispatch = useDispatch();
+  const ongetCalendarApi = async () => {
+    const token = localStorage.getItem("token");
+    await getCalendarApi(token !== null ? token : "", { projectId }, dispatch);
+  };
   return (
     <Link
       to={`project/?projectId=${projectId}`}
       className="diary-inner-box Select-diary-box"
+      onClick={ongetCalendarApi}
     >
       {projectName}
     </Link>

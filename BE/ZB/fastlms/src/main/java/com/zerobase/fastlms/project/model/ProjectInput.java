@@ -7,6 +7,7 @@ public class ProjectInput {
 	private String projectName;
 	/*
 	 * 프로젝트 분류 코드
+	 * 더미 값
 	 */
 	private Long projectId;
 	
@@ -14,6 +15,6 @@ public class ProjectInput {
 	 * 참여 번호
 	 */
 	private Long joinId;
-
+	
 	private String targetId;
 }
