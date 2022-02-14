@@ -29,7 +29,7 @@ function Record({ selectedDay }: RecordProps) {
     "금요일",
     "토요일"
   ); //요일구하기
-  const currentdate = selectedDay.replace(/[^0-9]/g, ""); //현재날짜출력
+  const currentdate = selectedDay.replace(/[^0-9]/g, "").slice(2); //현재날짜출력
   const issues = useSelector(
     //users목록 추출
     (state: RootState) => state.CalenderInfo

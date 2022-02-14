@@ -53,6 +53,7 @@ function FixedSchedule({
         );
       }
     );
+    setFixedSchedulevisible(false);
   };
 
   const FixedScheduletime = ({ worktimes, dayId }: FixedscheduletimeProps) => {

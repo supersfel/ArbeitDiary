@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdAdd } from "react-icons/md";
 import "../css/components/Schedule.css";
@@ -9,7 +9,6 @@ import {
   removeScheduleUser,
   toggleDetail,
 } from "../module/Calendar";
-import { getCalendarApi } from "../api/UserApi";
 
 type ScheduleProps = {
   selectedDay: string;
@@ -25,8 +24,6 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
   const dispatch = useDispatch();
   const [visible, setvisible] = useState(false); //modal 변수
 
-
-  
   let hours = []; //00:00 ~ 23:30까지 생성
   for (let i = 0; i < 24; i++) {
     i < 10 ? hours.push("0" + String(i)) : hours.push(String(i));
@@ -39,25 +36,27 @@ function Schedule({ selectedDay, projectRole }: ScheduleProps) {
     });
   });
 
-  const currentdate = selectedDay.replace(/[^0-9]/g, ""); //현재날짜출력
+  const currentdate = selectedDay.replace(/[^0-9]/g, "").slice(2); //현재날짜출력
 
   try {
     //user목록 없을때 임시로 추출
+    // const test = useSelector(
+    //   //users목록 추출
+    //   (state: RootState) => state.CalenderInfo
+    // )[0].dates.filter((date) => date.date === currentdate)[0].users;
+
     const test = useSelector(
-      //users목록 추출
       (state: RootState) => state.CalenderInfo
     )[0].dates.filter((date) => date.date === currentdate)[0].users;
   } catch (error) {
     dispatch(addDate(currentdate));
   }
 
-  const Calendar = useSelector(
-    //users목록 추출
-    (state: RootState) => state.CalenderInfo
-  )[0];
+  const Calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
 
   const users = Calendar.dates.filter((date) => date.date === currentdate)[0]
     .users;
+
   const currentuserList = users.map((user) => user.name); //현재 스케쥴이 없는 유저의 리스트를 만드는 부분
   const everyuserList = Calendar.userList.map((user) => user.name);
   const exceptuserList = everyuserList.filter(
