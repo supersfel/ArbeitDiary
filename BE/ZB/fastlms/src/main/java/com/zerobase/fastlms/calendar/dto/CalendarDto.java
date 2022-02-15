@@ -25,6 +25,11 @@ public class CalendarDto {
 	List<CalendarInterface.CustomDate> dates = new ArrayList<>();
 	
 	public CalendarDto() {}
+	public CalendarDto(CalendarUserList calendarUserList) {
+		this.projectId = calendarUserList.getProjectId();
+		this.projectName = calendarUserList.getProjectName();
+		setUserList(calendarUserList.getUserList());
+	}
 	public CalendarDto(CalendarUserList calendarUserList,CalendarInterface calendarInterface) {
 		this.calendarId = calendarInterface.getCalendarId();
 		this.projectId = calendarUserList.getProjectId();

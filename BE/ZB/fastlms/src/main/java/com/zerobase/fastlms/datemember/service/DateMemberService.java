@@ -7,11 +7,12 @@ import com.zerobase.fastlms.calendar.model.CalendarUserList;
 import com.zerobase.fastlms.calendar.model.CalendarUserList.userList;
 import com.zerobase.fastlms.calendar.model.DatesDto;
 import com.zerobase.fastlms.calendar.model.WorkUserListRequest;
+import com.zerobase.fastlms.calendar.model.responseDto.UserLists;
 
 public interface DateMemberService {
 	List<Date> exceptAutoTime(Long projectId, Long caLendarId);
-	boolean updateDailyWork(Long calendarId, List<userList> userList, List<Date> beforeDates);
-	
+
 	boolean loadDailyWork(Long calendarId, List<DatesDto> userList);
 	boolean deleteCommentAndDateMember(Long calendarId);
+	boolean updateDailyWork(Long calendarId, List<UserLists> userList, List<Date> beforeDates);
 }

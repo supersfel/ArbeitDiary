@@ -75,6 +75,7 @@ public class ApiCalendarController {
 		CalendarInterface calendarResponse = calendarRepository.findByProjectId(calendarInput.getProjectId());
 		CalendarDto calendarDto = new CalendarDto(calendarUserList, calendarResponse);
 		CalendarDto resultCalendar = calendarService.addWorkTime(calendarDto);
+		System.out.println("???");
 		return ResponseEntity.ok().body(calendarDto);
 	}
 	
@@ -86,8 +87,10 @@ public class ApiCalendarController {
 		boolean isUserListUpdate = workService.updateUserList(workUserList, beforeUserList, principal.getName());
 		System.out.println("[현재 유저 데이터 업데이트 완료] : =========================================================="+isUserListUpdate);
 		CalendarUserList calendarUserList = projectService.getUserList(workUserList.getProjectId());
+		CalendarDto calendarDto = new CalendarDto(calendarUserList); 
+		CalendarDto resultCalendar = calendarService.addWorkTime(calendarDto);
 		System.out.println("[userList값 가져오기 성공]==========================================================");
-		boolean result = dateMemberService.updateDailyWork(workUserList.getCalendarId(), calendarUserList.getUserList(), beforeUserList);
+		boolean result = dateMemberService.updateDailyWork(workUserList.getCalendarId(), resultCalendar.getUserList(), beforeUserList);
 		System.out.println("??");
 		return ResponseEntity.ok().body(result);
 	}
@@ -100,7 +103,7 @@ public class ApiCalendarController {
 		CalendarUserList calendarUserList = projectService.getUserList(workUserList.getProjectId());
 		CalendarInterface calendarResponse = calendarRepository.findByProjectId(workUserList.getProjectId());
 		CalendarDto calendarDto = new CalendarDto(calendarUserList, calendarResponse);
-		CalendarDto resultCalendar = calendarService.addWorkTime(calendarDto);
+		//CalendarDto resultCalendar = calendarService.addWorkTime(calendarDto);
 		return ResponseEntity.ok().body(calendarDto);
 	}
 }

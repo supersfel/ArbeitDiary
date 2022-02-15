@@ -146,6 +146,7 @@ export async function getCalendarApi(
       },
       data: params,
     }).then((response) => {
+      console.log("calendar받아오기");
       console.log(response.data);
       dispatch(getCalendarinfo(response.data));
     });

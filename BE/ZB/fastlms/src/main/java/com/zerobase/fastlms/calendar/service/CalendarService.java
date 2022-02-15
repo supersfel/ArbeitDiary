@@ -6,6 +6,7 @@ import java.util.List;
 import com.zerobase.fastlms.calendar.dto.CalendarDto;
 import com.zerobase.fastlms.calendar.entity.Calendar;
 import com.zerobase.fastlms.calendar.entity.Date;
+import com.zerobase.fastlms.calendar.model.CalendarUserList;
 import com.zerobase.fastlms.calendar.model.FixedTimeInterface;
 import com.zerobase.fastlms.project.entity.Project;
 
@@ -16,5 +17,6 @@ public interface CalendarService {
 	public boolean makeAllDate();
 	
 	public boolean ex(Long projectId);
+	//CalendarDto addWorkTime(CalendarDto calendarDto);
 	CalendarDto addWorkTime(CalendarDto calendarDto);
 }

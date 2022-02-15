@@ -19,7 +19,7 @@ public class UserLists{
 		this.userId = user.getUserId();
 		this.name = user.getUserName();
 		
-		//setFixeditmes(user.getFixedtimes(), projectId);
+		//setFixeditmes(user.getFixedtimes());
 	}
 	
 	public void setFixeditmes(List<FixedTimeInterface> times) {

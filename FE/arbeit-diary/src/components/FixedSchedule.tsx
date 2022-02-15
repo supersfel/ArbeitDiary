@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
 import { getCalendarApi, sendfixedscheduleapi } from "../api/UserApi";
 import "../css/components/FixedSchedule.css";
 import { RootState } from "../module";
@@ -22,6 +23,7 @@ function FixedSchedule({
   setFixedSchedulevisible,
 }: fixedScheduleProps) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
   const userList = calendar.userList;
@@ -45,15 +47,11 @@ function FixedSchedule({
   const onSendfixedschedule = async () => {
     const token = localStorage.getItem("token");
     await sendfixedscheduleapi(token === null ? "" : token, calendar).then(
-      async () => {
-        await getCalendarApi(
-          token === null ? "" : token,
-          calendar.projectId,
-          dispatch
-        );
+      () => {
+        setFixedSchedulevisible(false);
+        window.location.reload();
       }
     );
-    setFixedSchedulevisible(false);
   };
 
   const FixedScheduletime = ({ worktimes, dayId }: FixedscheduletimeProps) => {

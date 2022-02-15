@@ -111,7 +111,7 @@ public class CalendarServiceImpl implements CalendarService{
 			List<FixedTimeInterface> userWorkTimeList = workService.getWorkTimeWProjectId(calendarDto.getProjectId(), user.getUserId());
 			user.setFixeditmes(userWorkTimeList);
 		}
-		return null;
+		return calendarDto;
 	}
 	
 }

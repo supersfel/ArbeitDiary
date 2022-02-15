@@ -16,6 +16,8 @@ import com.zerobase.fastlms.calendar.model.DateUserDto;
 import com.zerobase.fastlms.calendar.model.DatesDto;
 import com.zerobase.fastlms.calendar.model.DayIssues;
 import com.zerobase.fastlms.calendar.model.WorkUserListRequest;
+import com.zerobase.fastlms.calendar.model.responseDto.FixedTimes;
+import com.zerobase.fastlms.calendar.model.responseDto.UserLists;
 import com.zerobase.fastlms.calendar.repository.DateRepository;
 import com.zerobase.fastlms.comment.CommentRepository;
 import com.zerobase.fastlms.comment.entity.Comment;
@@ -126,7 +128,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 	}
 		
 	@Override
-	public boolean updateDailyWork(Long calendarId, List<CalendarUserList.userList> userList, List<Date> beforeDates) {
+	public boolean updateDailyWork(Long calendarId, List<UserLists> userList, List<Date> beforeDates) {
 		int[] day = getTodayDay();
 		System.out.println("[day 받아오기 성공] : "+day);
 		Optional<Date> todayDate = dateRepository.findByCalendarCalendarIdAndYearAndMonthAndDay(calendarId, day[0], day[1], day[2]);
@@ -146,9 +148,9 @@ public class DateMemberServiceImpl implements DateMemberService{
 			
 			if(dayWorkers.isEmpty()) {
 				System.out.println("근무자 무");
-				for(CalendarUserList.userList user : userList) {
+				for(UserLists user : userList) {
 					System.out.println(user.getUserId());
-					for(CalendarUserList.userList.times time : user.getFixedtimes()) {
+					for(FixedTimes time : user.getFixedtimes()) {
 						System.out.println(time.getDayId());
 						if(!time.getDayId().equals(date.getDayOfWeek())) {
 							System.out.println("해당 요일이 아니다.");
@@ -164,7 +166,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 								.date(date)
 								.workTime(time.getWorktime())
 								.userId(user.getUserId())
-								.userName(user.getUserName())
+								.userName(user.getName())
 								.calendarId(calendarId)
 								.build(); 
 						uploadMember.add(dateMember);
@@ -180,7 +182,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 				//boolean isCoverWorker = true;
 				// 고정 근무자들 확인
 				boolean isCoverWorker = true;
-				for(CalendarUserList.userList user : userList) {
+				for(UserLists user : userList) {
 					if(!worker.getUserId().equals(user.getUserId())) {
 						//근무자들과 고정 근무자가 다름 = 대타자 놔둠
 						continue;
@@ -188,7 +190,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 					
 					//같으면
 					isCoverWorker = false;
-					for(CalendarUserList.userList.times time : user.getFixedtimes()) {
+					for(FixedTimes time : user.getFixedtimes()) {
 						if(!isWorkTime(time.getWorktime())) {
 							//일 하지 않는 날
 							continue;
@@ -217,7 +219,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 								.date(date)
 								.workTime(time.getWorktime())
 								.userId(user.getUserId())
-								.userName(user.getUserName())
+								.userName(user.getName())
 								.calendarId(calendarId)
 								.build(); 
 						uploadMember.add(dateMember);
@@ -238,7 +240,7 @@ public class DateMemberServiceImpl implements DateMemberService{
 		dateMemberRepository.saveAll(uploadMember);
 		//dateRepository.saveAll(uploadDate);
 		
-		return false;
+		return true;
 	}
 	
 	
