@@ -94,7 +94,7 @@ public class WorkServiceImpl implements WorkService{
 	}
 	
 	@Override
-	public boolean updateUserList(WorkUserListRequest userList, List<Date> beforeUserList, String userId) {
+	public boolean updateUserList(WorkUserListRequest userList, String userId) {
 		if(userList.getUserList().isEmpty()) {
 			System.out.println("존재하지 않습니다.");
 			return false;

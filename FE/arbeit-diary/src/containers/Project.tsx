@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
-import { getCalendarApi } from "../api/UserApi";
+import { calendarupdateapi, getCalendarApi } from "../api/UserApi";
 
 import Calendar from "../components/Calendar";
 import FixedSchedule from "../components/FixedSchedule";
@@ -16,6 +16,7 @@ import DayDetail from "./DayDetail";
 function Project() {
   CheckTokenMoveHome();
   const user = useSelector((state: RootState) => state.Userinfo)[0];
+  const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,7 +35,7 @@ function Project() {
   const [userId, setuserId] = useState("");
 
   const projects = user.projects;
-  
+
   const constproject = projects.filter(
     (project) => project.projectId === projectId
   )[0]; //해당 id의 userList 추출
@@ -47,7 +48,13 @@ function Project() {
     setselectedDay(days.format("YYYY년 MM월 DD일"));
   };
 
-  const onCancel = () => setvisible(false);
+  const onCancel = async () => {
+    setvisible(false);
+    const token = localStorage.getItem("token");
+    await calendarupdateapi(token === null ? "" : token, calendar).then(() => {
+      window.location.reload();
+    });
+  };
   const onConfirm = () => setvisible(true);
 
   const onCancelJoinModal = () => setJoinModalvisible(false);
@@ -72,7 +79,11 @@ function Project() {
         />
         <div className="projectRight">
           <div className="projectTitle">{constproject.projectName}</div>
-          <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} constproject={constproject} />
+          <Calendar
+            onConfirm={onConfirm}
+            onConfirmDay={onConfirmDay}
+            constproject={constproject}
+          />
         </div>
       </div>
       <DayDetail

@@ -173,3 +173,22 @@ export async function sendfixedscheduleapi(token: string, params: any) {
     console.log("error in sendfixedscheduleapi");
   }
 }
+
+export async function calendarupdateapi(token: string, params: any) {
+  try {
+    await axios({
+      method: "post",
+      url: "http://localhost:8080/api/update",
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+        Authorization: token,
+      },
+      data: params,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("error in calendarupdateapi");
+  }
+}

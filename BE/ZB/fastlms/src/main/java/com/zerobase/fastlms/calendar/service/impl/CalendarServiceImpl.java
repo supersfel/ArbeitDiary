@@ -28,7 +28,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class CalendarServiceImpl implements CalendarService{
-	public static final int INIT_FORWARD_DAYS = 30; // 30일
+	public static final int INIT_FORWARD_DAYS = 30 * 13; // 30일 * 12 = 1년
+	public static final int INIT_BACK_DAYS = 30;
 	
 	private final WorkService workService;
 	
@@ -57,7 +58,7 @@ public class CalendarServiceImpl implements CalendarService{
 //		Date date = makeDate(calendar, now, 0);
 //		dateRepository.save(date);
 		List<Date> dateList = new ArrayList<>();
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now().minusDays(INIT_BACK_DAYS);
 		for(int i=0; i < INIT_FORWARD_DAYS; i++) {
 			Date date = makeDate(calendar, now, i);
 			dateList.add(date);

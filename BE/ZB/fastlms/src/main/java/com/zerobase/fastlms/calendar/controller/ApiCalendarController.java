@@ -75,8 +75,10 @@ public class ApiCalendarController {
 		CalendarInterface calendarResponse = calendarRepository.findByProjectId(calendarInput.getProjectId());
 		CalendarDto calendarDto = new CalendarDto(calendarUserList, calendarResponse);
 		CalendarDto resultCalendar = calendarService.addWorkTime(calendarDto);
-		System.out.println("???");
-		return ResponseEntity.ok().body(calendarDto);
+		System.out.println("=============================================");
+		System.out.println(calendarDto.equals(resultCalendar));
+		System.out.println("=============================================");
+		return ResponseEntity.ok().body(resultCalendar);
 	}
 	
 	@PostMapping("api/auto")
@@ -84,7 +86,7 @@ public class ApiCalendarController {
 		System.out.println(workUserList);
 		List<Date> beforeUserList = dateMemberService.exceptAutoTime(workUserList.getProjectId(), workUserList.getCalendarId());
 		System.out.println("[이전 값 찾기 완료]==========================================================");
-		boolean isUserListUpdate = workService.updateUserList(workUserList, beforeUserList, principal.getName());
+		boolean isUserListUpdate = workService.updateUserList(workUserList, principal.getName());
 		System.out.println("[현재 유저 데이터 업데이트 완료] : =========================================================="+isUserListUpdate);
 		CalendarUserList calendarUserList = projectService.getUserList(workUserList.getProjectId());
 		CalendarDto calendarDto = new CalendarDto(calendarUserList); 
@@ -92,7 +94,7 @@ public class ApiCalendarController {
 		System.out.println("[userList값 가져오기 성공]==========================================================");
 		boolean result = dateMemberService.updateDailyWork(workUserList.getCalendarId(), resultCalendar.getUserList(), beforeUserList);
 		System.out.println("??");
-		return ResponseEntity.ok().body(result);
+		return ResponseEntity.ok().body(beforeUserList);
 	}
 	
 	@PostMapping("api/update")

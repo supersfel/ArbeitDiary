@@ -11,7 +11,7 @@ import com.zerobase.fastlms.member.model.SelectAutoSelf;
 
 public interface WorkService {
 	boolean testAdd(String day, String userId, Long projectId, String select);
-	boolean updateUserList(WorkUserListRequest userList, List<Date> beforeUserList, String userId);
+	boolean updateUserList(WorkUserListRequest userList, String userId);
 	boolean add(UserListsDto user, Long projectId, String select);
 	boolean initWorkdays(Member member, Long projectId);
 	
