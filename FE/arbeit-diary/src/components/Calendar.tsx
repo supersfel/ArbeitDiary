@@ -2,15 +2,25 @@ import moment from "moment";
 import React, { useState } from "react";
 import "../css/components/Calendar.css";
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { RootState } from "../module";
+import { projectType } from "../module/User";
 
 type CalendarProps = {
   onConfirm: () => void;
   onConfirmDay: (days: moment.Moment) => void;
+  constproject: projectType;
 };
 
-function Calendar({ onConfirm, onConfirmDay }: CalendarProps) {
+function Calendar({ onConfirm, onConfirmDay, constproject }: CalendarProps) {
+  const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
+  const dates = calendar.dates;
+  const trueUserList = constproject.userList //참으로 표시한 userList
+    .filter((user) => user.done === true)
+    .map((user) => user.userName);
+
   const [getMoment, setMoment] = useState(moment());
-  const today = getMoment; // today == moment()   입니다.
+  const today = getMoment; // today == moment()
 
   const firstWeek = today.clone().startOf("month").week();
   const lastWeek =
@@ -36,51 +46,49 @@ function Calendar({ onConfirm, onConfirmDay }: CalendarProps) {
                 .startOf("week")
                 .add(index, "day");
 
-              if (moment().format("YYYYMMDD") === days.format("YYYYMMDD")) {
-                return (
-                  <div
-                    className="calendarDay"
-                    key={index}
-                    style={{
-                      backgroundColor: "var(--main-color)",
-                      color: "#fff",
-                    }}
-                    onClick={() => {
-                      onConfirm();
-                      onConfirmDay(days);
-                    }}
-                  >
-                    {days.format("D")}
-                  </div>
-                );
-              } else if (days.format("MM") !== today.format("MM")) {
-                return (
-                  <div
-                    className="calendarDay"
-                    key={index}
-                    style={{ backgroundColor: "#d2d2d2ee" }}
-                    onClick={() => {
-                      onConfirm();
-                      onConfirmDay(days);
-                    }}
-                  >
-                    {days.format("D")}
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    className="calendarDay"
-                    key={index}
-                    onClick={() => {
-                      onConfirm();
-                      onConfirmDay(days);
-                    }}
-                  >
-                    {days.format("D")}
-                  </div>
-                );
+              let workflag = false;
+
+              try {
+                dates
+                  .filter((date) => date.date === days.format("YYMMDD"))[0]
+                  .users.map((user) => {
+                    for (const truename in trueUserList) {
+                      if (user.name === trueUserList[truename]) {
+                        if (
+                          user.worktime !==
+                          "000000000000000000000000000000000000000000000000"
+                        ) {
+                          workflag = true;
+                        }
+                      }
+                    }
+                  });
+              } catch (error) {
+                workflag = false;
               }
+
+              //console.log(days.format("YYMMDD"));
+
+              const daycheck =
+                days.format("MM") !== today.format("MM")
+                  ? " gray"
+                  : moment().format("YYYYMMDD") === days.format("YYYYMMDD")
+                  ? " today"
+                  : "";
+
+              return (
+                <div
+                  className={"calendarDay" + daycheck}
+                  id={workflag ? "check" : ""}
+                  key={index}
+                  onClick={() => {
+                    onConfirm();
+                    onConfirmDay(days);
+                  }}
+                >
+                  {days.format("D")}
+                </div>
+              );
             })}
         </div>
       );

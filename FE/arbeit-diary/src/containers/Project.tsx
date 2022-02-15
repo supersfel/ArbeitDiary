@@ -34,10 +34,10 @@ function Project() {
   const [userId, setuserId] = useState("");
 
   const projects = user.projects;
+  
   const constproject = projects.filter(
     (project) => project.projectId === projectId
   )[0]; //해당 id의 userList 추출
-
   /*새로고침 오류 방지 */
   if (constproject === undefined) {
     return <></>;
@@ -72,7 +72,7 @@ function Project() {
         />
         <div className="projectRight">
           <div className="projectTitle">{constproject.projectName}</div>
-          <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} />
+          <Calendar onConfirm={onConfirm} onConfirmDay={onConfirmDay} constproject={constproject} />
         </div>
       </div>
       <DayDetail

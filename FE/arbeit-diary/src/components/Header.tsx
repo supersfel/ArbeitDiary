@@ -10,6 +10,7 @@ function Header() {
   const [ScrollActive, setScrollActive] = useState(false);
   const history = useHistory();
   const calendar = useSelector((state: RootState) => state.CalenderInfo);
+  const user = useSelector((state: RootState) => state.Userinfo);
   function handleScroll() {
     if (ScrollY > 10) {
       setScrollY(window.pageYOffset);
@@ -38,6 +39,7 @@ function Header() {
 
   const onTest = () => {
     console.log(calendar[0]);
+    console.log(user[0]);
   };
 
   return (
