@@ -331,5 +331,15 @@ public class MemberServiceImpl implements MemberService{
 		
 		return new ServiceResult(true);
 	}
-	
+
+	@Override
+	public List<String> getUserId(String userPhone, String userName) {
+		List<Member> memberList = memberRepository.findAllByUserNameAndPhone(userName, userPhone);
+
+		List<String> idList = new ArrayList<String>();
+		for(Member member: memberList) {
+			idList.add(member.getUserId());
+		}
+		return idList;
+	}
 }

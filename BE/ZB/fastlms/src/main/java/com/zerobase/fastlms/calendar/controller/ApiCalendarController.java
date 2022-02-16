@@ -98,7 +98,7 @@ public class ApiCalendarController {
 	}
 	
 	@PostMapping("api/update")
-	public ResponseEntity<?> calendar(@RequestBody WorkUserListRequest workUserList, Principal principal){
+	public ResponseEntity<?> calendar(@RequestBody WorkUserListRequest workUserList, Principal principal) {
 		System.out.println("=============================================");
 		boolean result = dateMemberService.loadDailyWork(workUserList.getCalendarId(), workUserList.getDates());
 		System.out.println("=============================================");

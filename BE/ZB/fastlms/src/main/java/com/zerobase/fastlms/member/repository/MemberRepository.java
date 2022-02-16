@@ -16,4 +16,6 @@ public interface MemberRepository extends JpaRepository<Member, String>{
 	Optional<Member> findByUserIdAndUserName(String userId, String userName);
 	Optional<Member> findByResetPasswordKey(String uuid);
 	UserListInterface findByUserId(String userId);
+
+    List<Member> findAllByUserNameAndPhone(String userName, String userPhone);
 }

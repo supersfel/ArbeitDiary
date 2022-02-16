@@ -37,4 +37,6 @@ public interface MemberService extends UserDetailsService{
 	MemberLoginDto getloginToken(CustomUserDetails principal);
 	
 	ServiceResult updateMemberPassword(MemberInput memberInput);
+
+	List<String> getUserId(String userPhone, String userName);
 }

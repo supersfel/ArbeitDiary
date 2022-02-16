@@ -118,4 +118,13 @@ public class ApiMemberController {
 
 		return ResponseEntity.ok().body(result);
 	}
+
+	@PostMapping("/api/find/userid") // get은 requestbody 불가
+	public ResponseEntity<?> findId(@RequestBody MemberInput memberInput, HttpServletRequest request){
+		System.out.println("[API 아이디 찾기]");
+		System.out.println(memberInput);
+		List<String> userIdList = memberService.getUserId(memberInput.getUserPhone(), memberInput.getUserName());
+
+		return ResponseEntity.ok().body(userIdList);
+	}
 }

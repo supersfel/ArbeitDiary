@@ -1,18 +1,46 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CheckToken from "../api/CheckToken";
+import { findidapi } from "../api/UserApi";
+import Header from "../components/Header";
 
 function FindId() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const onSubmit = (e: any) => {
-    e.preventDefault();
+  const [visible, setvisible] = useState(false);
+  const [IdList, setIdList] = useState([]);
+  const onCancel = () => {
+    setvisible(false);
   };
 
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    const list = await findidapi({
+      userName: e.target.userName.value,
+      userPhone: e.target.userPhone.value,
+    });
+    setIdList(list);
+    setvisible(true);
+  };
 
-  
+  function IdlistModal() {
+    return (
+      <div
+        className={"background" + (visible ? " visible" : "")}
+        onClick={(event) => {
+          onCancel();
+        }}
+      >
+        <div
+          className="emailmodal"
+          onClick={(event) => event.stopPropagation()}
+        >
+          아이디 목록
+          {IdList.map((text, index) => {
+            return <div key={index}>{text}</div>;
+          })}
+          <Link to="/">홈 화면으로 이동</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -30,7 +58,7 @@ function FindId() {
           </label>
           <input
             type="text"
-            id="name"
+            id="userName"
             className="form-control"
             placeholder="이름"
             required
@@ -41,7 +69,7 @@ function FindId() {
           </label>
           <input
             type="text"
-            id="phone"
+            id="userPhone"
             className="form-control"
             placeholder="핸드폰 번호"
             required
@@ -59,6 +87,7 @@ function FindId() {
           <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
       </div>
+      <IdlistModal />
     </>
   );
 }

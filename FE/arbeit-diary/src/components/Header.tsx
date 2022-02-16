@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CheckToken from "../api/CheckToken";
 import "../css/components/Header.css";
-import { RootState } from "../module";
 
 function Header() {
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장

@@ -16,14 +16,16 @@
 
 .background .emailmodal {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   font-size: 2rem;
   font-weight: 700;
   width: 50%;
-  height: 30%;
+  height: 50%;
   background: rgb(243, 243, 243);
   z-index: 0;
+  padding: 3rem;
 
   border-radius: 20px;
 }

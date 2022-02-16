@@ -123,6 +123,26 @@ export async function resetpasswordapi(body: any, id: string) {
   }
 }
 
+export async function findidapi(body: any) {
+  let response: never[] = [];
+  try {
+    response = await axios({
+      method: "post",
+      url: `${api}/api/find/userid`,
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+      },
+      data: body,
+    }).then((response) => {
+      return response.data;
+    });
+  } catch (e) {
+    console.log("error in resetpasswordapi");
+  }
+  return response;
+}
+
 export async function Emailrequestapi(params: EmailRequestApiprops) {
   const history = useHistory();
 

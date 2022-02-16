@@ -2,6 +2,7 @@ import React, { CSSProperties, useState } from "react";
 import { RegistUserApi } from "../api/UserApi";
 import "../css/containers/Regist.css";
 import CheckEmailModal from "../components/CheckEmailModal";
+import Header from "../components/Header";
 
 function Regist() {
   const [password, setPassword] = useState(""); // 비밀번호 일치확인
