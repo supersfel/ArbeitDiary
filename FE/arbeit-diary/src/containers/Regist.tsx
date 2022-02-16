@@ -7,6 +7,8 @@ function Regist() {
   const [password, setPassword] = useState(""); // 비밀번호 일치확인
   const [confirmPassword, setConfirmPassword] = useState("");
   const [visible, setvisible] = useState(false);
+  const [correctpassword, setcorrectpassword] = useState(false);
+  const passwordType = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
   const onCancel = () => {
     setvisible(false);
@@ -14,16 +16,27 @@ function Regist() {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    setvisible(true);
-    RegistUserApi({
-      userId: e.target.email.value,
-      userPassword: e.target.password.value,
-      userName: e.target.name.value,
-      userPhone: e.target.phone.value,
-    });
+    if (passwordType.test(e.target.password.value)) {
+      if (password === confirmPassword) {
+        setvisible(true);
+        RegistUserApi({
+          userId: e.target.email.value,
+          userPassword: e.target.password.value,
+          userName: e.target.name.value,
+          userPhone: e.target.phone.value,
+        });
+      } else {
+        alert("비밀번호가 일치하지 않습니다");
+      }
+    } else {
+      alert("비밀번호 양식을 확인해주세요");
+    }
   };
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    passwordType.test(e.target.value)
+      ? setcorrectpassword(false)
+      : setcorrectpassword(true);
     setPassword(e.target.value);
   };
   const onChangeConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +45,10 @@ function Regist() {
 
   const uncorrectstyle: CSSProperties = {
     border: password !== confirmPassword ? "4px solid var(--main-color)" : "",
+  };
+
+  const commentpassword: CSSProperties = {
+    display: correctpassword ? "block" : "none",
   };
 
   return (
@@ -89,6 +106,9 @@ function Regist() {
             onChange={onChangeConfirmPassword}
             style={uncorrectstyle}
           />
+          <div style={commentpassword}>
+            비밀번호는 영어,숫자포함 8자에서 20자사이입니다
+          </div>
 
           <button className="btn-login" type="submit">
             회원가입

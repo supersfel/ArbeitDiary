@@ -45,7 +45,7 @@ function OldProject() {
       <Header />
       <div className="diary-container">
         <Link to="/newproject" className="diary-inner-box Make-diary-box">
-          새 프로젝트
+          새 일기 만들기
         </Link>
         {projects.map((project, index) => {
           return (

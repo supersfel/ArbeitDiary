@@ -1,9 +1,10 @@
 import React, { createRef, useState } from "react";
 import "../css/components/Record.css";
 import { MdAdd, MdRestoreFromTrash } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../module";
 import { addDetail, dayIssueType, removeDetail } from "../module/Calendar";
+import { calendarupdateapi } from "../api/UserApi";
 
 type RecordProps = {
   selectedDay: string;
@@ -11,8 +12,8 @@ type RecordProps = {
 
 function Record({ selectedDay }: RecordProps) {
   const dispatch = useDispatch();
-  const [detailText, setDetailText] = useState("");
-
+  const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
+  const [saveflag, setsaveflag] = useState(false);
   const day =
     selectedDay.slice(0, 4) +
     "-" +
@@ -32,7 +33,8 @@ function Record({ selectedDay }: RecordProps) {
   const currentdate = selectedDay.replace(/[^0-9]/g, "").slice(2); //현재날짜출력
   const issues = useSelector(
     //users목록 추출
-    (state: RootState) => state.CalenderInfo
+    (state: RootState) => state.CalenderInfo,
+    shallowEqual
   )[0].dates.filter((date) => date.date === currentdate)[0].dayIssues;
   const user = useSelector((state: RootState) => state.Userinfo)[0];
 
@@ -47,6 +49,7 @@ function Record({ selectedDay }: RecordProps) {
             className="trash"
             onClick={() => {
               dispatch(removeDetail({ name: userName, text }));
+              setsaveflag(true);
             }}
           />
         </div>
@@ -57,10 +60,10 @@ function Record({ selectedDay }: RecordProps) {
   const date = new Date();
   let currenttime = String(date.getHours()) + ":" + String(date.getMinutes());
 
-  const onsubmitdetail = (e: any) => {
+  const onsubmitdetail = async (e: any) => {
     e.preventDefault();
-    setDetailText(e.target.addDetail.value);
-    dispatch(
+
+    await dispatch(
       addDetail({
         date: currentdate,
         text: e.target.addDetail.value,
@@ -70,7 +73,16 @@ function Record({ selectedDay }: RecordProps) {
       })
     );
     e.target.addDetail.value = "";
+    setsaveflag(true);
   };
+
+  if (saveflag) {
+    const token = localStorage.getItem("token");
+
+    calendarupdateapi(token === null ? "" : token, calendar);
+
+    setsaveflag(false);
+  }
 
   return (
     <div className="record">

@@ -48,7 +48,7 @@ export async function UserApi(params: UserApiprops) {
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/login",
+      url: `${api}/api/login`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
@@ -69,7 +69,7 @@ export async function RegistUserApi(params: RegistApiprops) {
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/userRegist",
+      url: `${api}/api/userRegist`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
@@ -84,13 +84,31 @@ export async function RegistUserApi(params: RegistApiprops) {
   } catch (e) {}
 }
 
+export async function findpasswordapi(params: any) {
+  try {
+    await axios({
+      method: "post",
+      url: `${api}/api/find/password`,
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+      },
+      data: params,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("error in findpasswordapi");
+  }
+}
+
 export async function Emailrequestapi(params: EmailRequestApiprops) {
   const history = useHistory();
 
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/emailAuth",
+      url: `${api}/api/emailAuth`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
@@ -138,7 +156,7 @@ export async function getCalendarApi(
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/load",
+      url: `${api}/api/load`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
@@ -159,7 +177,7 @@ export async function sendfixedscheduleapi(token: string, params: any) {
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/auto",
+      url: `${api}/api/auto`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore
@@ -178,7 +196,7 @@ export async function calendarupdateapi(token: string, params: any) {
   try {
     await axios({
       method: "post",
-      url: "http://localhost:8080/api/update",
+      url: `${api}/api/update`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore

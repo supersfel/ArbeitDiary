@@ -8,6 +8,8 @@ import Project from "./containers/Project";
 import NewProject from "./containers/NewProject";
 import Emaildone from "./containers/Emaildone";
 import JoinProject from "./containers/JoinProject";
+import FindId from "./containers/FindId";
+import FindPassword from "./containers/FindPassword";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route path="/newproject" component={NewProject} />
       <Route path="/done" component={Emaildone} />
       <Route path="/joinproject" component={JoinProject} />
+      <Route path="/findid" component={FindId} />
+      <Route path="/findpassword" component={FindPassword} />
     </div>
   );
 }

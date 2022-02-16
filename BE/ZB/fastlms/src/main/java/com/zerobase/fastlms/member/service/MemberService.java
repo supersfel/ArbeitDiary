@@ -18,7 +18,7 @@ public interface MemberService extends UserDetailsService{
 	
 	boolean emailAuth(String uuid);
 	
-	boolean sendResetPassword(ResetPasswordInput parameter);
+	boolean sendResetPassword(String userId, String userName);
 	
 	boolean resetPassword(String id, String password);
 	

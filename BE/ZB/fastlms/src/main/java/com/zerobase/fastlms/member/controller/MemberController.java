@@ -110,7 +110,7 @@ public class MemberController {
 	public String findPasswordSubmit(ResetPasswordInput parameter, Model model) {
 		boolean result = false;
 		try {
-			result = memberService.sendResetPassword(parameter);
+			result = memberService.sendResetPassword(parameter.getUserId(), parameter.getUserName());
 		} catch(Exception e) {
 			System.out.println(e);
 		}

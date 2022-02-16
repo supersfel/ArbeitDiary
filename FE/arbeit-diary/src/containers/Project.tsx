@@ -22,8 +22,9 @@ function Project() {
   const history = useHistory();
   const location = useLocation();
   const projectId = location.search.slice(11);
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
     checkEffectiveToken(dispatch, history);
     getCalendarApi(token === null ? "" : token, { projectId }, dispatch);
   }, []);
@@ -48,13 +49,17 @@ function Project() {
     setselectedDay(days.format("YYYY년 MM월 DD일"));
   };
 
-  const onCancel = async () => {
+  const onCancel = () => {
     setvisible(false);
+  };
+
+  const onSaveCalendar = async () => {
     const token = localStorage.getItem("token");
     await calendarupdateapi(token === null ? "" : token, calendar).then(() => {
       window.location.reload();
     });
   };
+
   const onConfirm = () => setvisible(true);
 
   const onCancelJoinModal = () => setJoinModalvisible(false);
@@ -78,7 +83,17 @@ function Project() {
           setuserId={setuserId}
         />
         <div className="projectRight">
-          <div className="projectTitle">{constproject.projectName}</div>
+          <div className="projecthead">
+            <div className="projectTitle">{constproject.projectName}</div>
+            {constproject.projectRole === "MASTER" ? (
+              <div className="savebtn btn" onClick={onSaveCalendar}>
+                저장
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+
           <Calendar
             onConfirm={onConfirm}
             onConfirmDay={onConfirmDay}

@@ -9,8 +9,6 @@ function Header() {
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
   const history = useHistory();
-  const calendar = useSelector((state: RootState) => state.CalenderInfo);
-  const user = useSelector((state: RootState) => state.Userinfo);
   function handleScroll() {
     if (ScrollY > 10) {
       setScrollY(window.pageYOffset);
@@ -37,14 +35,8 @@ function Header() {
     }
   };
 
-  const onTest = () => {
-    console.log(calendar[0]);
-    console.log(user[0]);
-  };
-
   return (
     <>
-      <button onClick={onTest}></button>
       <header className={"Header" + (ScrollActive ? " onScrolled" : "")}>
         <Link to="/" className="left">
           <div className="logo-icon"></div>
