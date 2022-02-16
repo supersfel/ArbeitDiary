@@ -10,6 +10,7 @@ import Emaildone from "./containers/Emaildone";
 import JoinProject from "./containers/JoinProject";
 import FindId from "./containers/FindId";
 import FindPassword from "./containers/FindPassword";
+import ResetPassword from "./containers/ResetPassword";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/joinproject" component={JoinProject} />
       <Route path="/findid" component={FindId} />
       <Route path="/findpassword" component={FindPassword} />
+      <Route path="/member/reset/password" component={ResetPassword} />
     </div>
   );
 }

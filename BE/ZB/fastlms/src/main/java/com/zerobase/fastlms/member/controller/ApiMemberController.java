@@ -100,4 +100,22 @@ public class ApiMemberController {
 		System.out.println(result);
 		return ResponseEntity.ok().body(result);
 	}
+
+	@PostMapping("/api/reset/password") // get은 requestbody 불가
+	public ResponseEntity<?> resetPassword(@RequestBody MemberInput memberInput, HttpServletRequest request){
+		System.out.println("[API 비밀번호 찾기]");
+		System.out.println(memberInput);
+		String uuid = request.getParameter("id");
+		boolean result = false;
+		try {
+			result  =memberService.checkResetPasswordKey(uuid);
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		if(result) {
+			result = memberService.resetPassword(uuid, memberInput.getUserPassword());
+		}
+
+		return ResponseEntity.ok().body(result);
+	}
 }

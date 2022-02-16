@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { findpasswordapi } from "../api/UserApi";
 
 function FindPassword() {
+  const [visible, setvisible] = useState(false);
+  const onCancel = () => {
+    setvisible(false);
+  };
   const onSubmit = (e: any) => {
     e.preventDefault();
+    setvisible(true);
     findpasswordapi({
       userId: e.target.userId.value,
       userName: e.target.userName.value,
     });
   };
+
+  function CheckEmailModal() {
+    return (
+      <div
+        className={"background" + (visible ? " visible" : "")}
+        onClick={(event) => {
+          onCancel();
+        }}
+      >
+        <div
+          className="emailmodal"
+          onClick={(event) => event.stopPropagation()}
+        >
+          {/*이벤트 캡쳐링 방지 */}
+          비밀번호 찾기가 완료되었습니다 <br /> <br />
+          이메일을 확인해주세요
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -55,6 +80,7 @@ function FindPassword() {
           <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
       </div>
+      <CheckEmailModal />
     </>
   );
 }

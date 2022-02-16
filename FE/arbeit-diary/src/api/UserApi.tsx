@@ -102,6 +102,27 @@ export async function findpasswordapi(params: any) {
   }
 }
 
+export async function resetpasswordapi(body: any, id: string) {
+  try {
+    await axios({
+      method: "post",
+      url: `${api}/api/reset/password`,
+      headers: {
+        'Accept': "application/json", //prettier-ignore
+        'Content-Type': "application/json", //prettier-ignore
+      },
+      data: body,
+      params: {
+        id,
+      },
+    }).then((response) => {
+      console.log(response.data);
+    });
+  } catch (e) {
+    console.log("error in resetpasswordapi");
+  }
+}
+
 export async function Emailrequestapi(params: EmailRequestApiprops) {
   const history = useHistory();
 
