@@ -18,10 +18,14 @@
 
 .Introduce .intro .Box {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
+  position: relative;
+  width: 100%;
 }
 .Introduce .intro .first .staff {
   display: flex;
@@ -33,10 +37,45 @@
   width: 150px;
 }
 
-.Introduce .intro .makeprojectimg {
-  width: 50rem;
-  height: 28rem;
-  background-image: url("../components/makeproject-img.PNG");
+.Introduce .intro .fixedschedule {
+  width: 100%;
+  height: 50rem;
+  background-image: url("../components/fixedschedule-img.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.Introduce .intro .record-img {
+  width: 100%;
+  height: 40rem;
+  background-image: url("../components/record-img.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0px;
+  left: 35%;
+}
+
+.Introduce .intro .Introment {
+  height: 45rem;
+}
+
+.Introduce .intro .schedule-img {
+  width: 100%;
+  height: 40rem;
+  background-image: url("../components/schedule-img.PNG");
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.Introduce .logo-title {
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+.Introduce .start-btn {
+  width: 20rem;
+  height: 10rem;
+  font-size: 1.8rem;
+  margin: 10rem auto;
+  border-radius: 20px;
 }

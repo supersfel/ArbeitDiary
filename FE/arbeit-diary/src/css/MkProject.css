@@ -17,14 +17,7 @@
   font-weight: 900;
 }
 
-.logo-title {
-  width: 498px;
-  height: 119px;
-  background-image: url("./components/logo2.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-bottom: 5rem;
-}
+
 
 .MkProject .project {
   display: flex;

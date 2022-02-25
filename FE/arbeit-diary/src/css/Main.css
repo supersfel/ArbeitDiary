@@ -69,3 +69,15 @@ input::placeholder {
   border-radius: 15px;
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
 }
+
+
+/*logo*/
+
+.logo-title {
+  width: 498px;
+  height: 119px;
+  background-image: url("./components/logo2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 5rem;
+}
