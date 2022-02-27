@@ -181,7 +181,10 @@ function FixedSchedule({
             </div>
             <div
               className="settingBoxbtn btn"
-              onClick={() => setFixedSchedulevisible(false)}
+              onClick={() => {
+                setFixedSchedulevisible(false);
+                history.go(0);
+              }}
             >
               취소
             </div>
