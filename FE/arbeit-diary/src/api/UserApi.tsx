@@ -21,15 +21,11 @@ type EmailRequestApiprops = {
   id: string;
 };
 
-export async function getUserinfoApi(
-  url: string,
-  token: string,
-  dispatch: any
-) {
+export async function getUserinfoApi(token: string, dispatch: any) {
   try {
     await axios({
       method: "post",
-      url,
+      url: `${api}/api/oldproject`,
       headers: {
         'Accept': "application/json", //prettier-ignore
         'Content-Type': "application/json", //prettier-ignore

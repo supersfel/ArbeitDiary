@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { checkEffectiveToken, CheckTokenMoveHome } from "../api/CheckToken";
-import { PostApi } from "../api/UserApi";
+import { api, PostApi } from "../api/UserApi";
 import Header from "../components/Header";
 import "../css/containers/NewProject.css";
 import { addProject } from "../module/User";
@@ -20,8 +20,8 @@ function NewProject() {
 
     e.preventDefault();
     dispatch(addProject(e.target.Name.value));
-    const api = await PostApi(
-      "http://localhost:8080/api/newproject",
+    const postapi = await PostApi(
+      `${api}/api/newproject`,
       token !== null ? token : "",
       { projectName: e.target.Name.value }
     )

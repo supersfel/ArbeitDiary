@@ -17,11 +17,7 @@ function Login(): JSX.Element {
     }).then(() => {
       let token = localStorage.getItem("token");
 
-      getUserinfoApi(
-        "http://localhost:8080/api/oldproject",
-        token !== null ? token : "",
-        dispatch
-      );
+      getUserinfoApi(token !== null ? token : "", dispatch);
       if (CheckToken()) {
         history.push("/");
       } else {
