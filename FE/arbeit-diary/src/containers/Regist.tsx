@@ -89,7 +89,7 @@ function Regist() {
             autoFocus
           />
           <input
-            type="text"
+            type="password"
             id="password"
             className="form-control"
             placeholder="비밀번호"
