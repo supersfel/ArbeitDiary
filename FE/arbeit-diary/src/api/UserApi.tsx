@@ -22,7 +22,7 @@ type EmailRequestApiprops = {
   id: string;
 };
 
-export async function getUserinfoApi(token: string, dispatch: any) {
+export async function getUserinfoApi(token: any, dispatch: any) {
   if (token !== null) {
     try {
       await axios({
