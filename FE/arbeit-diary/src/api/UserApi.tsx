@@ -40,6 +40,8 @@ export async function getUserinfoApi(token: any, dispatch: any) {
       console.log("get getUserinfoApi error!!");
       return false;
     }
+  } else {
+    return false;
   }
 }
 
@@ -55,7 +57,6 @@ export async function UserApi(params: UserApiprops) {
       data: params,
     }).then((response) => {
       const { authorization } = response.headers;
-      console.log(authorization);
       localStorage.setItem("token", authorization);
       console.log(response.data);
     });
