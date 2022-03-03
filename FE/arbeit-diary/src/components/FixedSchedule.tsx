@@ -49,7 +49,7 @@ function FixedSchedule({
     await sendfixedscheduleapi(token === null ? "" : token, calendar).then(
       () => {
         setFixedSchedulevisible(false);
-        window.location.reload();
+        history.go(0);
       }
     );
   };
