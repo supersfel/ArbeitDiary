@@ -56,7 +56,7 @@ function Project() {
   const onSaveCalendar = async () => {
     const token = localStorage.getItem("token");
     await calendarupdateapi(token === null ? "" : token, calendar).then(() => {
-      history.push(`/project/?projectId=${projectId}`);
+      // history.push(`/project/?projectId=${projectId}`);
     });
   };
 
