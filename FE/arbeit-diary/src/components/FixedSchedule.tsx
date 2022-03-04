@@ -24,7 +24,7 @@ function FixedSchedule({
 }: fixedScheduleProps) {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const location = useLocation();
   const projectId = location.search.slice(11);
   const calendar = useSelector((state: RootState) => state.CalenderInfo)[0];
   const userList = calendar.userList;
@@ -51,6 +51,7 @@ function FixedSchedule({
       () => {
         setFixedSchedulevisible(false);
         // history.push(`/project/?projectId=${projectId}`);
+        window.location.replace(`/project/?projectId=${projectId}`);
       }
     );
   };
