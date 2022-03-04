@@ -50,8 +50,9 @@ function FixedSchedule({
     await sendfixedscheduleapi(token === null ? "" : token, calendar).then(
       () => {
         setFixedSchedulevisible(false);
-        // history.push(`/project/?projectId=${projectId}`);
+
         window.location.replace(`/project/?projectId=${projectId}`);
+        history.push(`/project/?projectId=${projectId}`);
       }
     );
   };
