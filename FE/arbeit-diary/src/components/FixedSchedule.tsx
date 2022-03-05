@@ -49,12 +49,12 @@ function FixedSchedule({
     const token = localStorage.getItem("token");
     await sendfixedscheduleapi(token === null ? "" : token, calendar).then(
       () => {
+        //window.location.replace(`/project/?projectId=${projectId}`);
+        history.push(`/oldproject`);
         setFixedSchedulevisible(false);
-
-        window.location.replace(`/project/?projectId=${projectId}`);
-        history.push(`/project/?projectId=${projectId}`);
       }
     );
+    setFixedSchedulevisible(false);
   };
 
   const FixedScheduletime = ({ worktimes, dayId }: FixedscheduletimeProps) => {
